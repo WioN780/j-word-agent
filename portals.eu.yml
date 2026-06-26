@@ -1,0 +1,1043 @@
+# portals.eu.yml — EU / UK / Scandinavian company extensions
+# Fork-safe: loaded alongside portals.yml by scan.mjs (EU-FORK patch).
+# DO NOT edit portals.yml for EU companies — add them here instead.
+#
+# ATS auto-detection from careers_url:
+#   Greenhouse  → job-boards(.eu)?.greenhouse.io/<slug>
+#   Ashby       → jobs.ashbyhq.com/<slug>
+#   Lever       → jobs.lever.co/<slug>
+#   Workable    → apply.workable.com/<slug>
+#   SmartRecrs  → careers.smartrecruiters.com/<slug>
+#   Breezy HR   → <slug>.breezy.hr
+#
+# Companies marked enabled: false either:
+#   - Use Workday/SAP/custom ATS (manual apply required), or
+#   - Have an unconfirmed/404 ATS slug — paste their JD URL into
+#     data/pipeline.md and run /career-ops pipeline to evaluate individually.
+#
+# To find the correct slug for a 404 company: visit their careers page,
+# look at the URL — if it contains greenhouse.io, ashbyhq.com, or lever.co,
+# update the careers_url and remove enabled: false.
+
+# -- Title filter (EU-specific focus) --
+# Merged (union) with portals.yml title_filter by the EU-FORK patch.
+
+title_filter:
+  positive:
+    - "engineer"
+    - "developer"
+    - "backend"
+    - "frontend"
+    - "fullstack"
+    - "full-stack"
+    - "full stack"
+    - "devops"
+    - "platform"
+    - "data"
+    - "ml"
+    - "machine learning"
+    - "ai"
+    - "sre"
+    - "infrastructure"
+    - "python"
+    - "javascript"
+    - "typescript"
+    - "go"
+    - "rust"
+    - "cloud"
+    - "security"
+    - "software"
+  negative:
+    - "Head of"
+    - "VP of"
+    - "Director"
+    - "C-level"
+    - "Chief"
+    - "Principal Engineer"
+    - "Staff Engineer"
+    - "Distinguished"
+    - "10+ years"
+    - "10 years experience"
+    - "8+ years"
+    - "intern"
+    - "Intern"
+
+tracked_companies:
+
+  # ============================================================
+  # -- UK Fintech / Payments (verified ATS URLs)
+  # ============================================================
+
+  - name: Wise
+    careers_url: https://www.wise.jobs/roles
+    scan_method: websearch
+    scan_query: '"wise" money transfer "engineer" OR "developer" OR "backend" OR "data" careers jobs'
+    notes: "London UK. Global money transfer fintech. Lever slug (wise) no longer active — websearch only."
+    enabled: false
+
+  - name: Monzo
+    careers_url: https://job-boards.greenhouse.io/monzo
+    api: https://boards-api.greenhouse.io/v1/boards/monzo/jobs
+    notes: "London UK. UK neobank, 9M+ customers."
+    enabled: true
+
+  - name: Revolut
+    careers_url: https://www.revolut.com/careers
+    scan_method: websearch
+    scan_query: '"revolut" neobank "engineer" OR "developer" OR "backend" OR "data" careers jobs'
+    notes: "London UK. Global neobank, 40M+ customers. Lever slug (revolut) no longer active — websearch only."
+    enabled: false
+
+  - name: Checkout.com
+    careers_url: https://jobs.ashbyhq.com/checkout.com
+    notes: "London UK. Enterprise payments infrastructure."
+    enabled: true
+
+  - name: Mollie
+    careers_url: https://jobs.ashbyhq.com/mollie
+    notes: "Amsterdam NL. European payments platform for SMBs."
+    enabled: true
+
+  - name: Adyen
+    careers_url: https://job-boards.greenhouse.io/adyen
+    api: https://boards-api.greenhouse.io/v1/boards/adyen/jobs
+    notes: "Amsterdam NL. Global payments processor, listed on AEX."
+    enabled: true
+
+  - name: GoCardless
+    careers_url: https://job-boards.greenhouse.io/gocardless
+    api: https://boards-api.greenhouse.io/v1/boards/gocardless/jobs
+    notes: "London UK. Bank debit / open banking payments."
+    enabled: true
+
+  - name: Starling Bank
+    careers_url: https://apply.workable.com/starling-bank/
+    notes: "London UK. UK challenger bank, profitable."
+    enabled: true
+
+  - name: Truelayer
+    careers_url: https://job-boards.greenhouse.io/truelayer
+    api: https://boards-api.greenhouse.io/v1/boards/truelayer/jobs
+    notes: "London UK. Open banking payments API."
+    enabled: true
+
+  # ============================================================
+  # -- UK Tech (other sectors)
+  # ============================================================
+
+  - name: Marshmallow
+    careers_url: https://jobs.ashbyhq.com/marshmallow
+    notes: "London UK. Insurtech for migrants/expats, £1.2B valuation."
+    enabled: true
+
+  - name: Tractable
+    careers_url: https://jobs.ashbyhq.com/tractable
+    notes: "London UK. AI for accident & disaster recovery."
+    enabled: true
+
+  - name: Onfido
+    careers_url: https://apply.workable.com/onfido/
+    notes: "London UK. AI identity verification platform."
+    enabled: true
+
+  - name: Graphcore
+    careers_url: https://job-boards.greenhouse.io/graphcore
+    api: https://boards-api.greenhouse.io/v1/boards/graphcore/jobs
+    notes: "Bristol UK. AI chip maker (Intelligence Processing Unit)."
+    enabled: true
+
+  - name: Deliveroo
+    careers_url: https://deliveroo.com/careers
+    scan_method: websearch
+    scan_query: '"deliveroo" "engineer" OR "developer" OR "data" careers jobs'
+    notes: "London UK. Food delivery marketplace. Greenhouse slug unconfirmed — websearch only."
+    enabled: false
+
+  - name: Cleo
+    careers_url: https://www.meetcleo.com/careers
+    scan_method: websearch
+    scan_query: '"cleo" AI fintech "engineer" OR "developer" careers jobs'
+    notes: "London UK. AI personal finance assistant. Ashby slug unconfirmed — websearch only."
+    enabled: false
+
+  - name: Multiverse
+    careers_url: https://www.multiverse.io/en-GB/careers
+    scan_method: websearch
+    scan_query: '"multiverse" apprenticeships "engineer" OR "developer" careers jobs'
+    notes: "London UK. AI-powered professional apprenticeships. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Skyscanner
+    careers_url: https://www.skyscanner.net/jobs
+    scan_method: websearch
+    scan_query: '"skyscanner" "engineer" OR "developer" careers jobs'
+    notes: "Edinburgh/London UK. Travel search. Custom ATS — websearch only."
+    enabled: false
+
+  - name: Depop
+    careers_url: https://www.depop.com/jobs
+    scan_method: websearch
+    scan_query: '"depop" "engineer" OR "developer" careers jobs'
+    notes: "London UK. Fashion marketplace (Etsy-owned). Custom ATS — manual apply."
+    enabled: false
+
+  - name: Chip
+    careers_url: https://www.chip.co.uk/careers
+    scan_method: websearch
+    scan_query: '"chip" savings app "engineer" OR "developer" careers'
+    notes: "London UK. AI savings app. ATS unconfirmed."
+    enabled: false
+
+  - name: Freetrade
+    careers_url: https://freetrade.io/jobs
+    scan_method: websearch
+    scan_query: '"freetrade" "engineer" OR "developer" jobs'
+    notes: "London UK. Commission-free investment platform. ATS unconfirmed."
+    enabled: false
+
+  - name: Curve
+    careers_url: https://www.curve.com/en-gb/careers
+    scan_method: websearch
+    scan_query: '"curve" fintech "engineer" OR "developer" careers'
+    notes: "London UK. All-in-one fintech card. ATS unconfirmed."
+    enabled: false
+
+  - name: Zilch
+    careers_url: https://www.zilch.com/careers
+    scan_method: websearch
+    scan_query: '"zilch" BNPL "engineer" OR "developer" careers'
+    notes: "London UK. BNPL fintech. ATS unconfirmed."
+    enabled: false
+
+  - name: Featurespace
+    careers_url: https://www.featurespace.com/careers
+    scan_method: websearch
+    scan_query: '"featurespace" ML fraud "engineer" careers'
+    notes: "Cambridge UK. ML/fraud detection. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Improbable
+    careers_url: https://www.improbable.io/careers
+    scan_method: websearch
+    scan_query: '"improbable" simulation "engineer" OR "developer" careers'
+    notes: "London UK. Defence simulation tech. ATS unconfirmed."
+    enabled: false
+
+  # ============================================================
+  # -- Scandinavian / Nordic Tech
+  # ============================================================
+
+  - name: Klarna
+    careers_url: https://www.klarna.com/careers
+    scan_method: websearch
+    scan_query: '"klarna" BNPL "engineer" OR "developer" OR "backend" OR "data" careers jobs'
+    notes: "Stockholm SE. BNPL unicorn, 85M+ customers. Lever slug (klarna) no longer active — websearch only."
+    enabled: false
+
+  - name: Trustly
+    careers_url: https://jobs.lever.co/trustly
+    notes: "Stockholm SE. Open banking payments."
+    enabled: true
+
+  - name: Whereby
+    careers_url: https://whereby.com/information/careers
+    scan_method: websearch
+    scan_query: '"whereby" video meetings "engineer" OR "developer" careers jobs'
+    notes: "Oslo NO. Embedded video meetings API. Ashby slug (whereby) invalid — websearch only."
+    enabled: false
+
+  - name: Kahoot
+    careers_url: https://apply.workable.com/kahoot/
+    notes: "Oslo NO. Gamified learning platform."
+    enabled: true
+
+  - name: Pipedrive
+    careers_url: https://jobs.lever.co/pipedrive
+    notes: "Tallinn EE / NYC. CRM platform, 100K+ customers."
+    enabled: true
+
+  - name: Epidemic Sound
+    careers_url: https://www.epidemicsound.com/careers
+    scan_method: websearch
+    scan_query: '"epidemic sound" "engineer" OR "developer" OR "data" careers jobs'
+    notes: "Stockholm SE. Music licensing platform. Greenhouse slug unconfirmed — websearch only."
+    enabled: false
+
+  - name: Mentimeter
+    careers_url: https://www.mentimeter.com/careers
+    scan_method: websearch
+    scan_query: '"mentimeter" "engineer" OR "developer" careers jobs'
+    notes: "Stockholm SE. Interactive presentation platform. ATS unconfirmed."
+    enabled: false
+
+  - name: Adevinta
+    careers_url: https://adevinta.com/careers
+    scan_method: websearch
+    scan_query: '"adevinta" classifieds "engineer" OR "developer" careers jobs'
+    notes: "Oslo NO. Classifieds marketplace operator. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Vivino
+    careers_url: https://www.vivino.com/careers
+    scan_method: websearch
+    scan_query: '"vivino" wine app "engineer" OR "developer" careers jobs'
+    notes: "Copenhagen DK. World's largest wine app. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Pricefx
+    careers_url: https://www.pricefx.com/careers
+    scan_method: websearch
+    scan_query: '"pricefx" pricing SaaS "engineer" OR "developer" careers jobs'
+    notes: "Prague CZ / Munich DE. SaaS pricing platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Voi Technology
+    careers_url: https://www.voi.com/careers
+    scan_method: websearch
+    scan_query: '"voi technology" scooter "engineer" OR "developer" careers jobs'
+    notes: "Stockholm SE. E-scooter sharing. ATS unconfirmed."
+    enabled: false
+
+  - name: Northvolt
+    careers_url: https://northvolt.com/careers
+    scan_method: websearch
+    scan_query: '"northvolt" battery "engineer" OR "data" careers jobs'
+    notes: "Stockholm SE. Battery manufacturer. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Einride
+    careers_url: https://www.einride.tech/careers
+    scan_method: websearch
+    scan_query: '"einride" autonomous freight "engineer" OR "developer" careers'
+    notes: "Stockholm SE. Autonomous electric freight. ATS unconfirmed."
+    enabled: false
+
+  - name: Anyfin
+    careers_url: https://anyfin.com/careers
+    scan_method: websearch
+    scan_query: '"anyfin" refinancing fintech "engineer" OR "developer" careers'
+    notes: "Stockholm SE. Consumer loan refinancing fintech. ATS unconfirmed."
+    enabled: false
+
+  - name: Otovo
+    careers_url: https://www.otovo.com/careers
+    scan_method: websearch
+    scan_query: '"otovo" solar "engineer" OR "developer" careers'
+    notes: "Oslo NO. Solar energy marketplace. ATS unconfirmed."
+    enabled: false
+
+  - name: ASSA ABLOY Digital
+    careers_url: https://careers.assaabloy.com
+    scan_method: websearch
+    scan_query: '"assa abloy" digital smart lock "engineer" OR "developer" careers'
+    notes: "Stockholm SE. Physical access + smart lock tech. Large enterprise, Workday ATS."
+    enabled: false
+
+  - name: Lunar
+    careers_url: https://www.lunarway.com/careers
+    scan_method: websearch
+    scan_query: '"lunar" neobank Denmark "engineer" OR "developer" careers'
+    notes: "Copenhagen DK. Nordic neobank. ATS unconfirmed."
+    enabled: false
+
+  - name: Veo Technologies
+    careers_url: https://www.veo.co/careers
+    scan_method: websearch
+    scan_query: '"veo technologies" football AI camera "engineer" careers'
+    notes: "Copenhagen DK. AI camera for sports. Greenhouse slug unconfirmed."
+    enabled: false
+
+  # ============================================================
+  # -- EU SaaS / Productivity
+  # ============================================================
+
+  - name: TravelPerk (Perk)
+    careers_url: https://jobs.ashbyhq.com/Perk
+    notes: "Barcelona ES. Business travel management, rebranded to Perk. ~$1.4B valuation."
+    enabled: true
+
+  # ============================================================
+  # -- Polish Tech
+  # ============================================================
+
+  - name: Brainly
+    careers_url: https://jobs.ashbyhq.com/brainly
+    notes: "Warsaw PL. Online learning / homework help platform."
+    enabled: true
+
+  - name: Docplanner
+    careers_url: https://apply.workable.com/docplanner/
+    notes: "Warsaw PL. Healthcare marketplace and SaaS, 2M+ doctors."
+    enabled: true
+
+  - name: Netguru
+    careers_url: https://apply.workable.com/netguru/
+    notes: "Poznan PL. Software consultancy, 800+ engineers."
+    enabled: true
+
+  - name: Monterail
+    careers_url: https://apply.workable.com/monterail/
+    notes: "Wroclaw PL. Product-focused software studio."
+    enabled: true
+
+  - name: OLX Group
+    careers_url: https://www.olxgroup.com/careers
+    scan_method: websearch
+    scan_query: '"olx group" classifieds "engineer" OR "developer" OR "data" careers jobs'
+    notes: "Amsterdam NL / Warsaw PL. Classifieds (Prosus group). Lever slug (olx) invalid — websearch only."
+    enabled: false
+
+  - name: Snowflake Poland
+    careers_url: https://jobs.ashbyhq.com/snowflake
+    notes: "Gdansk PL (+ global). Data cloud platform. Filter for Poland in Ashby location facet."
+    enabled: true
+
+  - name: Boldare
+    careers_url: https://boldare.breezy.hr
+    notes: "Gliwice PL. Product design and development studio. Breezy HR ATS."
+    enabled: true
+
+  - name: Allegro
+    careers_url: https://allegro.tech/jobs
+    scan_method: websearch
+    scan_query: '"allegro" tech Poland "engineer" OR "developer" OR "data" careers'
+    notes: "Warsaw PL. Largest Polish e-commerce. Uses Workday — manual apply only."
+    enabled: false
+
+  - name: Infermedica
+    careers_url: https://infermedica.com/careers
+    scan_method: websearch
+    scan_query: '"infermedica" medical AI "engineer" OR "developer" careers'
+    notes: "Wroclaw PL. AI medical diagnosis platform. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Synerise
+    careers_url: https://synerise.com/careers
+    scan_method: websearch
+    scan_query: '"synerise" AI data Poland "engineer" OR "developer" careers'
+    notes: "Krakow PL. AI/data platform for retail. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Future Mind
+    careers_url: https://www.futuremind.com/career
+    scan_method: websearch
+    scan_query: '"future mind" mobile Poland "engineer" OR "developer" careers'
+    notes: "Warsaw PL. Mobile-first product studio. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Applause
+    careers_url: https://www.applause.com/company/careers
+    scan_method: websearch
+    scan_query: '"applause" testing platform "engineer" OR "developer" careers'
+    notes: "Boston US / Warsaw PL office. Greenhouse slug unconfirmed — websearch only."
+    enabled: false
+
+  # ============================================================
+  # -- German Tech
+  # ============================================================
+
+  - name: Delivery Hero
+    careers_url: https://careers.smartrecruiters.com/DeliveryHero
+    notes: "Berlin DE. Global food delivery holding (Foodora, Talabat, etc.)."
+    enabled: true
+
+  - name: Babbel
+    careers_url: https://www.babbel.com/jobs
+    scan_method: websearch
+    scan_query: '"babbel" language learning "engineer" OR "developer" careers jobs'
+    notes: "Berlin DE. Language learning subscription app. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Wefox
+    careers_url: https://www.wefox.com/en/careers
+    scan_method: websearch
+    scan_query: '"wefox" insurtech Germany "engineer" OR "developer" careers'
+    notes: "Berlin DE. Insurtech unicorn. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Omio
+    careers_url: https://www.omio.com/careers
+    scan_method: websearch
+    scan_query: '"omio" travel Germany "engineer" OR "developer" careers'
+    notes: "Berlin DE. Multi-modal travel search. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: FlixMobility (Flixbus)
+    careers_url: https://corporate.flixbus.com/work-with-us
+    scan_method: websearch
+    scan_query: '"flixbus" OR "flixmobility" "engineer" OR "developer" careers'
+    notes: "Munich DE. Long-distance bus/train operator. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Scalable Capital
+    careers_url: https://de.scalable.capital/career
+    scan_method: websearch
+    scan_query: '"scalable capital" investment Germany "engineer" OR "developer" careers'
+    notes: "Munich DE. Digital investment platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: AUTO1 Group
+    careers_url: https://www.auto1-group.com/jobs
+    scan_method: websearch
+    scan_query: '"auto1 group" car marketplace "engineer" OR "developer" careers'
+    notes: "Berlin DE. Europe's largest used-car marketplace. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Tourlane
+    careers_url: https://www.tourlane.com/careers
+    scan_method: websearch
+    scan_query: '"tourlane" travel Germany "engineer" OR "developer" careers'
+    notes: "Berlin DE. Bespoke travel experiences. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Personio
+    careers_url: https://www.personio.com/about-personio/careers
+    scan_method: websearch
+    scan_query: '"personio" HR SaaS "engineer" OR "developer" careers'
+    notes: "Munich DE. HR SaaS for SMBs. Custom ATS (Personio's own product) — manual apply."
+    enabled: false
+
+  - name: Zalando
+    careers_url: https://corporate.zalando.com/en/careers
+    scan_method: websearch
+    scan_query: '"zalando" fashion e-commerce "engineer" OR "developer" careers'
+    notes: "Berlin DE. Fashion e-commerce. Uses Workday — manual apply."
+    enabled: false
+
+  - name: Adjust
+    careers_url: https://www.adjust.com/company/careers
+    scan_method: websearch
+    scan_query: '"adjust" mobile analytics "engineer" OR "developer" careers'
+    notes: "Berlin DE. Mobile measurement (AppLovin-owned). ATS may have changed — verify."
+    enabled: false
+
+  - name: Billie
+    careers_url: https://www.billie.io/careers
+    scan_method: websearch
+    scan_query: '"billie" B2B payments Germany "engineer" OR "developer" careers'
+    notes: "Berlin DE. B2B payments / BNPL fintech. ATS unconfirmed."
+    enabled: false
+
+  - name: Moss
+    careers_url: https://www.getmoss.com/careers
+    scan_method: websearch
+    scan_query: '"moss" spend management Germany "engineer" OR "developer" careers'
+    notes: "Berlin DE. Corporate card and spend management. ATS unconfirmed."
+    enabled: false
+
+  - name: Clark
+    careers_url: https://www.clark.de/en/careers
+    scan_method: websearch
+    scan_query: '"clark" insurance Germany "engineer" OR "developer" careers'
+    notes: "Frankfurt DE. Digital insurance broker. ATS unconfirmed."
+    enabled: false
+
+  - name: Chrono24
+    careers_url: https://www.chrono24.de/jobs
+    scan_method: websearch
+    scan_query: '"chrono24" luxury watches "engineer" OR "developer" careers'
+    notes: "Karlsruhe DE. Global luxury watch marketplace. ATS unconfirmed."
+    enabled: false
+
+  # ============================================================
+  # -- French Tech (La French Tech)
+  # ============================================================
+
+  - name: Alan
+    careers_url: https://jobs.ashbyhq.com/alan
+    notes: "Paris FR. Digital health insurance. 500K+ members."
+    enabled: true
+
+  - name: Pennylane
+    careers_url: https://jobs.ashbyhq.com/pennylane
+    notes: "Paris FR. Accounting / financial management platform."
+    enabled: true
+
+  - name: Contentsquare
+    careers_url: https://contentsquare.com/careers
+    scan_method: websearch
+    scan_query: '"contentsquare" digital analytics "engineer" OR "developer" careers'
+    notes: "Paris FR. Digital experience analytics, $3.2B valuation. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Dataiku
+    careers_url: https://www.dataiku.com/company/careers
+    scan_method: websearch
+    scan_query: '"dataiku" data science platform "engineer" OR "developer" careers'
+    notes: "Paris FR / NYC. Enterprise data science platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Mirakl
+    careers_url: https://www.mirakl.com/company/careers
+    scan_method: websearch
+    scan_query: '"mirakl" marketplace SaaS "engineer" OR "developer" careers'
+    notes: "Paris FR. B2B marketplace SaaS. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: PayFit
+    careers_url: https://payfit.com/careers
+    scan_method: websearch
+    scan_query: '"payfit" payroll HR "engineer" OR "developer" careers'
+    notes: "Paris FR. Payroll and HR SaaS for European SMBs. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Brevo
+    careers_url: https://www.brevo.com/careers
+    scan_method: websearch
+    scan_query: '"brevo" OR "sendinblue" email marketing "engineer" OR "developer" careers'
+    notes: "Paris FR. Marketing automation platform (fmr. Sendinblue). Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Shift Technology
+    careers_url: https://www.shift-technology.com/careers
+    scan_method: websearch
+    scan_query: '"shift technology" insurance AI "engineer" OR "developer" careers'
+    notes: "Paris FR. AI for insurance fraud detection. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: ManoMano
+    careers_url: https://www.manomano.fr/jobs
+    scan_method: websearch
+    scan_query: '"manomano" DIY marketplace "engineer" OR "developer" careers'
+    notes: "Paris FR. DIY/home improvement marketplace. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Spendesk
+    careers_url: https://career.spendesk.com
+    scan_method: websearch
+    scan_query: '"spendesk" spend management "engineer" OR "developer" careers'
+    notes: "Paris FR. Spend management SaaS. Custom ATS (career.spendesk.com) — manual apply."
+    enabled: false
+
+  - name: Swile
+    careers_url: https://www.swile.co/en/jobs
+    scan_method: websearch
+    scan_query: '"swile" employee benefits France "engineer" OR "developer" careers'
+    notes: "Paris FR. Employee benefits and meal voucher app. ATS unconfirmed."
+    enabled: false
+
+  - name: Doctolib
+    careers_url: https://careers.doctolib.com
+    scan_method: websearch
+    scan_query: '"doctolib" healthcare booking "engineer" OR "developer" careers'
+    notes: "Paris FR. Healthcare booking and telemedicine. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Back Market
+    careers_url: https://jobs.backmarket.com
+    scan_method: websearch
+    scan_query: '"back market" refurbished "engineer" OR "developer" careers'
+    notes: "Paris FR. Refurbished electronics marketplace. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Blablacar
+    careers_url: https://www.blablacar.com/carpooling/company/jobs
+    scan_method: websearch
+    scan_query: '"blablacar" ridesharing "engineer" OR "developer" careers'
+    notes: "Paris FR. Intercity ridesharing. ATS unconfirmed."
+    enabled: false
+
+  - name: Lydia
+    careers_url: https://www.lydia-app.com/careers
+    scan_method: websearch
+    scan_query: '"lydia" payments France "engineer" OR "developer" careers'
+    notes: "Paris FR. P2P payment and neobank app. ATS unconfirmed."
+    enabled: false
+
+  - name: Vestiaire Collective
+    careers_url: https://www.vestiairecollective.com/jobs
+    scan_method: websearch
+    scan_query: '"vestiaire collective" luxury pre-owned "engineer" OR "developer" careers'
+    notes: "Paris FR. Luxury pre-owned fashion marketplace. ATS unconfirmed."
+    enabled: false
+
+  # ============================================================
+  # -- Netherlands / Benelux Tech
+  # ============================================================
+
+  - name: MessageBird (Bird)
+    careers_url: https://www.bird.com/careers
+    scan_method: websearch
+    scan_query: '"messagebird" OR "bird.com" communications "engineer" OR "developer" careers'
+    notes: "Amsterdam NL. Omnichannel communications platform (rebranded to Bird). GH slug unconfirmed."
+    enabled: false
+
+  - name: Picnic
+    careers_url: https://picnic.app/nl/carriere
+    scan_method: websearch
+    scan_query: '"picnic" grocery delivery Netherlands "engineer" OR "developer" careers'
+    notes: "Amsterdam NL. Online supermarket. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Sendcloud
+    careers_url: https://www.sendcloud.com/jobs
+    scan_method: websearch
+    scan_query: '"sendcloud" shipping e-commerce "engineer" OR "developer" careers'
+    notes: "Eindhoven NL. Shipping automation platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: bunq
+    careers_url: https://www.bunq.com/careers
+    scan_method: websearch
+    scan_query: '"bunq" neobank "engineer" OR "developer" careers'
+    notes: "Amsterdam NL. European neobank. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Catawiki
+    careers_url: https://www.catawiki.com/jobs
+    scan_method: websearch
+    scan_query: '"catawiki" auction "engineer" OR "developer" careers'
+    notes: "Amsterdam NL. Online auction marketplace. Custom ATS — manual apply."
+    enabled: false
+
+  - name: TomTom
+    careers_url: https://tomtom.wd3.myworkdayjobs.com/en-US/External
+    scan_method: websearch
+    scan_query: '"tomtom" maps navigation "engineer" OR "developer" careers'
+    notes: "Amsterdam NL. Maps and navigation software. Uses Workday — manual apply."
+    enabled: false
+
+  - name: ChannelEngine
+    careers_url: https://www.channelengine.com/en/jobs
+    scan_method: websearch
+    scan_query: '"channelengine" marketplace "engineer" OR "developer" careers'
+    notes: "Leiden NL. Marketplace integration platform. ATS unconfirmed."
+    enabled: false
+
+  - name: Coolblue
+    careers_url: https://www.werkenbijcoolblue.nl
+    scan_method: websearch
+    scan_query: '"coolblue" electronics "engineer" OR "developer" careers'
+    notes: "Rotterdam NL. Consumer electronics e-commerce. Custom ATS — manual apply."
+    enabled: false
+
+  # ============================================================
+  # -- Spanish Tech
+  # ============================================================
+
+  - name: Typeform
+    careers_url: https://www.typeform.com/careers
+    scan_method: websearch
+    scan_query: '"typeform" forms Barcelona "engineer" OR "developer" careers'
+    notes: "Barcelona ES. Interactive form and survey platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Wallbox
+    careers_url: https://wallbox.com/en_us/careers
+    scan_method: websearch
+    scan_query: '"wallbox" EV charging "engineer" OR "developer" careers'
+    notes: "Barcelona ES. EV charging solutions, listed on NYSE. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Holded
+    careers_url: https://www.holded.com/careers
+    scan_method: websearch
+    scan_query: '"holded" ERP Barcelona "engineer" OR "developer" careers'
+    notes: "Barcelona ES. ERP and business management for SMBs. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Glovo
+    careers_url: https://careers.glovoapp.com
+    scan_method: websearch
+    scan_query: '"glovo" delivery Barcelona "engineer" OR "developer" careers'
+    notes: "Barcelona ES. On-demand delivery (Delivery Hero subsidiary). ATS unconfirmed."
+    enabled: false
+
+  - name: Paack
+    careers_url: https://paack.co/careers
+    scan_method: websearch
+    scan_query: '"paack" delivery Barcelona "engineer" OR "developer" careers'
+    notes: "Barcelona ES. Scheduled e-commerce delivery. ATS unconfirmed."
+    enabled: false
+
+  # ============================================================
+  # -- Baltic / Eastern Europe Tech
+  # ============================================================
+
+  - name: Bolt
+    careers_url: https://bolt.eu/en/careers
+    scan_method: websearch
+    scan_query: '"bolt" ride-hailing Tallinn "engineer" OR "developer" careers'
+    notes: "Tallinn EE. Ride-hailing, delivery and micro-mobility. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Veriff
+    careers_url: https://www.veriff.com/careers
+    scan_method: websearch
+    scan_query: '"veriff" identity verification Tallinn "engineer" OR "developer" careers'
+    notes: "Tallinn EE. AI identity verification. ATS unconfirmed."
+    enabled: false
+
+  - name: TransferGo
+    careers_url: https://transfergo.com/careers
+    scan_method: websearch
+    scan_query: '"transfergo" remittances "engineer" OR "developer" careers'
+    notes: "London UK / Vilnius LT. International money transfers. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Toggl
+    careers_url: https://toggl.com/jobs
+    scan_method: websearch
+    scan_query: '"toggl" time tracking Tallinn "engineer" OR "developer" careers'
+    notes: "Tallinn EE. Time tracking / project planning. Fully remote, custom ATS."
+    enabled: false
+
+  - name: Printful
+    careers_url: https://www.printful.com/careers
+    scan_method: websearch
+    scan_query: '"printful" print-on-demand Latvia "engineer" OR "developer" careers'
+    notes: "Riga LV. Print-on-demand fulfilment. Uses Workday — manual apply."
+    enabled: false
+
+  - name: Zego
+    careers_url: https://www.zego.com/careers
+    scan_method: websearch
+    scan_query: '"zego" insurance "engineer" OR "developer" careers'
+    notes: "London UK / Tallinn EE. Commercial vehicle insurance. ATS unconfirmed."
+    enabled: false
+
+  - name: Skeleton Technologies
+    careers_url: https://skeletontech.com/careers
+    scan_method: websearch
+    scan_query: '"skeleton technologies" energy storage "engineer" careers'
+    notes: "Tallinn EE / Großröhrsdorf DE. Ultracapacitor / energy storage. ATS unconfirmed."
+    enabled: false
+
+  - name: Teamwork
+    careers_url: https://www.teamwork.com/careers
+    scan_method: websearch
+    scan_query: '"teamwork" project management Cork "engineer" OR "developer" careers'
+    notes: "Cork IE. Project management SaaS platform. ATS unconfirmed."
+    enabled: false
+
+  # ============================================================
+  # -- Remote-First / EU-Friendly Global Companies
+  # ============================================================
+
+  - name: GitLab
+    careers_url: https://about.gitlab.com/jobs
+    scan_method: websearch
+    scan_query: '"gitlab" "engineer" OR "developer" OR "data" careers jobs'
+    notes: "Fully remote. DevOps platform. Greenhouse slug unconfirmed — websearch only."
+    enabled: false
+
+  - name: Miro
+    careers_url: https://miro.com/careers
+    scan_method: websearch
+    scan_query: '"miro" whiteboarding "engineer" OR "developer" careers jobs'
+    notes: "Amsterdam NL / remote. Visual collaboration platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Pitch
+    careers_url: https://apply.workable.com/pitch-software/
+    notes: "Berlin DE / remote. Collaborative presentation platform."
+    enabled: true
+
+  - name: Grafana Labs
+    careers_url: https://grafana.com/about/careers
+    scan_method: websearch
+    scan_query: '"grafana labs" observability "engineer" OR "developer" careers'
+    notes: "Remote-first. Observability platform (Grafana, Loki, Tempo). GH slug unconfirmed."
+    enabled: false
+
+  - name: Sentry
+    careers_url: https://sentry.io/careers
+    scan_method: websearch
+    scan_query: '"sentry" error monitoring "engineer" OR "developer" careers'
+    notes: "Remote-first. Error monitoring platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Deel
+    careers_url: https://jobs.ashbyhq.com/deel
+    notes: "Remote-first. Global HR / payroll platform. Strong EU hiring."
+    enabled: true
+
+  - name: Remote
+    careers_url: https://remote.com/careers
+    scan_method: websearch
+    scan_query: '"remote.com" employment platform "engineer" OR "developer" careers'
+    notes: "Remote-first. Global employment platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Oyster HR
+    careers_url: https://www.oysterhr.com/about/careers
+    scan_method: websearch
+    scan_query: '"oyster hr" employment "engineer" OR "developer" careers'
+    notes: "Remote-first. Global employment OS. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Linear
+    careers_url: https://jobs.ashbyhq.com/Linear
+    notes: "Remote-first. Project management for software teams."
+    enabled: true
+
+  - name: Notion
+    careers_url: https://jobs.ashbyhq.com/notion
+    notes: "Remote-friendly. Collaboration workspace. EU hiring via Dublin entity."
+    enabled: true
+
+  - name: Figma
+    careers_url: https://www.figma.com/careers
+    scan_method: websearch
+    scan_query: '"figma" design "engineer" OR "developer" careers jobs'
+    notes: "Remote-friendly / London EU hub. Design collaboration platform. GH slug unconfirmed."
+    enabled: false
+
+  - name: 1Password
+    careers_url: https://1password.com/careers
+    scan_method: websearch
+    scan_query: '"1password" security "engineer" OR "developer" careers'
+    notes: "Remote-first. Password manager and secrets platform. Greenhouse slug unconfirmed."
+    enabled: false
+
+  - name: Doist
+    careers_url: https://doist.com/careers
+    scan_method: websearch
+    scan_query: '"doist" todoist "engineer" OR "developer" careers'
+    notes: "Remote-first. Productivity apps (Todoist, Twist). Custom ATS — manual apply."
+    enabled: false
+
+  - name: Automattic
+    careers_url: https://automattic.com/work-with-us
+    scan_method: websearch
+    scan_query: '"automattic" wordpress "engineer" OR "developer" careers'
+    notes: "Remote-first. WordPress.com, WooCommerce. Custom application form — manual apply."
+    enabled: false
+
+  - name: Basecamp
+    careers_url: https://basecamp.com/about/jobs
+    scan_method: websearch
+    scan_query: '"basecamp" project management "engineer" OR "developer" careers'
+    notes: "Remote-first. Project management software. Custom ATS — manual apply."
+    enabled: false
+
+  - name: Loom
+    careers_url: https://www.loom.com/careers
+    scan_method: websearch
+    scan_query: '"loom" async video "engineer" OR "developer" careers'
+    notes: "Atlassian-owned since 2023. ATS changed — verify current system."
+    enabled: false
+
+  - name: Coda
+    careers_url: https://coda.io/careers
+    scan_method: websearch
+    scan_query: '"coda.io" "engineer" OR "developer" careers'
+    notes: "Remote-friendly. Collaborative doc platform. ATS unconfirmed."
+    enabled: false
+
+  - name: Labelbox
+    careers_url: https://labelbox.com/careers
+    scan_method: websearch
+    scan_query: '"labelbox" ML training data "engineer" OR "developer" careers'
+    notes: "Remote-friendly. Data labeling and ML training data platform. GH slug unconfirmed."
+    enabled: false
+
+# ── Job boards (aggregators) ───────────────────────────────────────────────────
+# These return offers from many companies in a single fetch.
+# Registered via EU-FORK in scan.mjs; providers live in parsers/.
+
+job_boards:
+
+  # ── JustJoin.it ─────────────────────────────────────────────────────
+  # Poland's largest tech job board (10 000+ active listings).
+  # NOTE: The former REST API (/api/offers) was shut down ~2024.
+  # This entry uses the XML sitemap fallback (parsers/justjoin.mjs).
+  # Title/company/location are heuristically derived from the URL slug;
+  # use title_filter keywords to keep the pipeline to a manageable size.
+  - name: JustJoin.it
+    careers_url: https://justjoin.it/sitemaps/active-jobs.xml
+    provider: justjoin
+    enabled: true
+    notes: "Polish tech job board; sitemap-based since REST API was shut down"
+
+  # ── Remotive (category-filtered) ────────────────────────────────────
+  # Remote-first job board. Each entry fetches one Remotive category so the
+  # network payload stays small and the results are already pre-filtered by
+  # discipline. Registered as 'remotive-cat' to avoid overwriting the
+  # existing providers/remotive.mjs (full-feed) provider.
+
+  - name: Remotive · Software Dev
+    careers_url: https://remotive.com/api/remote-jobs
+    provider: remotive-cat
+    category: software-dev
+    enabled: true
+    notes: "Remotive remote jobs — software-dev category"
+
+  - name: Remotive · DevOps / SRE
+    careers_url: https://remotive.com/api/remote-jobs
+    provider: remotive-cat
+    category: devops-sysadmin
+    enabled: true
+    notes: "Remotive remote jobs — devops-sysadmin category"
+
+  - name: Remotive · Data
+    careers_url: https://remotive.com/api/remote-jobs
+    provider: remotive-cat
+    category: data
+    enabled: true
+    notes: "Remotive remote jobs — data category"
+
+  - name: Remotive · Machine Learning
+    careers_url: https://remotive.com/api/remote-jobs
+    provider: remotive-cat
+    category: machine-learning
+    enabled: true
+    notes: "Remotive remote jobs — machine-learning category"
+
+  # NoFluffJobs — Poland-focused board. UK/DE return 0 results; scope is:
+  #   (a) Polish in-office jobs, (b) fully-remote jobs listed on the PL portal
+  # (accessible from anywhere in Europe).
+  # One entry per category: combined queries return a smaller "best of all" subset
+  # (87); per-category queries each return 200+ unique postings.
+
+  - name: NoFluffJobs · Backend
+    careers_url: https://nofluffjobs.com/pl/jobs
+    provider: nofluffjobs
+    nfj_categories:
+      - backend
+    enabled: true
+    notes: "NFJ backend — Poland (in-office + remote)"
+
+  - name: NoFluffJobs · DevOps
+    careers_url: https://nofluffjobs.com/pl/jobs
+    provider: nofluffjobs
+    nfj_categories:
+      - devops
+    enabled: true
+    notes: "NFJ devops — Poland (in-office + remote)"
+
+  - name: NoFluffJobs · Fullstack
+    careers_url: https://nofluffjobs.com/pl/jobs
+    provider: nofluffjobs
+    nfj_categories:
+      - fullstack
+    enabled: true
+    notes: "NFJ fullstack — Poland (in-office + remote)"
+
+  - name: NoFluffJobs · AI
+    careers_url: https://nofluffjobs.com/pl/jobs
+    provider: nofluffjobs
+    nfj_categories:
+      - artificial-intelligence
+    enabled: true
+    notes: "NFJ artificial-intelligence — Poland (in-office + remote)"
+
+  - name: NoFluffJobs · Data
+    careers_url: https://nofluffjobs.com/pl/jobs
+    provider: nofluffjobs
+    nfj_categories:
+      - data
+    enabled: true
+    notes: "NFJ data — Poland (in-office + remote)"
+
+  - name: NoFluffJobs · Remote Tech
+    careers_url: https://nofluffjobs.com/pl/jobs
+    provider: nofluffjobs
+    nfj_categories:
+      - backend
+      - devops
+      - artificial-intelligence
+      - data
+    nfj_remote: true
+    enabled: true
+    notes: "NFJ fully-remote tech jobs (combined query)"

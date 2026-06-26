@@ -138,3 +138,48 @@ cover_letter:
 # half-point scores like 3.5/5 occur in evaluations). Set it to 0 to
 # generate a PDF for every offer.
 # auto_pdf_score_threshold: 4.0
+
+# EU-FORK START
+# ── EU / European Market Settings ──────────────────────────────────────────────
+#
+# Uncomment and fill these fields when targeting EU/EEA/UK roles.
+# The EU archetype modes (eu-backend, eu-ml, eu-devops) read these at calibration time.
+# These fields are optional for US/non-EU job searches.
+
+# EU compensation (EUR/GBP/PLN target — replaces the USD compensation block above
+# when targeting EU markets. Both can coexist if searching globally.)
+#
+# eu_compensation:
+#   target_range: "€90K–120K"   # Annual gross in local currency
+#   currency: "EUR"              # EUR | GBP | PLN | CHF | SEK | NOK | DKK
+#   minimum: "€75K"
+#   contract_model: "employment" # "employment" | "b2b" (B2B/invoice common in Poland/CEE)
+#   # B2B rates in Poland are typically quoted monthly net (e.g. "25K PLN/month")
+#   # employment rates are annual gross. Confirm with candidate before comp research.
+
+# Work authorization in the EU (used by eu-swe.md and eu-* modes for hard filters)
+#
+# eu_work_authorization:
+#   status: "EU citizen"
+#   # Options: "EU citizen" | "EEA citizen" | "UK citizen" | "EU Blue Card holder" |
+#   #          "EU work permit (country-specific)" | "Needs sponsorship"
+#   sponsorship_needed: false
+#   # If true, only apply to roles that explicitly offer sponsorship or Blue Card support.
+#   relocation_open: false
+#   # If true, consider roles that require relocation with support offered.
+
+# Language proficiency (used for hard-filter checks in eu-* modes)
+#
+# eu_languages:
+#   - language: English
+#     level: C1          # A1 | A2 | B1 | B2 | C1 | C2 | Native
+#   - language: German
+#     level: B1
+#   - language: Polish
+#     level: Native
+
+# EU archetype mode preference (overrides auto-detection when set)
+# Options: "eu-backend" | "eu-ml" | "eu-devops" | "eu-swe" | "auto" (default)
+#
+# eu_archetype_mode: "auto"
+# EU-FORK END

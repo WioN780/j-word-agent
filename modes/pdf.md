@@ -223,3 +223,46 @@ Do not auto-generate the cover letter PDF without going through the interactive 
 ## Post-generation
 
 Update tracker if the job is already registered: change PDF from ❌ to ✅.
+
+<!-- EU-FORK START -->
+## Project Pool Integration
+
+This block overrides **Step 9** of the Full pipeline above ("Select top 3-4 most relevant projects for the job"). The source of projects is now `projects.md`, not the flat list in `cv.md`.
+
+### Revised Step 9 — Project selection from pool
+
+Before building the HTML (Step 14), execute the project pool selection algorithm defined in `modes/_shared.md` → "Project Pool Selection":
+
+1. Check if `projects.md` exists in the project root.
+   - **If yes:** read all project entries from `projects.md`.
+   - **If no:** fall back to the Projects section in `cv.md` (original behaviour — no change).
+
+2. Score each project against the extracted JD keywords from Step 3.
+
+3. Select the top 2-3 projects (dropping the weakest match as specified in `_shared.md`).
+
+4. **Output selection reasoning** before building the HTML — print one line per project showing the decision and keyword hit count:
+   ```
+   ✅ Selected: FastAPI Gateway — 4 hits (FastAPI, PostgreSQL, Docker, Python backend)
+   ✅ Selected: SensorMesh — 1 hit (data pipeline)
+   ❌ Dropped:  ShopFlow Dashboard — 0 hits on JD stack
+   ```
+
+5. Build the `{{PROJECTS}}` HTML block using only the selected projects. Each project renders as:
+   ```html
+   <div class="project">
+     <div class="project-title">{Name} — <span style="font-weight:400;color:#555;">{Description}</span></div>
+     <div class="project-meta" style="font-size:10px;color:hsl(270,70%,45%);margin-bottom:3px;">{Stack tags}</div>
+     <div class="project-impact" style="font-size:10.5px;color:#444;">{Impact statement}</div>
+     <div style="font-size:10px;color:#777;margin-top:2px;"><a href="{Link}" style="color:#777;">{Link}</a></div>
+   </div>
+   ```
+
+6. Insert the rendered HTML into `{{PROJECTS}}` in the template. The section heading placeholder `{{SECTION_PROJECTS}}` stays unchanged.
+
+### What does NOT change
+
+- Steps 1-8 and Steps 10-18 of the full pipeline are unchanged.
+- The `{{PROJECTS}}` placeholder in `cv-template.html` is the single insertion point — no second Projects section is added to the template.
+- ATS rules (single-column, selectable text, no hidden content) apply to project HTML exactly as they do to experience bullets.
+<!-- EU-FORK END -->

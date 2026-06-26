@@ -28,6 +28,7 @@
  *   node scan.mjs --verify --headed-fallback  # retry anti-bot-blocked URLs in a headed browser (needs a display)
  *   node scan.mjs --verify --throttle          # jittered ~5-10s gap between checks (stay under rate limits)
  *   node scan.mjs --verify --throttle=8000     # custom base gap in ms (waits base..2*base)
+ *   node scan.mjs --notify                    # send Telegram cards for each new offer (requires TELEGRAM_* in .env)
  */
 
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
@@ -36,6 +37,16 @@ import path from 'path';
 import yaml from 'js-yaml';
 
 import { makeHttpCtx } from './providers/_http.mjs';
+
+// EU-FORK START — EU-specific job board parsers (not in providers/ to keep fork additions isolated)
+import { makeJustJoinProvider } from './parsers/justjoin.mjs';
+import { makeRemotiveCatProvider } from './parsers/remotive.mjs';
+import { makeNoFluffJobsProvider } from './parsers/nofluffjobs.mjs';
+// EU-FORK END
+
+// EU-FORK START — ATS detection for pipeline metadata
+import { detectATS } from './ats-detector.mjs';
+// EU-FORK END
 
 const parseYaml = yaml.load;
 
@@ -496,7 +507,11 @@ export function formatPipelineOffer(offer) {
   const url = sanitizePipelineUrl(offer.url);
   const company = sanitizeMarkdownField(offer.company);
   const title = sanitizeMarkdownField(offer.title);
-  return `- [ ] ${url} | ${company} | ${title}`;
+  let line = `- [ ] ${url} | ${company} | ${title}`;
+  // EU-FORK START — ATS tier in pipeline.md
+  if (offer.atsTier != null) line += ` | tier:${offer.atsTier} | ats:${offer.atsType || 'unknown'}`;
+  // EU-FORK END
+  return line;
 }
 
 export function formatScanHistoryRow(offer, date, status = 'added') {
@@ -744,6 +759,12 @@ async function main() {
     process.exit(1);
   }
 
+  // EU-FORK START — register EU-specific job board providers
+  providers.set('justjoin', makeJustJoinProvider());
+  providers.set('remotive-cat', makeRemotiveCatProvider());
+  providers.set('nofluffjobs', makeNoFluffJobsProvider());
+  // EU-FORK END
+
   // 2. Read portals.yml
   if (!existsSync(PORTALS_PATH)) {
     console.error('Error: portals.yml not found. Run onboarding first.');
@@ -758,6 +779,41 @@ async function main() {
     process.exit(1);
   }
   const config = rawConfig && typeof rawConfig === 'object' ? rawConfig : {};
+
+  // EU-FORK START — merge portals.eu.yml alongside portals.yml
+  const EU_PORTALS_PATH = 'portals.eu.yml';
+  if (existsSync(EU_PORTALS_PATH)) {
+    let rawEu;
+    try {
+      rawEu = parseYaml(readFileSync(EU_PORTALS_PATH, 'utf-8'));
+    } catch (err) {
+      console.error(`Warning: failed to parse ${EU_PORTALS_PATH}: ${err.message}`);
+      rawEu = null;
+    }
+    if (rawEu && typeof rawEu === 'object') {
+      if (Array.isArray(rawEu.tracked_companies)) {
+        config.tracked_companies = [...(config.tracked_companies || []), ...rawEu.tracked_companies];
+      }
+      if (Array.isArray(rawEu.job_boards)) {
+        config.job_boards = [...(config.job_boards || []), ...rawEu.job_boards];
+      }
+      if (rawEu.title_filter) {
+        config.title_filter = config.title_filter || {};
+        if (Array.isArray(rawEu.title_filter.positive)) {
+          config.title_filter.positive = [
+            ...new Set([...(config.title_filter.positive || []), ...rawEu.title_filter.positive]),
+          ];
+        }
+        if (Array.isArray(rawEu.title_filter.negative)) {
+          config.title_filter.negative = [
+            ...new Set([...(config.title_filter.negative || []), ...rawEu.title_filter.negative]),
+          ];
+        }
+      }
+    }
+  }
+  // EU-FORK END
+
   const companies = Array.isArray(config.tracked_companies) ? config.tracked_companies : [];
   const boards = Array.isArray(config.job_boards) ? config.job_boards : [];
   const titleFilter = buildTitleFilter(config.title_filter);
@@ -904,6 +960,12 @@ async function main() {
           tracked: Boolean(careersUrlDomain),
           careersUrlDomain,
         });
+        // EU-FORK START — attach ATS tier for pipeline.md metadata
+        const newOffer = newOffers[newOffers.length - 1];
+        const { tier: atsTier, type: atsType } = detectATS(job.url);
+        newOffer.atsTier = atsTier;
+        newOffer.atsType = atsType;
+        // EU-FORK END
       }
     } catch (err) {
       errors.push({ company: company.name, error: err.message });
@@ -1024,6 +1086,31 @@ async function main() {
 
   console.log(`\n→ Run /career-ops pipeline to evaluate new offers.`);
   console.log('→ Share results and get help: https://discord.gg/8pRpHETxa4');
+
+  // EU-FORK START — Telegram notifications (--notify)
+  if (args.includes('--notify')) {
+    try {
+      const { sendJobCard, sendDailySummary } = await import('./telegram-bot.mjs');
+      if (verifiedOffers.length > 0) {
+        console.log(`\n📱 Sending ${verifiedOffers.length} Telegram card(s)...`);
+        for (const offer of verifiedOffers) {
+          await sendJobCard(offer);
+        }
+      }
+      await sendDailySummary({
+        newOffers: verifiedOffers.length,
+        duplicates: totalDupes,
+        companies: targets.length,
+        errors: errors.length,
+      });
+      if (verifiedOffers.length > 0) {
+        console.log('📱 Telegram: cards sent. Run "node telegram-bot.mjs" to handle replies.');
+      }
+    } catch (err) {
+      console.error(`Telegram: ${err.message}`);
+    }
+  }
+  // EU-FORK END
 }
 
 // Only run main() when invoked directly (`node scan.mjs`), not when imported by tests.
