@@ -1,0 +1,44 @@
+[2026-06-26 09:30:26] ═══════════════════════════════════════════════════════════
+[2026-06-26 09:30:26] 🤖 career-ops scheduler — mode: once
+[2026-06-26 09:30:26]    Config:        config/scheduler.yml
+[2026-06-26 09:30:26]    Scan times:    08:00, 12:00, 18:00
+[2026-06-26 09:30:26]    Score gate:    3.5
+[2026-06-26 09:30:26]    Daily limit:   10
+[2026-06-26 09:30:26]    Stages:        scan, cv, notify
+[2026-06-26 09:30:26]    Verify liveness: false
+[2026-06-26 09:30:26] ═══════════════════════════════════════════════════════════
+[2026-06-26 09:30:26] 🔍 Scan cycle #1 starting
+[2026-06-26 09:30:26]   $ node scan.mjs --notify
+[2026-06-26 09:30:33]   [err] Telegram: ETELEGRAM: 400 Bad Request: chat not found
+[2026-06-26 09:30:33] ✅ Scan complete — 9031 new offer(s), 11 error(s)
+[2026-06-26 09:30:33]    Score threshold 3.5 — apply AI evaluation (/career-ops pipeline) to filter further
+[2026-06-26 09:30:33]   📄 CV stage: rendering templates/cv-template.html → output/cv-2026-06-26.pdf
+[2026-06-26 09:30:33]   $ node generate-pdf.mjs templates/cv-template.html output/cv-2026-06-26.pdf
+[2026-06-26 09:30:35]   ✅ CV stage: output/cv-2026-06-26.pdf generated
+[2026-06-26 09:30:35] ⛔ Daily limit reached (10) — scheduler paused
+[2026-06-26 09:30:35] ⚠️  Telegram send error: ETELEGRAM: 400 Bad Request: chat not found
+[2026-06-26 09:30:35] ✅ --once cycle complete
+[2026-06-26 09:30:35]    New offers today: 9031
+[2026-06-26 09:30:35]    CVs generated:    1
+[2026-06-26 09:30:35]    Errors:           11
+[2026-06-26 09:45:30] ═══════════════════════════════════════════════════════════
+[2026-06-26 09:45:30] 🤖 career-ops scheduler — mode: once
+[2026-06-26 09:45:30]    Config:        config/scheduler.yml
+[2026-06-26 09:45:30]    Scan times:    08:00, 12:00, 18:00
+[2026-06-26 09:45:30]    Score gate:    3.5
+[2026-06-26 09:45:30]    Daily limit:   10
+[2026-06-26 09:45:30]    Stages:        scan, cv, notify
+[2026-06-26 09:45:30]    Verify liveness: false
+[2026-06-26 09:45:30] ═══════════════════════════════════════════════════════════
+[2026-06-26 09:45:30] 🔍 Scan cycle #1 starting
+[2026-06-26 09:45:30]   $ node scan.mjs --notify
+[2026-06-26 09:45:39]   [err] Telegram: ETELEGRAM: 400 Bad Request: chat not found
+[2026-06-26 09:45:40] ✅ Scan complete — 425 new offer(s), 11 error(s)
+[2026-06-26 09:45:40]    Score threshold 3.5 — apply AI evaluation (/career-ops pipeline) to filter further
+[2026-06-26 09:45:40]   📄 CV stage: output/cv-2026-06-26.pdf already exists — skipping
+[2026-06-26 09:45:40] ⛔ Daily limit reached (10) — scheduler paused
+[2026-06-26 09:45:40] ⚠️  Telegram send error: ETELEGRAM: 400 Bad Request: chat not found
+[2026-06-26 09:45:40] ✅ --once cycle complete
+[2026-06-26 09:45:40]    New offers today: 425
+[2026-06-26 09:45:40]    CVs generated:    1
+[2026-06-26 09:45:40]    Errors:           11

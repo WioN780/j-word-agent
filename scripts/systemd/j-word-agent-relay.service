@@ -1,0 +1,30 @@
+[Unit]
+Description=j-word-agent relay server (phone → browser bridge)
+Documentation=https://github.com/santifer/career-ops/blob/main/docs/RELAY.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__SERVICE_USER__
+Group=__SERVICE_USER__
+WorkingDirectory=__PROJECT_DIR__
+ExecStart=__NODE_BIN__ __PROJECT_DIR__/relay-server.mjs
+EnvironmentFile=__PROJECT_DIR__/.env
+
+Restart=on-failure
+RestartSec=30
+StartLimitBurst=5
+StartLimitIntervalSec=600
+
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+LimitNOFILE=65536
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=j-word-agent-relay
+
+[Install]
+WantedBy=multi-user.target

@@ -508,3 +508,46 @@
 </div>
 </body>
 </html>
+
+<!-- EU-FORK START
+=======================================================================
+PROJECT POOL — markup reference for agents generating {{PROJECTS}} HTML
+=======================================================================
+
+The {{PROJECTS}} placeholder above (inside <!-- PROJECTS --> section)
+is the SINGLE live insertion point for project content. Projects are
+selected from projects.md by the algorithm in modes/_shared.md and
+rendered by the revised Step 9 in modes/pdf.md.
+
+DO NOT add a second <div class="section"> for projects anywhere in this
+file. The existing <!-- PROJECTS --> block (line ~484) at its correct
+position in the section order is sufficient.
+
+Per-project markup pattern (one <div class="project"> per selected project):
+
+  <div class="project">
+    <div class="project-title">
+      {Project Name}
+      <span style="font-weight:400;color:#555;"> — {one-line description}</span>
+    </div>
+    <div class="project-meta"
+         style="font-size:10px;color:hsl(270,70%,45%);margin-bottom:3px;">
+      {Stack tags — comma-separated}
+    </div>
+    <div class="project-impact" style="font-size:10.5px;color:#444;">
+      {Impact statement from projects.md}
+    </div>
+    <div style="font-size:10px;color:#777;margin-top:2px;">
+      <a href="{Link}" style="color:#777;">{Link display text}</a>
+    </div>
+  </div>
+
+CSS classes already defined in this file:
+  .project        — container, margin-bottom:12px
+  .project-title  — font-weight:600, 11.5px, break-after:avoid
+  .section-title  — section header, uppercase, cyan primary color
+
+Source of data: projects.md (project root) — read by agent at PDF
+generation time. See modes/pdf.md EU-FORK block for selection logic.
+======================================================================= -->
+<!-- EU-FORK END -->

@@ -1,0 +1,51 @@
+# Dockerfile.daemon — slim production image for career-ops daemons.
+#
+# Runs:
+#   scheduler.mjs --daemon   (autonomous scan orchestrator)
+#   relay-server.mjs         (phone review bridge)
+#
+# Differences from the full Dockerfile:
+#   ✗ No Go toolchain (~400 MB saved)
+#   ✗ No LaTeX/texlive (~2.1 GB saved)
+#   ✓ Same playwright base image → identical Chromium on arm64 + amd64
+#   ✓ node_modules installed at build time (separate named volume in compose)
+#
+# Multi-arch: linux/amd64 + linux/arm64 (Raspberry Pi 3 B+, 4, 5).
+# The mcr.microsoft.com/playwright image ships both variants.
+#
+# ⚠️  arm64 note: use `chromium`, never `chrome`.
+#     Google Chrome does NOT have a linux/arm64 build.
+#     Playwright's bundled Chromium does.
+
+FROM mcr.microsoft.com/playwright:v1.61.0-jammy
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    NODE_ENV=production \
+    # Point Playwright at the Chromium that ships inside the base image.
+    # No browser download needed — it's already at /ms-playwright.
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+
+# tini: correct signal forwarding so Ctrl-C / SIGTERM stop Node cleanly.
+# curl: used by the /ping healthcheck in compose.
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends tini curl; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install npm dependencies.
+# --ignore-scripts skips postinstall which calls `playwright install --with-deps`
+# (uses apt-get and is unnecessary here — browser lives in the base image).
+COPY package.json package-lock.json* pnpm-lock.yaml* ./
+RUN npm install --ignore-scripts --no-audit --no-fund
+
+# Project source is bind-mounted at runtime via docker-compose volumes,
+# so we don't COPY it here. Config edits and `git pull` on the host show
+# up immediately inside the container without a rebuild.
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+# Override in docker-compose per-service (scheduler vs relay).
+CMD ["node", "scheduler.mjs", "--daemon"]

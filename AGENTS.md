@@ -345,4 +345,71 @@ Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slu
 **RULES:**
 - No markdown bold (`**`) in status field
 - No dates in status field (use the date column)
+
+<!-- EU-FORK START -->
+## EU Archetype Extensions
+
+This block wires European market calibration into the evaluation pipeline. Existing archetype and scoring logic above is unchanged — this appends EU-specific detection, sub-classification, and scoring dimensions.
+
+### EU Location Detection
+
+Detect EU context when the JD contains ANY of:
+
+| Signal category | Examples |
+|-----------------|---------|
+| Geography | Country or city in EU/EEA/UK: Germany, France, Poland, Netherlands, Spain, Portugal, Sweden, Denmark, Norway, Finland, Austria, Switzerland, Belgium, Ireland, Czech Republic, Romania, and all other EU/EEA member states + UK |
+| Currency | EUR, GBP, PLN, CHF, SEK, NOK, DKK, CZK, HUF, RON |
+| Job portal source | justjoin.it, nofluffjobs.com, otta.com, arbeitnow.com, eu company Greenhouse/Ashby slug |
+| Regulatory | "GDPR", "EU AI Act", "Schrems II", "data residency EU", "Blue Card", "right to work in EU/UK", "DORA" |
+| Language | German/French/Polish/Dutch/Swedish listed as required; "B2 English minimum"; "English C1 required" |
+
+When EU context is detected, note it in Block A and apply the sub-classification below.
+
+### EU Sub-Archetype Classification
+
+After EU detection, classify the role family into the appropriate EU mode:
+
+| EU Sub-Archetype | Key signals in JD | Mode file to read |
+|------------------|------------------|-------------------|
+| EU Backend / Fullstack | Python/FastAPI/Django, Java/Spring Boot, Go, Node.js/NestJS, REST/GraphQL API focus | `modes/eu-backend.md` |
+| EU ML / AI / Data | PyTorch, scikit-learn, MLflow, dbt, Airflow, "data scientist", "ML engineer", EU AI Act, data pipeline | `modes/eu-ml.md` |
+| EU DevOps / Platform / SRE | Kubernetes, Terraform, GitLab CI, Helm, Prometheus, "SRE", "platform engineering", IaC | `modes/eu-devops.md` |
+| Generic EU SWE | Role family unclear, or mixed signals | `modes/regional/eu-swe.md` |
+
+For ML/AI roles: `_shared.md` archetype classification (LLMOps, Agentic, etc.) runs first; `eu-ml.md` is a calibration layer on top.
+
+### Integration into the A–G Flow
+
+When EU context is detected:
+
+1. **After Step 0 (Archetype Detection):** classify the EU sub-archetype and add it to the Block A table as a new row: `EU sub-archetype | {value}`.
+2. **Before Block B:** run the EU hard filters from the relevant `modes/eu-*.md` file. A blocker overrides — tell the user and stop, the same as the liveness gate pattern.
+3. **In Block D (Comp):** note salary range transparency and visa/relocation support (see scoring dimensions below).
+4. **In Block A (Role Summary):** add a `Remote policy` row — note whether the work model is explicitly stated. Absence after 2025 is a mild red flag.
+5. **After Block G:** append the calibration output section from the relevant `modes/eu-*.md` file to the evaluation report.
+
+### EU Scoring Dimensions (A–F Mapping)
+
+These four dimensions apply to all EU roles. They are additive adjustments to existing blocks — not a new block.
+
+| EU Dimension | Feeds into | Logic |
+|--------------|-----------|-------|
+| Salary range shown in JD | Block D — Comp | Shown → higher confidence in comp data. Absent in DE/FR/AT post-2025 → mild red flag worth noting |
+| Visa / relocation support mentioned | Block D — Comp | Present and candidate needs it → reduces financial risk (positive). Absent when candidate needs sponsorship → blocker |
+| Remote policy clarity | Block A — Cultural signals | Explicitly stated → transparency positive. Entirely absent → "Proceed with Caution" note in Block A |
+| English proficiency match | Block B — Match / Red flags | Candidate meets stated level → neutral. Candidate's level unclear or below stated threshold → soft flag, ask user to confirm before applying |
+
+### EU Skill Modes (Extension to Skill Modes Table)
+
+| If the user targets... | EU Mode |
+|------------------------|---------|
+| Backend / fullstack EU role | `eu-backend` — read `modes/eu-backend.md` |
+| ML / AI / data EU role | `eu-ml` — read `modes/eu-ml.md` |
+| DevOps / Platform / SRE EU role | `eu-devops` — read `modes/eu-devops.md` |
+| Generic EU SWE or unclear role family | `eu-swe` — read `modes/regional/eu-swe.md` |
+
+### JustJoin.it / NoFluffJobs Pipeline Notes
+
+When offers arrive from `portals.eu.yml` portals (justjoin.it, nofluffjobs), EU detection fires automatically — the portal origin is itself a sufficient location signal. Apply the EU sub-archetype classification based on role title and stack, then run the corresponding `modes/eu-*.md` calibration as part of the pipeline pass.
+<!-- EU-FORK END -->
 - No extra text (use the notes column)

@@ -1,0 +1,17 @@
+{
+  "paused": true,
+  "lastScanTime": "2026-06-26T09:45:40.006Z",
+  "nextScanTime": null,
+  "dailySummarySentDate": null,
+  "today": {
+    "date": "2026-06-26",
+    "scanCycles": 1,
+    "newOffers": 425,
+    "cvsGenerated": 1,
+    "errors": 11
+  },
+  "consecutiveScanFailures": 0,
+  "circuitOpen": false,
+  "retryAt": null,
+  "diskWarnedDate": null
+}
