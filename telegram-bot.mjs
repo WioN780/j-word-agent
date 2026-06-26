@@ -243,6 +243,7 @@ export async function sendJobCard(job) {
 
 /**
  * Send a scan digest message summarising what the scanner found.
+ * Accepts an optional `offers` array to list new jobs inline.
  * Silent no-op when credentials are absent.
  */
 export async function sendDailySummary(stats) {
@@ -253,16 +254,115 @@ export async function sendDailySummary(stats) {
   const bot = new TelegramBot(token, { polling: false });
 
   const lines = [
-    "📊 <b>Scan Summary</b>",
+    "📊 <b>Scan Complete</b>",
     "",
     `✨ New offers: <b>${stats.newOffers}</b>`,
     `🔄 Duplicates skipped: ${stats.duplicates}`,
     `🏢 Targets scanned: ${stats.companies}`,
   ];
   if (stats.errors > 0) lines.push(`⚠️ Errors: ${stats.errors}`);
-  lines.push("", "→ Run <code>/career-ops pipeline</code> to evaluate");
+
+  if (Array.isArray(stats.offers) && stats.offers.length > 0) {
+    lines.push("", "<b>Found:</b>");
+    for (const [i, offer] of stats.offers.slice(0, 15).entries()) {
+      const badge = TIER_BADGE[offer.atsTier] ?? TIER_BADGE[3];
+      lines.push(`${i + 1}. ${badge.emoji} <b>${escapeHtml(offer.company)}</b> — ${escapeHtml(offer.title)}`);
+    }
+    if (stats.offers.length > 15) lines.push(`… and ${stats.offers.length - 15} more`);
+    lines.push("", "→ /next to review one by one  ·  /ranked after evaluation");
+  } else if (stats.newOffers === 0) {
+    lines.push("", "No new jobs this scan.");
+  } else {
+    lines.push("", "→ /next to review one by one");
+  }
 
   await bot.sendMessage(chatId, lines.join("\n"), { parse_mode: "HTML" });
+}
+
+// ── Pipeline browser helpers ──────────────────────────────────────────────────
+
+function getNextPipelineJob(state) {
+  const PIPELINE_PATH = "data/pipeline.md";
+  if (!existsSync(PIPELINE_PATH)) return null;
+
+  const text = readFileSync(PIPELINE_PATH, "utf-8");
+  const pendingLines = text.split("\n").filter(l => /^- \[ \]/.test(l));
+
+  // Skip jobs already actioned via bot
+  for (const line of pendingLines) {
+    const urlMatch = line.match(/^- \[ \] (\S+)/);
+    if (!urlMatch) continue;
+    const url = urlMatch[1];
+    if (state.kept.includes(url) || state.skipped.includes(url)) continue;
+
+    // Parse: - [ ] URL | Company | Title | tier:X | ats:Y
+    const parts = line.replace(/^- \[ \] /, "").split(" | ");
+    const tierMatch = (parts[3] || "").match(/tier:(\d)/);
+    const atsMatch = (parts[4] || "").match(/ats:(\w+)/);
+    return {
+      url,
+      company: parts[1] || "Unknown",
+      title: parts[2] || "Unknown role",
+      tier: tierMatch ? parseInt(tierMatch[1]) : 3,
+      atsType: atsMatch ? atsMatch[1] : "Unknown",
+      remaining: pendingLines.filter(l => {
+        const m = l.match(/^- \[ \] (\S+)/);
+        return m && !state.kept.includes(m[1]) && !state.skipped.includes(m[1]);
+      }).length,
+    };
+  }
+  return null;
+}
+
+async function sendNextPipelineJob(bot, chatId) {
+  const state = loadState();
+  const job = getNextPipelineJob(state);
+
+  if (!job) {
+    await bot.sendMessage(
+      chatId,
+      "✅ No more jobs to review!\n\nRun <code>node scan.mjs --notify</code> to scan for more, or <code>/ranked</code> to see scored offers.",
+      { parse_mode: "HTML" },
+    );
+    return;
+  }
+
+  const badge = TIER_BADGE[job.tier] ?? TIER_BADGE[3];
+  const cardLines = [
+    `🔍 <b>Job Review</b> — ${job.remaining} pending`,
+    "",
+    `🏢 <b>${escapeHtml(job.company)}</b> — ${escapeHtml(job.title)}`,
+    `${badge.emoji} ${escapeHtml(job.atsType)} · ${badge.label}`,
+    `🔗 ${escapeHtml(job.url)}`,
+  ];
+
+  const sentMsg = await bot.sendMessage(chatId, cardLines.join("\n"), {
+    parse_mode: "HTML",
+    disable_web_page_preview: true,
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: "✅ Keep", callback_data: "keep" },
+          { text: "❌ Skip", callback_data: "skip" },
+          { text: "➡️ Next", callback_data: "next_job" },
+        ],
+        [
+          { text: "📋 Apply Card", callback_data: "apply_card" },
+        ],
+      ],
+    },
+  });
+
+  state.pendingCards[String(sentMsg.message_id)] = {
+    url: job.url,
+    title: job.title,
+    company: job.company,
+    location: null,
+    source: job.atsType,
+    atsTier: job.tier,
+    jobId: null,
+  };
+  saveState(state);
 }
 
 // ── Standalone callback listener ──────────────────────────────────────────────
@@ -289,6 +389,57 @@ async function startListener() {
   console.log(`   Chat ID: ${chatId}`);
 
   const bot = new TelegramBot(token, { polling: true });
+
+  // Register commands in the "/" menu (Bot API: setMyCommands)
+  await bot
+    .setMyCommands([
+      { command: "start",    description: "Show help and navigation" },
+      { command: "next",     description: "Review next job from pipeline" },
+      { command: "ranked",   description: "Top-scored evaluated offers" },
+      { command: "linkedin", description: "Search LinkedIn: /linkedin <keywords>" },
+    ])
+    .catch((err) => console.error(`setMyCommands failed: ${err.message}`));
+
+  // Send persistent keyboard so buttons are always visible in chat
+  const NAV_KEYBOARD = {
+    keyboard: [
+      [{ text: "/next" }, { text: "/ranked" }],
+    ],
+    resize_keyboard: true,
+    is_persistent: true,
+  };
+
+  await bot
+    .sendMessage(chatId, "🤖 <b>career-ops bot ready</b> — buttons pinned below", {
+      parse_mode: "HTML",
+      reply_markup: NAV_KEYBOARD,
+    })
+    .catch(() => {/* ignore if chat not yet initiated */});
+
+  // ── /start command ────────────────────────────────────────────────────────
+  bot.onText(/\/start/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const lines = [
+      "👋 <b>career-ops bot</b>",
+      "",
+      "<b>Commands:</b>",
+      "  /next — Review next job from pipeline",
+      "  /ranked — Top-scored offers after evaluation",
+      "  /linkedin &lt;keywords&gt; — Search LinkedIn",
+      "",
+      "<b>Workflow:</b>",
+      "  1. <code>node scan.mjs --notify</code> — scan &amp; get summary",
+      "  2. /next — browse found jobs one by one",
+      "  3. <code>/career-ops pipeline</code> in Claude — evaluate &amp; score",
+      "  4. /ranked — see your best matches",
+    ];
+
+    await bot.sendMessage(chatId, lines.join("\n"), {
+      parse_mode: "HTML",
+      reply_markup: NAV_KEYBOARD,
+    });
+  });
 
   bot.on("callback_query", async (query) => {
     // Ignore callbacks from other chats (security: only our personal chat)
@@ -381,6 +532,15 @@ async function startListener() {
         await bot.sendMessage(chatId, followUp, { parse_mode: "HTML" });
       }
       console.log(`  📋 Apply    — ${card.company} | ${card.title}`);
+    } else if (action === "next_job") {
+      await bot.answerCallbackQuery(query.id, { text: "Loading next job…" });
+      await bot
+        .editMessageReplyMarkup({ inline_keyboard: [] }, {
+          chat_id: query.message.chat.id,
+          message_id: query.message.message_id,
+        })
+        .catch(() => {});
+      await sendNextPipelineJob(bot, chatId);
     } else if (action === "apply_card") {
       // Generate and send an apply data card on demand
       await bot.answerCallbackQuery(query.id, {
@@ -413,6 +573,59 @@ async function startListener() {
 
   bot.on("polling_error", (err) => {
     console.error(`Polling error: ${err.code || ""} ${err.message}`);
+  });
+
+  // ── /next command — browse pipeline jobs one by one ──────────────────────
+  bot.onText(/\/next/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+    await sendNextPipelineJob(bot, chatId);
+  });
+
+  // ── /ranked command — show top-scored evaluated offers ────────────────────
+  bot.onText(/\/ranked/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const APPLICATIONS_PATH = "data/applications.md";
+    if (!existsSync(APPLICATIONS_PATH)) {
+      await bot.sendMessage(
+        chatId,
+        "📭 No evaluated offers yet.\n\nRun <code>/career-ops pipeline</code> in Claude Code first.",
+        { parse_mode: "HTML" },
+      );
+      return;
+    }
+
+    const text = readFileSync(APPLICATIONS_PATH, "utf-8");
+    const rows = [];
+    for (const line of text.split("\n")) {
+      // Table: | # | Date | Company | Role | Score | Status | ...
+      const m = line.match(/^\|\s*\d+\s*\|[^|]+\|\s*([^|]+)\|\s*([^|]+)\|\s*([\d.]+)\/5\s*\|\s*([^|]+)\|/);
+      if (!m) continue;
+      const score = parseFloat(m[3]);
+      if (isNaN(score)) continue;
+      rows.push({ company: m[1].trim(), role: m[2].trim(), score, status: m[4].trim() });
+    }
+
+    if (rows.length === 0) {
+      await bot.sendMessage(
+        chatId,
+        "📭 No scored offers yet.\n\nRun <code>/career-ops pipeline</code> in Claude Code to evaluate jobs.",
+        { parse_mode: "HTML" },
+      );
+      return;
+    }
+
+    rows.sort((a, b) => b.score - a.score);
+    const medals = ["🥇", "🥈", "🥉"];
+    const lines = [`🏆 <b>Top Offers</b> (${rows.length} evaluated)`, ""];
+    for (const [i, r] of rows.slice(0, 10).entries()) {
+      const m = medals[i] ?? `${i + 1}.`;
+      lines.push(`${m} <b>${escapeHtml(r.company)}</b> — ${escapeHtml(r.role)}`);
+      lines.push(`   ⭐ ${r.score}/5 · ${escapeHtml(r.status)}`);
+    }
+    if (rows.length > 10) lines.push(`\n… and ${rows.length - 10} more`);
+
+    await bot.sendMessage(chatId, lines.join("\n"), { parse_mode: "HTML" });
   });
 
   // ── /linkedin command ─────────────────────────────────────────────────────

@@ -1,14 +1,14 @@
 {
   "paused": true,
-  "lastScanTime": "2026-06-26T09:45:40.006Z",
-  "nextScanTime": null,
+  "lastScanTime": "2026-06-26T12:52:24.326Z",
+  "nextScanTime": "2026-06-26T18:00:00.000Z",
   "dailySummarySentDate": null,
   "today": {
     "date": "2026-06-26",
-    "scanCycles": 1,
-    "newOffers": 425,
-    "cvsGenerated": 1,
-    "errors": 11
+    "scanCycles": 4,
+    "newOffers": 850,
+    "cvsGenerated": 4,
+    "errors": 45
   },
   "consecutiveScanFailures": 0,
   "circuitOpen": false,

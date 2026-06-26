@@ -1,0 +1,2184 @@
+{
+  "kept": [],
+  "skipped": [],
+  "pendingCards": {
+    "18": {
+      "url": "https://job-boards.greenhouse.io/intercom/jobs/7824137",
+      "title": "AI Infrastructure Engineer",
+      "company": "Intercom",
+      "location": "London, England",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7824137"
+    },
+    "19": {
+      "url": "https://job-boards.greenhouse.io/intercom/jobs/7818586",
+      "title": "Engineering Manager, AI Models Infrastructure",
+      "company": "Intercom",
+      "location": "London, England",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7818586"
+    },
+    "20": {
+      "url": "https://job-boards.greenhouse.io/intercom/jobs/6428372",
+      "title": "Senior Product Engineer",
+      "company": "Intercom",
+      "location": "London, England",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "6428372"
+    },
+    "21": {
+      "url": "https://job-boards.greenhouse.io/vercel/jobs/5858553004",
+      "title": "Senior Customer Support Engineer",
+      "company": "Vercel",
+      "location": "Remote - Japan",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "5858553004"
+    },
+    "22": {
+      "url": "https://job-boards.greenhouse.io/anthropic/jobs/4977626008",
+      "title": "Applied AI Architect, Industries",
+      "company": "Anthropic",
+      "location": "Paris, France",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "4977626008"
+    },
+    "23": {
+      "url": "https://job-boards.greenhouse.io/anthropic/jobs/5283616008",
+      "title": "Applied AI Architect, Partnerships",
+      "company": "Anthropic",
+      "location": "London, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "5283616008"
+    },
+    "24": {
+      "url": "https://job-boards.greenhouse.io/arizeai/jobs/5693219004",
+      "title": "Senior DevOps Engineer, APJ",
+      "company": "Arize AI",
+      "location": "Remote (South Korea)",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "5693219004"
+    },
+    "25": {
+      "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4694340005",
+      "title": "AI Success Manager, West",
+      "company": "Glean",
+      "location": "San Francisco, CA",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "4694340005"
+    },
+    "26": {
+      "url": "https://job-boards.greenhouse.io/gleanwork/jobs/4659412005",
+      "title": "Founding Forward Deployed Engineer",
+      "company": "Glean",
+      "location": "New York, NY",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "4659412005"
+    },
+    "27": {
+      "url": "https://boomi.com/boomi-jobs/?gh_jid=5843564004",
+      "title": "Senior Presales Solutions Engineer",
+      "company": "Boomi",
+      "location": "United States of America",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "boomi-jobs"
+    },
+    "29": {
+      "url": "https://boomi.com/boomi-jobs/?gh_jid=5776960004",
+      "title": "Senior ServiceNow Developer  ",
+      "company": "Boomi",
+      "location": "India",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "boomi-jobs"
+    },
+    "31": {
+      "url": "https://jobs.ashbyhq.com/decagon/73ef8e9d-a6b3-4817-ab02-893c4ac72bad",
+      "title": "Senior Solutions Engineer",
+      "company": "Decagon",
+      "location": "New York City",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "73ef8e9d-a6b3-4817-ab02-893c4ac72bad"
+    },
+    "32": {
+      "url": "https://jobs.ashbyhq.com/decagon/8c40fb7a-5f25-4112-a1df-f1c22b81042c",
+      "title": "Customer Engineer, Agent Builder",
+      "company": "Decagon",
+      "location": "San Francisco",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "8c40fb7a-5f25-4112-a1df-f1c22b81042c"
+    },
+    "33": {
+      "url": "https://jobs.ashbyhq.com/decagon/df98cb0e-3ab1-47aa-9e39-522b968d37f3",
+      "title": "Senior Research Engineer",
+      "company": "Decagon",
+      "location": "London",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "df98cb0e-3ab1-47aa-9e39-522b968d37f3"
+    },
+    "34": {
+      "url": "https://jobs.ashbyhq.com/decagon/e31c0645-7325-43b9-9d58-0acc40904240",
+      "title": "Senior Agent Product Manager",
+      "company": "Decagon",
+      "location": "New York City",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "e31c0645-7325-43b9-9d58-0acc40904240"
+    },
+    "35": {
+      "url": "https://jobs.ashbyhq.com/decagon/e973eabb-2544-4323-ba60-e443dae140e5",
+      "title": "Agent Development Manager",
+      "company": "Decagon",
+      "location": "San Francisco",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "e973eabb-2544-4323-ba60-e443dae140e5"
+    },
+    "36": {
+      "url": "https://jobs.ashbyhq.com/decagon/f45c6d16-7a06-4a3f-ade7-c915698aba75",
+      "title": "Agent Strategy Manager ",
+      "company": "Decagon",
+      "location": "Toronto",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "f45c6d16-7a06-4a3f-ade7-c915698aba75"
+    },
+    "37": {
+      "url": "https://coreweave.com/careers/job?4688572006&board=coreweave&gh_jid=4688572006",
+      "title": "Senior Specialist Field Engineer - Networking",
+      "company": "Weights & Biases (CoreWeave)",
+      "location": "Warsaw, PL",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "job"
+    },
+    "39": {
+      "url": "https://jobs.ashbyhq.com/sierra/7053ca02-ee36-48cc-b331-9d795a966c4c",
+      "title": "Developer Relations Engineer",
+      "company": "Sierra",
+      "location": "San Francisco, CA",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "7053ca02-ee36-48cc-b331-9d795a966c4c"
+    },
+    "40": {
+      "url": "https://jobs.ashbyhq.com/sierra/757f6d53-8849-46b5-b23e-184753c05e62",
+      "title": "Strategist, Agent Development",
+      "company": "Sierra",
+      "location": "Tokyo",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "757f6d53-8849-46b5-b23e-184753c05e62"
+    },
+    "41": {
+      "url": "https://jobs.ashbyhq.com/sierra/787c1efd-2327-46e7-9335-59a20ad4be18",
+      "title": "Software Engineer, Agent",
+      "company": "Sierra",
+      "location": "Sydney",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "787c1efd-2327-46e7-9335-59a20ad4be18"
+    },
+    "42": {
+      "url": "https://jobs.ashbyhq.com/sierra/ba9ca2da-c0c3-4673-b496-f820223c77c1",
+      "title": "Sales Engineer",
+      "company": "Sierra",
+      "location": "London",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "ba9ca2da-c0c3-4673-b496-f820223c77c1"
+    },
+    "43": {
+      "url": "https://jobs.ashbyhq.com/attio/ce226be1-8237-41ce-b5ca-97c18d3ca8e6",
+      "title": "Solutions Engineer [Pre and Post-Sales] - SMB",
+      "company": "Attio",
+      "location": "New York",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "ce226be1-8237-41ce-b5ca-97c18d3ca8e6"
+    },
+    "44": {
+      "url": "https://job-boards.greenhouse.io/celonis/jobs/7725802003?gh_jid=7725802003",
+      "title": "Applied Value Engineer",
+      "company": "Celonis",
+      "location": "Redwood City, US, California",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7725802003"
+    },
+    "45": {
+      "url": "https://job-boards.greenhouse.io/celonis/jobs/7751339003?gh_jid=7751339003",
+      "title": "Lead Value Engineer",
+      "company": "Celonis",
+      "location": "Copenhagen, Denmark",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7751339003"
+    },
+    "46": {
+      "url": "https://job-boards.greenhouse.io/celonis/jobs/7695045003?gh_jid=7695045003",
+      "title": "Senior Management & Technology Consultant - AI & Process Analytics",
+      "company": "Celonis",
+      "location": "Copenhagen, Denmark",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7695045003"
+    },
+    "47": {
+      "url": "https://job-boards.greenhouse.io/contentful/jobs/7557586",
+      "title": "Fullstack Software Engineer (f/m/d)",
+      "company": "Contentful",
+      "location": "Dublin, Dublin, Ireland",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7557586"
+    },
+    "48": {
+      "url": "https://job-boards.greenhouse.io/contentful/jobs/7635752",
+      "title": "Senior Product Manager (f/m/d)",
+      "company": "Contentful",
+      "location": "London, England, United Kingdom",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7635752"
+    },
+    "49": {
+      "url": "https://job-boards.greenhouse.io/contentful/jobs/7760966",
+      "title": "Senior Software Engineer - Backend & Infrastructure (f/m/d)",
+      "company": "Contentful",
+      "location": "Berlin, Berlin, Germany",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7760966"
+    },
+    "50": {
+      "url": "https://n26.com/en-eu/careers/positions/8020517?gh_jid=8020517",
+      "title": "Backend Engineer - Investments & Savings",
+      "company": "N26",
+      "location": "Berlin, Barcelona",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "8020517"
+    },
+    "52": {
+      "url": "https://careers.hellofresh.com/global/en/job/8025707?gh_jid=8025707",
+      "title": "Senior Product Manager",
+      "company": "HelloFresh",
+      "location": "Dublin, Dublin, Ireland",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "8025707"
+    },
+    "54": {
+      "url": "https://sumup.com/careers/positions/8294821002?gh_jid=8294821002",
+      "title": "Agent Commercial Terrain - Indépendant (Freelance)",
+      "company": "SumUp",
+      "location": "Saint-Étienne, Loire, France",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "8294821002"
+    },
+    "56": {
+      "url": "https://sumup.com/careers/positions/8570763002?gh_jid=8570763002",
+      "title": "Agente di commercio / Procacciatore (P. IVA) – Settore pagamenti",
+      "company": "SumUp",
+      "location": "Milan, Italy",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "8570763002"
+    },
+    "58": {
+      "url": "https://sumup.com/careers/positions/8580102002?gh_jid=8580102002",
+      "title": "Fullstack Engineer-Bank",
+      "company": "SumUp",
+      "location": "Sofia, Bulgaria",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "8580102002"
+    },
+    "60": {
+      "url": "https://www.scandit.com/careers/job-description/?gh_jid=7552618",
+      "title": "Engineering Manager, Platform ",
+      "company": "Scandit",
+      "location": "Zurich",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "job-description"
+    },
+    "62": {
+      "url": "https://wayve.firststage.co/jobs?gh_jid=8460443002",
+      "title": "Application Software Engineer - Relocation to Tokyo",
+      "company": "Wayve",
+      "location": "Singapore",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "jobs"
+    },
+    "64": {
+      "url": "https://wayve.firststage.co/jobs?gh_jid=8478637002",
+      "title": "Principal Application Software Engineer - Relocation to Tokyo",
+      "company": "Wayve",
+      "location": "Singapore",
+      "source": "greenhouse-api",
+      "atsTier": 3,
+      "jobId": "jobs"
+    },
+    "66": {
+      "url": "https://job-boards.eu.greenhouse.io/physicsx/jobs/4880947101",
+      "title": "Machine Learning Engineer",
+      "company": "PhysicsX",
+      "location": "San Francisco, CA",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "4880947101"
+    },
+    "67": {
+      "url": "https://jobs.ashbyhq.com/faculty/4aad6acf-ec5a-45f4-99d4-1a36966fdd06",
+      "title": "Lead Software Engineer",
+      "company": "Faculty",
+      "location": "UK - Remote",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "4aad6acf-ec5a-45f4-99d4-1a36966fdd06"
+    },
+    "68": {
+      "url": "https://jobs.ashbyhq.com/faculty/900b965b-a6ae-41e1-94cc-f90167854800",
+      "title": "Lead Machine Learning Engineer ",
+      "company": "Faculty",
+      "location": "UK - Remote",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "900b965b-a6ae-41e1-94cc-f90167854800"
+    },
+    "69": {
+      "url": "https://jobs.ashbyhq.com/faculty/92c892cd-1f6c-443d-9cd8-e4902f9b7fb6",
+      "title": "Lead Data Scientist ",
+      "company": "Faculty",
+      "location": "UK - London",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "92c892cd-1f6c-443d-9cd8-e4902f9b7fb6"
+    },
+    "70": {
+      "url": "https://jobs.ashbyhq.com/faculty/98f476d9-39ea-4bcc-b908-a6f6b8119fb9",
+      "title": "Machine Learning Engineer ",
+      "company": "Faculty",
+      "location": "UK - London",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "98f476d9-39ea-4bcc-b908-a6f6b8119fb9"
+    },
+    "71": {
+      "url": "https://jobs.ashbyhq.com/faculty/aafc6889-c160-4172-b5ae-87a3557830d8",
+      "title": "Senior Data Scientist ",
+      "company": "Faculty",
+      "location": "UK - Remote",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "aafc6889-c160-4172-b5ae-87a3557830d8"
+    },
+    "72": {
+      "url": "https://jobs.ashbyhq.com/faculty/b72b42b6-4fdf-4c6e-bee0-96e3cba3a84f",
+      "title": "Senior Machine Learning Engineer ",
+      "company": "Faculty",
+      "location": "UK - London",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "b72b42b6-4fdf-4c6e-bee0-96e3cba3a84f"
+    },
+    "73": {
+      "url": "https://jobs.ashbyhq.com/faculty/c61dad1a-ac89-4802-9bcc-4e31726a04e0",
+      "title": "Senior Machine Learning Engineer",
+      "company": "Faculty",
+      "location": "UK - London",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "c61dad1a-ac89-4802-9bcc-4e31726a04e0"
+    },
+    "74": {
+      "url": "https://jobs.lever.co/palantir/a5fdd5ec-d1f3-4837-83af-161b003931dd",
+      "title": "Application Security Engineer",
+      "company": "Palantir",
+      "location": "Washington, D.C.",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "a5fdd5ec-d1f3-4837-83af-161b003931dd"
+    },
+    "75": {
+      "url": "https://jobs.lever.co/palantir/d33e0c31-ac7e-4f57-ba74-36f2df6ae2f5",
+      "title": "Backend Software Engineer - Defense",
+      "company": "Palantir",
+      "location": "New York, NY",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "d33e0c31-ac7e-4f57-ba74-36f2df6ae2f5"
+    },
+    "76": {
+      "url": "https://jobs.lever.co/palantir/fbf8b12b-38f3-4cdb-a4d3-b5404c0aa98a",
+      "title": "Compliance Engineer",
+      "company": "Palantir",
+      "location": "Washington, D.C.",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "fbf8b12b-38f3-4cdb-a4d3-b5404c0aa98a"
+    },
+    "77": {
+      "url": "https://jobs.lever.co/palantir/fe65ee3c-61e0-4eb6-99e5-c90e38e7043f",
+      "title": "Edge Infrastructure Engineer",
+      "company": "Palantir",
+      "location": "London, United Kingdom",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "fe65ee3c-61e0-4eb6-99e5-c90e38e7043f"
+    },
+    "78": {
+      "url": "https://jobs.lever.co/palantir/a90eb029-19cc-413c-bd51-b8411053d7d4",
+      "title": "Forward Deployed Enablement Engineer - Customer Success",
+      "company": "Palantir",
+      "location": "Washington, D.C.",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "a90eb029-19cc-413c-bd51-b8411053d7d4"
+    },
+    "79": {
+      "url": "https://jobs.lever.co/palantir/b57f08e9-546c-4b9b-8d21-db0ebbc11363",
+      "title": "Forward Deployed Infrastructure Engineer - US Government",
+      "company": "Palantir",
+      "location": "New York, NY",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "b57f08e9-546c-4b9b-8d21-db0ebbc11363"
+    },
+    "80": {
+      "url": "https://jobs.lever.co/palantir/5168e8fd-fec1-4fea-b7a1-81bdaea65850",
+      "title": "Forward Deployed Software Engineer",
+      "company": "Palantir",
+      "location": "London, United Kingdom",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "5168e8fd-fec1-4fea-b7a1-81bdaea65850"
+    },
+    "81": {
+      "url": "https://jobs.lever.co/palantir/ce8ca664-60dc-4f9a-8986-3c96673bcfdf",
+      "title": "Forward Deployed Software Engineer - US Government",
+      "company": "Palantir",
+      "location": "Honolulu, HI",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "ce8ca664-60dc-4f9a-8986-3c96673bcfdf"
+    },
+    "82": {
+      "url": "https://jobs.lever.co/palantir/e2a8360a-710a-4185-b2a9-3b7d9fe590b1",
+      "title": "Information Security Engineer",
+      "company": "Palantir",
+      "location": "New York, NY",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "e2a8360a-710a-4185-b2a9-3b7d9fe590b1"
+    },
+    "83": {
+      "url": "https://jobs.lever.co/palantir/b0e1823a-fbe7-4c9d-a4d3-a1e738db2589",
+      "title": "Information Security Engineer - Insider Risk",
+      "company": "Palantir",
+      "location": "Washington, D.C.",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "b0e1823a-fbe7-4c9d-a4d3-a1e738db2589"
+    },
+    "84": {
+      "url": "https://jobs.lever.co/palantir/bb7af139-064c-4a59-a784-9ba8c4324d21",
+      "title": "Senior Identity Security Engineer",
+      "company": "Palantir",
+      "location": "Palo Alto, CA",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "bb7af139-064c-4a59-a784-9ba8c4324d21"
+    },
+    "85": {
+      "url": "https://jobs.lever.co/palantir/89a77547-8b74-45b2-8590-f04b16e19a59",
+      "title": "Senior Software Engineer, Network Infrastructure",
+      "company": "Palantir",
+      "location": "Washington, D.C.",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "89a77547-8b74-45b2-8590-f04b16e19a59"
+    },
+    "86": {
+      "url": "https://jobs.lever.co/palantir/b80d45be-7fe8-4a11-b159-65551320c61f",
+      "title": "Senior Software Engineer, Substrate",
+      "company": "Palantir",
+      "location": "London, United Kingdom",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "b80d45be-7fe8-4a11-b159-65551320c61f"
+    },
+    "87": {
+      "url": "https://jobs.lever.co/palantir/f75cb0d2-6608-450b-848e-0f27937c930d",
+      "title": "Software Engineer - Apollo Platform",
+      "company": "Palantir",
+      "location": "London, United Kingdom",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "f75cb0d2-6608-450b-848e-0f27937c930d"
+    },
+    "88": {
+      "url": "https://jobs.lever.co/palantir/e9aecd15-c7e9-4803-9928-fc0b67e70f5b",
+      "title": "Software Engineer - Hosted Model Infrastructure",
+      "company": "Palantir",
+      "location": "Palo Alto, CA",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "e9aecd15-c7e9-4803-9928-fc0b67e70f5b"
+    },
+    "89": {
+      "url": "https://jobs.lever.co/palantir/e168a922-a2f0-45d0-912c-678d66e15118",
+      "title": "Software Engineer - Mission Manager",
+      "company": "Palantir",
+      "location": "Seattle, WA",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "e168a922-a2f0-45d0-912c-678d66e15118"
+    },
+    "90": {
+      "url": "https://jobs.lever.co/palantir/da426d8b-5963-42e5-9b19-84649cb519cc",
+      "title": "Systems Engineer - Business Systems",
+      "company": "Palantir",
+      "location": "Washington, D.C.",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "da426d8b-5963-42e5-9b19-84649cb519cc"
+    },
+    "91": {
+      "url": "https://jobs.lever.co/palantir/96e4295f-3af7-48e5-a2c8-74622eaf5587",
+      "title": "Web Application Developer - Defense",
+      "company": "Palantir",
+      "location": "Palo Alto, CA",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "96e4295f-3af7-48e5-a2c8-74622eaf5587"
+    },
+    "92": {
+      "url": "https://jobs.ashbyhq.com/legora/1ed3ca79-617d-4657-8738-7655caa3af6b",
+      "title": "Legal Engineer",
+      "company": "Legora",
+      "location": "Toronto",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "1ed3ca79-617d-4657-8738-7655caa3af6b"
+    },
+    "93": {
+      "url": "https://jobs.ashbyhq.com/legora/7b215b4e-7587-47ae-a244-6e84d1a8e408",
+      "title": "Lead Legal Engineer",
+      "company": "Legora",
+      "location": "Denver",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "7b215b4e-7587-47ae-a244-6e84d1a8e408"
+    },
+    "94": {
+      "url": "https://jobs.ashbyhq.com/legora/820dfe87-acfe-45cb-81b9-f3045f02a732",
+      "title": "Legal Engineer, Law Firms",
+      "company": "Legora",
+      "location": "Munich",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "820dfe87-acfe-45cb-81b9-f3045f02a732"
+    },
+    "95": {
+      "url": "https://jobs.ashbyhq.com/legora/9c5fcf62-69ce-4e78-bc1f-6fb311cafed9",
+      "title": "Legal Engineer Associate",
+      "company": "Legora",
+      "location": "Denver",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "9c5fcf62-69ce-4e78-bc1f-6fb311cafed9"
+    },
+    "96": {
+      "url": "https://jobs.ashbyhq.com/legora/d6384a5d-f395-4188-9504-935e1de137d1",
+      "title": "Legal Engineer, In-House",
+      "company": "Legora",
+      "location": "Madrid",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "d6384a5d-f395-4188-9504-935e1de137d1"
+    },
+    "97": {
+      "url": "https://jobs.ashbyhq.com/legora/f1ed20ac-add0-47f0-a6c5-2d6cf5149117",
+      "title": "Software Engineer",
+      "company": "Legora",
+      "location": "Malmö",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "f1ed20ac-add0-47f0-a6c5-2d6cf5149117"
+    },
+    "98": {
+      "url": "https://jobs.ashbyhq.com/pleo/4bc6dfa3-f8b6-4591-a1eb-fb0720d72bc6",
+      "title": "Senior TechOps Engineer",
+      "company": "Pleo",
+      "location": "Lisbon · Madrid",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "4bc6dfa3-f8b6-4591-a1eb-fb0720d72bc6"
+    },
+    "99": {
+      "url": "https://jobs.lever.co/pigment/27d0415e-b9fe-446f-bf45-aa95c660b0a8",
+      "title": "AI Deployment Strategist",
+      "company": "Pigment",
+      "location": "New York",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "27d0415e-b9fe-446f-bf45-aa95c660b0a8"
+    },
+    "100": {
+      "url": "https://job-boards.greenhouse.io/adyen/jobs/7532705",
+      "title": "Implementation Engineer",
+      "company": "Adyen",
+      "location": "New York",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7532705"
+    },
+    "101": {
+      "url": "https://job-boards.greenhouse.io/adyen/jobs/7342905",
+      "title": "Senior Software Engineer (Java) - Data Extraction & Accessibility ",
+      "company": "Adyen",
+      "location": "Amsterdam",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7342905"
+    },
+    "102": {
+      "url": "https://job-boards.greenhouse.io/adyen/jobs/7342887",
+      "title": "Software Engineer (Java) - Unified Platform ",
+      "company": "Adyen",
+      "location": "Amsterdam",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7342887"
+    },
+    "103": {
+      "url": "https://job-boards.greenhouse.io/gocardless/jobs/7525979",
+      "title": "Data Science Manager",
+      "company": "GoCardless",
+      "location": "Lisbon, Portugal",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7525979"
+    },
+    "104": {
+      "url": "https://job-boards.greenhouse.io/gocardless/jobs/7544236",
+      "title": "Senior Data Scientist, Fraud Prevention",
+      "company": "GoCardless",
+      "location": "Lisbon, Portugal",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7544236"
+    },
+    "105": {
+      "url": "https://job-boards.greenhouse.io/gocardless/jobs/7526078",
+      "title": "Senior Data Scientist, Payment Intelligence",
+      "company": "GoCardless",
+      "location": "Riga, Latvia",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "7526078"
+    },
+    "106": {
+      "url": "https://jobs.ashbyhq.com/checkout.com/17a06158-3279-4a40-8e59-a7cfb69719bc",
+      "title": "Senior Software Engineer I",
+      "company": "Checkout.com",
+      "location": "Paris",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "17a06158-3279-4a40-8e59-a7cfb69719bc"
+    },
+    "107": {
+      "url": "https://jobs.lever.co/pipedrive/4dbe8cb4-cce6-4091-899e-04f69d4dbaae",
+      "title": "Principal AI/ML Scientist & Engineer",
+      "company": "Pipedrive",
+      "location": "Germany, Berlin",
+      "source": "lever-api",
+      "atsTier": 1,
+      "jobId": "4dbe8cb4-cce6-4091-899e-04f69d4dbaae"
+    },
+    "108": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8605704002",
+      "title": "Infrastructure and MLOps Engineer ",
+      "company": "Graphcore",
+      "location": "London, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8605704002"
+    },
+    "109": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8532820002",
+      "title": "Senior Cloud Engineer (K8S)",
+      "company": "Graphcore",
+      "location": "Bristol, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8532820002"
+    },
+    "110": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8561922002",
+      "title": "Senior Cloud Platform Engineer ",
+      "company": "Graphcore",
+      "location": "Bristol, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8561922002"
+    },
+    "111": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8607695002",
+      "title": "Senior Engineer (ML Engineer)",
+      "company": "Graphcore",
+      "location": "Bristol, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8607695002"
+    },
+    "112": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8564380002",
+      "title": "Senior Machine Learning Engineer (Large Systems)",
+      "company": "Graphcore",
+      "location": "Bristol, UK; Cambridge, UK; London, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8564380002"
+    },
+    "113": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8562012002",
+      "title": "Senior Software Engineer ",
+      "company": "Graphcore",
+      "location": "Gdańsk, Pomeranian Voivodeship, Poland",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8562012002"
+    },
+    "114": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8607724002",
+      "title": "Senior Software Engineer (ML QA)",
+      "company": "Graphcore",
+      "location": "London, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8607724002"
+    },
+    "115": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8605719002",
+      "title": "Senior Software Infrastructure Engineer",
+      "company": "Graphcore",
+      "location": "Cambridge, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8605719002"
+    },
+    "116": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8533895002",
+      "title": "Senior Systems Engineer – Performance & Reliability",
+      "company": "Graphcore",
+      "location": "Gdańsk, Pomeranian Voivodeship, Poland",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8533895002"
+    },
+    "117": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8533907002",
+      "title": "Senior Systems Engineer – Performance & Reliability (Analysis)",
+      "company": "Graphcore",
+      "location": "London, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8533907002"
+    },
+    "118": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8605749002",
+      "title": "Software Engineer in Build Engineering ",
+      "company": "Graphcore",
+      "location": "Cambridge, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8605749002"
+    },
+    "119": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8605723002",
+      "title": "Software Infrastructure Kubernetes Engineer ",
+      "company": "Graphcore",
+      "location": "Gdańsk, Pomeranian Voivodeship, Poland",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8605723002"
+    },
+    "120": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8561854002",
+      "title": "Staff Software Engineer (ML QA)",
+      "company": "Graphcore",
+      "location": "Bristol, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8561854002"
+    },
+    "121": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8460942002",
+      "title": "Staff System Software Engineer ",
+      "company": "Graphcore",
+      "location": "Cambridge, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8460942002"
+    },
+    "122": {
+      "url": "https://job-boards.greenhouse.io/graphcore/jobs/8545352002",
+      "title": "System Software Engineer",
+      "company": "Graphcore",
+      "location": "Bristol, UK",
+      "source": "greenhouse-api",
+      "atsTier": 1,
+      "jobId": "8545352002"
+    },
+    "123": {
+      "url": "https://jobs.ashbyhq.com/mollie/e925299d-30c8-4e9f-bfae-55fa2c132bca",
+      "title": "Application Engineer II",
+      "company": "Mollie",
+      "location": "Milan",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "e925299d-30c8-4e9f-bfae-55fa2c132bca"
+    },
+    "124": {
+      "url": "https://jobs.ashbyhq.com/mollie/f62986be-80fb-4878-8c33-138ca4c87634",
+      "title": "Senior Application Engineer",
+      "company": "Mollie",
+      "location": "Milan",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "f62986be-80fb-4878-8c33-138ca4c87634"
+    },
+    "125": {
+      "url": "https://jobs.ashbyhq.com/snowflake/38ede053-28d2-46f4-b0bc-4484c0c0782e",
+      "title": "Senior Solution Engineer",
+      "company": "Snowflake Poland",
+      "location": "BE-Belgium-Remote",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "38ede053-28d2-46f4-b0bc-4484c0c0782e"
+    },
+    "126": {
+      "url": "https://jobs.ashbyhq.com/snowflake/c579777e-cad1-48d3-bee9-5181e2674f8b",
+      "title": "Senior PS Sales Solutions Architect",
+      "company": "Snowflake Poland",
+      "location": "US-OR-Remote · Dallas, TX · Dallas · United States · US-IL-Chicago-MSO · Chicago",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "c579777e-cad1-48d3-bee9-5181e2674f8b"
+    },
+    "127": {
+      "url": "https://jobs.ashbyhq.com/snowflake/c7de1cab-c45e-46b1-ad44-7ba84fd63b2a",
+      "title": "Solution Engineer",
+      "company": "Snowflake Poland",
+      "location": "IL-Tel Aviv-MSO",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "c7de1cab-c45e-46b1-ad44-7ba84fd63b2a"
+    },
+    "128": {
+      "url": "https://jobs.ashbyhq.com/snowflake/f288375d-5d6b-4686-94bf-8018583ff03b",
+      "title": "Senior Technical Support Engineer, Observe by Snowflake",
+      "company": "Snowflake Poland",
+      "location": "CH-Zurich-Observe",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "f288375d-5d6b-4686-94bf-8018583ff03b"
+    },
+    "129": {
+      "url": "https://solid.jobs/o/0idkm06h/career-ops",
+      "title": "Senior Cloud Data Engineer (GCP)",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "131": {
+      "url": "https://solid.jobs/o/kozbsqdn/career-ops",
+      "title": "Senior QA Engineer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "133": {
+      "url": "https://solid.jobs/o/ebohfkyb/career-ops",
+      "title": "Senior Scala Developer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "135": {
+      "url": "https://solid.jobs/o/j2g1iozb/career-ops",
+      "title": "Senior Backend Engineer (AI Automation)",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "137": {
+      "url": "https://solid.jobs/o/w0j70uud/career-ops",
+      "title": "Senior Frontend Developer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "139": {
+      "url": "https://solid.jobs/o/qhb4c9d2/career-ops",
+      "title": "Scala Developer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "141": {
+      "url": "https://solid.jobs/o/y75ribrb/career-ops",
+      "title": "Senior Al Engineer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "143": {
+      "url": "https://solid.jobs/o/tzl4ztu2/career-ops",
+      "title": "Al Engineer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "145": {
+      "url": "https://solid.jobs/o/x8my1cs6/career-ops",
+      "title": "ML Engineer / ML Ops",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "147": {
+      "url": "https://solid.jobs/o/r5e82nx7/career-ops",
+      "title": "Fullstack Developer (Java/Angular)",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "149": {
+      "url": "https://solid.jobs/o/7v6ahya7/career-ops",
+      "title": "Fullstack Developer (Java, Angular)",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "151": {
+      "url": "https://solid.jobs/o/xq6p7m46/career-ops",
+      "title": "Automation Test Engineer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "153": {
+      "url": "https://solid.jobs/o/fgvm21o2/career-ops",
+      "title": "AI Engineer",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "155": {
+      "url": "https://solid.jobs/o/nmzy2lyo/career-ops",
+      "title": "Senior Fullstack Developer (Python, Java, JS)",
+      "company": "j-labs",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "157": {
+      "url": "https://solid.jobs/o/nz7nfpaq/career-ops",
+      "title": "Senior Streaming Flink AI Engineer",
+      "company": "Be in IT",
+      "location": "Wrocław",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "159": {
+      "url": "https://solid.jobs/o/rc98279k/career-ops",
+      "title": "Salesforce Developer",
+      "company": "Sollers Consulting",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "161": {
+      "url": "https://solid.jobs/o/c7rozhcm/career-ops",
+      "title": "Developer with German",
+      "company": "Sollers Consulting",
+      "location": "Bydgoszcz",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "163": {
+      "url": "https://solid.jobs/o/nnmk82hd/career-ops",
+      "title": "Data Engineer (With Snowflake/Databricks)",
+      "company": "Sollers Consulting",
+      "location": "Gdańsk",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "165": {
+      "url": "https://solid.jobs/o/bjshefy1/career-ops",
+      "title": "Developer",
+      "company": "Sollers Consulting",
+      "location": "Bydgoszcz",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "167": {
+      "url": "https://solid.jobs/o/4hzneozf/career-ops",
+      "title": "Developer with French",
+      "company": "Sollers Consulting",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "169": {
+      "url": "https://solid.jobs/o/edh62akn/career-ops",
+      "title": "Guidewire Developer",
+      "company": "Sollers Consulting",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "171": {
+      "url": "https://solid.jobs/o/33gtkfnu/career-ops",
+      "title": "PL/SQL Developer with Java",
+      "company": "Sollers Consulting",
+      "location": "Gdańsk",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "173": {
+      "url": "https://solid.jobs/o/ftyelg32/career-ops",
+      "title": "Senior PL/SQL Developer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "175": {
+      "url": "https://solid.jobs/o/5lyudl6e/career-ops",
+      "title": "Senior Oracle OTM Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "179": {
+      "url": "https://solid.jobs/o/9wtz7meb/career-ops",
+      "title": "Senior GenAI Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "181": {
+      "url": "https://solid.jobs/o/1x1400sa/career-ops",
+      "title": "Senior GCP Data Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "183": {
+      "url": "https://solid.jobs/o/y53471w7/career-ops",
+      "title": "Senior GCP AI Automation Developer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "185": {
+      "url": "https://solid.jobs/o/rb9ln34g/career-ops",
+      "title": "Senior Fullstack Developer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "187": {
+      "url": "https://solid.jobs/o/drr26i7q/career-ops",
+      "title": "Salesforce Developer with Omnistudio/Vlocity",
+      "company": "Sollers Consulting",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "189": {
+      "url": "https://solid.jobs/o/np7qwaym/career-ops",
+      "title": "Senior Data Modeller",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "191": {
+      "url": "https://solid.jobs/o/swa8z3nx/career-ops",
+      "title": "Senior C++ MS SQL Developer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "193": {
+      "url": "https://solid.jobs/o/wbxprayl/career-ops",
+      "title": "Senior Azure Cloud Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "195": {
+      "url": "https://solid.jobs/o/570dbo3t/career-ops",
+      "title": "Senior AI GCP Infrastructure Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "197": {
+      "url": "https://solid.jobs/o/kb3x21dk/career-ops",
+      "title": "Security Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "199": {
+      "url": "https://solid.jobs/o/xop1c2ic/career-ops",
+      "title": "Power Platform & Copilot Expert",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "201": {
+      "url": "https://solid.jobs/o/vbpaqihn/career-ops",
+      "title": "Magento Developer",
+      "company": "Be in IT",
+      "location": "Poznań",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "203": {
+      "url": "https://solid.jobs/o/6dzkx6iw/career-ops",
+      "title": "Lead Google Workspace Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "205": {
+      "url": "https://solid.jobs/o/p442q68e/career-ops",
+      "title": "Lead Databricks Engineer",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "207": {
+      "url": "https://solid.jobs/o/yyn4f7il/career-ops",
+      "title": "GCP Data Migration Architect",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "209": {
+      "url": "https://solid.jobs/o/d1o7pga5/career-ops",
+      "title": "GCP AI Solution Architect",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "211": {
+      "url": "https://solid.jobs/o/wnsb0aak/career-ops",
+      "title": "Databricks Data Engineer",
+      "company": "Be in IT",
+      "location": "Wrocław",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "213": {
+      "url": "https://solid.jobs/o/1k1ijpps/career-ops",
+      "title": "Cloud Security Architect",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "215": {
+      "url": "https://solid.jobs/o/pl18bidi/career-ops",
+      "title": "Tech Lead Dynamics 365 Sales/Power Platform",
+      "company": "Be in IT",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "217": {
+      "url": "https://solid.jobs/o/0du3kn1j/career-ops",
+      "title": "Senior Software AI Developer (Business Intelligence)",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "219": {
+      "url": "https://solid.jobs/o/eotd7rph/career-ops",
+      "title": "Senior Site Reliability Engineer",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "223": {
+      "url": "https://solid.jobs/o/4ygfpg7y/career-ops",
+      "title": "Senior Product Manager (Ledger Domain)",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "225": {
+      "url": "https://solid.jobs/o/hvk031gn/career-ops",
+      "title": "Senior Fullstack Developer (Java/Angular)",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "227": {
+      "url": "https://solid.jobs/o/ymcl8oz3/career-ops",
+      "title": "Senior BI Engineer",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "229": {
+      "url": "https://solid.jobs/o/3p1s6na9/career-ops",
+      "title": "Risk Data Engineer",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "231": {
+      "url": "https://solid.jobs/o/n7ruavwz/career-ops",
+      "title": "IT Security Team Leader",
+      "company": "XTB",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "233": {
+      "url": "https://solid.jobs/o/dqudf1bj/career-ops",
+      "title": "Senior MLOps Engineer",
+      "company": "ITFS",
+      "location": "Gdynia",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "235": {
+      "url": "https://solid.jobs/o/uf2b5yzb/career-ops",
+      "title": "Senior AI Engineer",
+      "company": "Scalo",
+      "location": "Kraków",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "237": {
+      "url": "https://solid.jobs/o/5ojd0j7w/career-ops",
+      "title": "Senior DevOps Engineer – API Management Platform",
+      "company": "DCG",
+      "location": "Warszawa",
+      "source": "solidjobs-api",
+      "atsTier": 3,
+      "jobId": "career-ops"
+    },
+    "239": {
+      "url": "https://nofluffjobs.com/pl/job/senior-devops-consultant-with-azure-gft-poland-krakow-1",
+      "title": "Senior DevOps Consultant with Azure",
+      "company": "GFT Poland",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-devops-consultant-with-azure-gft-poland-krakow-1"
+    },
+    "241": {
+      "url": "https://nofluffjobs.com/pl/job/senior-devops-engineer-with-azure-gft-poland-krakow-1",
+      "title": "Senior DevOps Engineer with Azure",
+      "company": "GFT Poland",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-devops-engineer-with-azure-gft-poland-krakow-1"
+    },
+    "243": {
+      "url": "https://nofluffjobs.com/pl/job/devops-engineer-aws-link-group-remote-2",
+      "title": "DevOps Engineer (AWS)",
+      "company": "Link Group",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "devops-engineer-aws-link-group-remote-2"
+    },
+    "245": {
+      "url": "https://nofluffjobs.com/pl/job/senior-linux-devsecops-engineer-with-advanced-python-skills-codilime-remote",
+      "title": "Senior Linux/DevSecOps Engineer with advanced Python skills",
+      "company": "CodiLime",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-linux-devsecops-engineer-with-advanced-python-skills-codilime-remote"
+    },
+    "247": {
+      "url": "https://nofluffjobs.com/pl/job/gcp-devops-engineer-mindbox-krakow-4",
+      "title": "GCP DevOps Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "gcp-devops-engineer-mindbox-krakow-4"
+    },
+    "249": {
+      "url": "https://nofluffjobs.com/pl/job/senior-technical-sdlc-transformation-consultant-moondigo-remote-1",
+      "title": "Senior Technical SDLC Transformation Consultant",
+      "company": "Moondigo Sp. z o.o.",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-technical-sdlc-transformation-consultant-moondigo-remote-1"
+    },
+    "251": {
+      "url": "https://nofluffjobs.com/pl/job/python-mlops-engineer-virtuslab-kielce",
+      "title": "Python & MLOps Engineer",
+      "company": "VirtusLab",
+      "location": "Kielce",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "python-mlops-engineer-virtuslab-kielce"
+    },
+    "253": {
+      "url": "https://nofluffjobs.com/pl/job/senior-devops-engineer-diverse-cg-sp-k--lodz",
+      "title": "Senior DevOps Engineer",
+      "company": "Diverse CG Sp. z o.o. Sp.k.",
+      "location": "Łódź",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-devops-engineer-diverse-cg-sp-k--lodz"
+    },
+    "255": {
+      "url": "https://nofluffjobs.com/pl/job/devops-engineer-ework-group-gdansk-7",
+      "title": "DevOps Engineer",
+      "company": "Ework Group",
+      "location": "Gdańsk",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "devops-engineer-ework-group-gdansk-7"
+    },
+    "257": {
+      "url": "https://nofluffjobs.com/pl/job/site-reliability-engineer-avenga-agencja-pracy-nr-kraz-8448-warszawa",
+      "title": "Site Reliability Engineer",
+      "company": "AVENGA (Agencja Pracy, nr KRAZ: 8448)",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "site-reliability-engineer-avenga-agencja-pracy-nr-kraz-8448-warszawa"
+    },
+    "259": {
+      "url": "https://nofluffjobs.com/pl/job/production-engineering-specialist-mindbox-krakow-2",
+      "title": "Production Engineering Specialist",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "production-engineering-specialist-mindbox-krakow-2"
+    },
+    "261": {
+      "url": "https://nofluffjobs.com/pl/job/aws-devops-engineer-mindbox-krakow-1",
+      "title": "AWS DevOps Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "aws-devops-engineer-mindbox-krakow-1"
+    },
+    "263": {
+      "url": "https://nofluffjobs.com/pl/job/senior-kafka-engineer-mindbox-krakow",
+      "title": "Senior Kafka Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-kafka-engineer-mindbox-krakow"
+    },
+    "265": {
+      "url": "https://nofluffjobs.com/pl/job/senior-devops-engineer-codilime-remote",
+      "title": "Senior DevOps Engineer",
+      "company": "CodiLime",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-devops-engineer-codilime-remote"
+    },
+    "267": {
+      "url": "https://nofluffjobs.com/pl/job/devops-engineer-dcg-gdansk-1",
+      "title": "DevOps Engineer",
+      "company": "DCG sp. z o.o.",
+      "location": "Gdańsk",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "devops-engineer-dcg-gdansk-1"
+    },
+    "269": {
+      "url": "https://nofluffjobs.com/pl/job/senior-cloud-consultant-gft-poland-krakow",
+      "title": "Senior Cloud Consultant",
+      "company": "GFT Poland",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-cloud-consultant-gft-poland-krakow"
+    },
+    "271": {
+      "url": "https://nofluffjobs.com/pl/job/fullstack-developer-healthcare-industry-f-m-x-sii-polska-warszawa-1",
+      "title": "Fullstack Developer – healthcare industry (f/m/x)",
+      "company": "Sii Polska",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "fullstack-developer-healthcare-industry-f-m-x-sii-polska-warszawa-1"
+    },
+    "273": {
+      "url": "https://nofluffjobs.com/pl/job/senior-full-stack-developer-b2b-soft-remote-4",
+      "title": "Senior Full Stack Developer",
+      "company": "B2B Soft",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-full-stack-developer-b2b-soft-remote-4"
+    },
+    "275": {
+      "url": "https://nofluffjobs.com/pl/job/senior-fullstack-developer-java-angular-ework-group-warszawa",
+      "title": "Senior Fullstack Developer (Java/Angular)",
+      "company": "Ework Group",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-fullstack-developer-java-angular-ework-group-warszawa"
+    },
+    "277": {
+      "url": "https://nofluffjobs.com/pl/job/fullstack-developer-java-react-ts-speednet-remote",
+      "title": "Fullstack Developer (Java/React/TS)",
+      "company": "SPEEDNET SP. Z O.O.",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "fullstack-developer-java-react-ts-speednet-remote"
+    },
+    "279": {
+      "url": "https://nofluffjobs.com/pl/job/senior-fullstack-developer-python-angular-link-group-krakow",
+      "title": "Senior Fullstack Developer (Python + Angular)",
+      "company": "Link Group",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-fullstack-developer-python-angular-link-group-krakow"
+    },
+    "281": {
+      "url": "https://nofluffjobs.com/pl/job/full-stack-developer-frontend-focused-javascript-cantor-fitzgerald-warszawa-1",
+      "title": "Full Stack Developer (Frontend-Focused /JavaScript)",
+      "company": "Cantor Fitzgerald",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "full-stack-developer-frontend-focused-javascript-cantor-fitzgerald-warszawa-1"
+    },
+    "283": {
+      "url": "https://nofluffjobs.com/pl/job/full-stack-developer-ochk-warszawa-1",
+      "title": "Full Stack Developer",
+      "company": "OChK",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "full-stack-developer-ochk-warszawa-1"
+    },
+    "285": {
+      "url": "https://nofluffjobs.com/pl/job/senior-software-consultant-with-ibm-iseries-ile-rpg-gft-poland-krakow",
+      "title": "Senior Software Consultant with IBM iSeries & ILE RPG",
+      "company": "GFT Poland",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-software-consultant-with-ibm-iseries-ile-rpg-gft-poland-krakow"
+    },
+    "287": {
+      "url": "https://nofluffjobs.com/pl/job/senior-software-engineer-with-ibm-iseries-ile-rpg-gft-poland-krakow",
+      "title": "Senior Software Engineer with IBM iSeries & ILE RPG",
+      "company": "GFT Poland",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-software-engineer-with-ibm-iseries-ile-rpg-gft-poland-krakow"
+    },
+    "289": {
+      "url": "https://nofluffjobs.com/pl/job/servicenow-developer-life-science-f-m-x-sii-polska-remote-1",
+      "title": "ServiceNow Developer – Life Science (f/m/x)",
+      "company": "Sii Polska",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "servicenow-developer-life-science-f-m-x-sii-polska-remote-1"
+    },
+    "291": {
+      "url": "https://nofluffjobs.com/pl/job/mid-senior-go-engineer-with-web-api-experience-codilime-remote",
+      "title": "Mid/Senior Go Engineer with Web API experience",
+      "company": "CodiLime",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "mid-senior-go-engineer-with-web-api-experience-codilime-remote"
+    },
+    "293": {
+      "url": "https://nofluffjobs.com/pl/job/senior-software-engineer-with-python-network-codilime-remote",
+      "title": "Senior Software Engineer with Python & Network",
+      "company": "CodiLime",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-software-engineer-with-python-network-codilime-remote"
+    },
+    "295": {
+      "url": "https://nofluffjobs.com/pl/job/senior-scala-backend-developer-reality-games-krakow",
+      "title": "Senior Scala Backend Developer",
+      "company": "Reality Games",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-scala-backend-developer-reality-games-krakow"
+    },
+    "297": {
+      "url": "https://nofluffjobs.com/pl/job/software-development-engineer-mindbox-krakow",
+      "title": "Software Development Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "software-development-engineer-mindbox-krakow"
+    },
+    "299": {
+      "url": "https://nofluffjobs.com/pl/job/senior-go-engineer-architecture-distributed-systems-upvanta-remote",
+      "title": "Senior Go Engineer (Architecture & Distributed Systems)",
+      "company": "Upvanta",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-go-engineer-architecture-distributed-systems-upvanta-remote"
+    },
+    "301": {
+      "url": "https://nofluffjobs.com/pl/job/informatica-powercenter-developer-scalo-warszawa-4",
+      "title": "Informatica PowerCenter Developer",
+      "company": "Scalo",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "informatica-powercenter-developer-scalo-warszawa-4"
+    },
+    "303": {
+      "url": "https://nofluffjobs.com/pl/job/senior-scala-developer-j-labs-software-specialist-cracow",
+      "title": "Senior Scala Developer",
+      "company": "j-labs software specialist",
+      "location": "Cracow",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-scala-developer-j-labs-software-specialist-cracow"
+    },
+    "305": {
+      "url": "https://nofluffjobs.com/pl/job/software-engineer-c--motorola-solutions-systems-polska-krakow-12",
+      "title": "Software Engineer C#",
+      "company": "Motorola Solutions Systems Polska",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "software-engineer-c--motorola-solutions-systems-polska-krakow-12"
+    },
+    "307": {
+      "url": "https://nofluffjobs.com/pl/job/backend-engineer-littleengine-remote-1",
+      "title": "Backend Engineer",
+      "company": "LittleEngine Inc",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "backend-engineer-littleengine-remote-1"
+    },
+    "309": {
+      "url": "https://nofluffjobs.com/pl/job/senior-software-engineer-c-c--sopra-steria-poland-katowice",
+      "title": "Senior Software Engineer (C++,C#)",
+      "company": "Sopra Steria Poland",
+      "location": "Katowice",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-software-engineer-c-c--sopra-steria-poland-katowice"
+    },
+    "311": {
+      "url": "https://nofluffjobs.com/pl/job/senior-software-engineer-hsbc-technology-poland-krakow-13",
+      "title": "Senior Software Engineer",
+      "company": "HSBC Technology Poland",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-software-engineer-hsbc-technology-poland-krakow-13"
+    },
+    "313": {
+      "url": "https://nofluffjobs.com/pl/job/senior-software-engineer-c-qt-cad-cae-sopra-steria-poland-katowice",
+      "title": "Senior Software Engineer (C++,Qt, CAD/CAE)",
+      "company": "Sopra Steria Poland",
+      "location": "Katowice",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-software-engineer-c-qt-cad-cae-sopra-steria-poland-katowice"
+    },
+    "315": {
+      "url": "https://nofluffjobs.com/pl/job/backend-engineer-python-typescript-itfs-remote",
+      "title": "Backend Engineer (Python & TypeScript)",
+      "company": "ITFS Sp. z o.o.",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "backend-engineer-python-typescript-itfs-remote"
+    },
+    "317": {
+      "url": "https://nofluffjobs.com/pl/job/mid-senior-ai-engineer-with-networking-experience-codilime-remote",
+      "title": "Mid/Senior AI engineer with networking experience",
+      "company": "CodiLime",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "mid-senior-ai-engineer-with-networking-experience-codilime-remote"
+    },
+    "319": {
+      "url": "https://nofluffjobs.com/pl/job/ai-engineer-mindbox-krakow",
+      "title": "AI Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "ai-engineer-mindbox-krakow"
+    },
+    "321": {
+      "url": "https://nofluffjobs.com/pl/job/machine-learning-engineer-monopoly-world-reality-games-krakow-3",
+      "title": "Machine Learning Engineer - Monopoly World",
+      "company": "Reality Games",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "machine-learning-engineer-monopoly-world-reality-games-krakow-3"
+    },
+    "323": {
+      "url": "https://nofluffjobs.com/pl/job/senior-platform-engineer-ai-aws-northmill-bank-aboddzial-w-polsce-katowice",
+      "title": "Senior Platform Engineer (AI & AWS)",
+      "company": "Northmill Bank AB S.A Oddział w Polsce",
+      "location": "Katowice",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-platform-engineer-ai-aws-northmill-bank-aboddzial-w-polsce-katowice"
+    },
+    "325": {
+      "url": "https://nofluffjobs.com/pl/job/senior-mlops-engineer-aws-genai-ework-group-warsaw",
+      "title": "Senior MLOps Engineer (AWS / GenAI)",
+      "company": "Ework Group",
+      "location": "Warsaw",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-mlops-engineer-aws-genai-ework-group-warsaw"
+    },
+    "327": {
+      "url": "https://nofluffjobs.com/pl/job/remote-principal-software-engineer-mend-io-1",
+      "title": "Remote - Principal Software Engineer",
+      "company": "Mend.io",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "remote-principal-software-engineer-mend-io-1"
+    },
+    "329": {
+      "url": "https://nofluffjobs.com/pl/job/csr-ai-solution-engineer-mindbox-krakow",
+      "title": "CSR AI Solution Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "csr-ai-solution-engineer-mindbox-krakow"
+    },
+    "331": {
+      "url": "https://nofluffjobs.com/pl/job/ai-catalyst-lead-mindbox-krakow",
+      "title": "AI Catalyst Lead",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "ai-catalyst-lead-mindbox-krakow"
+    },
+    "333": {
+      "url": "https://nofluffjobs.com/pl/job/ai-appsec-aisec-engineer-mindbox-krakow",
+      "title": "AI AppSec / AiSec Engineer",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "ai-appsec-aisec-engineer-mindbox-krakow"
+    },
+    "335": {
+      "url": "https://nofluffjobs.com/pl/job/ai-mlops-engineer-dcg-warszawa",
+      "title": "AI/ MLOps Engineer",
+      "company": "DCG",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "ai-mlops-engineer-dcg-warszawa"
+    },
+    "337": {
+      "url": "https://justjoin.it/job-offer/directio--net-developer-warszawa-erp",
+      "title": "Developer",
+      "company": "Directio Net",
+      "location": "Warszawa",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "directio--net-developer-warszawa-erp"
+    },
+    "339": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-software-engineer-lodz-c",
+      "title": "Senior Software Engineer",
+      "company": "Epam Systems",
+      "location": "Lodz",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-software-engineer-lodz-c"
+    },
+    "341": {
+      "url": "https://justjoin.it/job-offer/epam-systems-lead-net-software-engineer-lodz-net",
+      "title": "Lead Net Software Engineer",
+      "company": "Epam Systems",
+      "location": "Lodz",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-lead-net-software-engineer-lodz-net"
+    },
+    "343": {
+      "url": "https://justjoin.it/job-offer/epam-systems-lead-c-engineer-with-observability-poznan-c",
+      "title": "Lead C Engineer With Observability",
+      "company": "Epam Systems",
+      "location": "Poznan",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-lead-c-engineer-with-observability-poznan-c"
+    },
+    "345": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-copilot-developer-wroclaw-ai",
+      "title": "Senior Copilot Developer",
+      "company": "Epam Systems",
+      "location": "Wroclaw",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-copilot-developer-wroclaw-ai"
+    },
+    "347": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-agentic-automation-engineer-wroclaw-ai",
+      "title": "Senior Agentic Automation Engineer",
+      "company": "Epam Systems",
+      "location": "Wroclaw",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-agentic-automation-engineer-wroclaw-ai"
+    },
+    "349": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-data-delivery-manager-engagement-lead--krakow-pm",
+      "title": "Senior Data Delivery Manager Engagement Lead",
+      "company": "Epam Systems",
+      "location": "Krakow",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-data-delivery-manager-engagement-lead--krakow-pm"
+    },
+    "351": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-c-engineer-with-observability-krakow-c",
+      "title": "Senior C Engineer With Observability",
+      "company": "Epam Systems",
+      "location": "Krakow",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-c-engineer-with-observability-krakow-c"
+    },
+    "353": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-python-ai-engineer-gdansk-ai",
+      "title": "Senior Python Ai Engineer",
+      "company": "Epam Systems",
+      "location": "Gdansk",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-python-ai-engineer-gdansk-ai"
+    },
+    "355": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-go-developer-with-generative-ai-gdansk-go",
+      "title": "Senior Go Developer With Generative Ai",
+      "company": "Epam Systems",
+      "location": "Gdansk",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-go-developer-with-generative-ai-gdansk-go"
+    },
+    "357": {
+      "url": "https://justjoin.it/job-offer/epam-systems-dynamics-365-f-scm-developer-mid-senior--krakow-erp",
+      "title": "Developer Mid Senior",
+      "company": "Epam Systems Dynamics 365 F Scm",
+      "location": "Krakow",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-dynamics-365-f-scm-developer-mid-senior--krakow-erp"
+    },
+    "359": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-python-ai-engineer-full-stack--lodz-ai",
+      "title": "Senior Python Ai Engineer Full Stack",
+      "company": "Epam Systems",
+      "location": "Lodz",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-python-ai-engineer-full-stack--lodz-ai"
+    },
+    "361": {
+      "url": "https://justjoin.it/job-offer/epam-systems-lead-copilot-developer-gdansk-ai",
+      "title": "Lead Copilot Developer",
+      "company": "Epam Systems",
+      "location": "Gdansk",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-lead-copilot-developer-gdansk-ai"
+    },
+    "363": {
+      "url": "https://justjoin.it/job-offer/epam-systems-lead-c-developer-poznan-c",
+      "title": "Lead C Developer",
+      "company": "Epam Systems",
+      "location": "Poznan",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-lead-c-developer-poznan-c"
+    },
+    "365": {
+      "url": "https://justjoin.it/job-offer/epam-systems-senior-net-full-stack-engineer-with-spfx-lodz-net",
+      "title": "Senior Net Full Stack Engineer With Spfx",
+      "company": "Epam Systems",
+      "location": "Lodz",
+      "source": "justjoin-api",
+      "atsTier": 3,
+      "jobId": "epam-systems-senior-net-full-stack-engineer-with-spfx-lodz-net"
+    },
+    "367": {
+      "url": "https://nofluffjobs.com/pl/job/senior-data-engineer-azure-databricks-diverse-cg-sp-k--remote",
+      "title": "Senior Data Engineer (Azure/Databricks)",
+      "company": "Diverse CG Sp. z o.o. Sp.k.",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "senior-data-engineer-azure-databricks-diverse-cg-sp-k--remote"
+    },
+    "369": {
+      "url": "https://nofluffjobs.com/pl/job/data-engineer-ework-group-remote-10",
+      "title": "Data Engineer",
+      "company": "Ework Group",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-engineer-ework-group-remote-10"
+    },
+    "371": {
+      "url": "https://nofluffjobs.com/pl/job/data-analyst-with-german-harvey-nash-technology-remote",
+      "title": "Data Analyst with German",
+      "company": "Harvey Nash Technology",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-analyst-with-german-harvey-nash-technology-remote"
+    },
+    "373": {
+      "url": "https://nofluffjobs.com/pl/job/data-engineer-databricks-ework-group-remote-1",
+      "title": "Data Engineer (Databricks)",
+      "company": "Ework Group",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-engineer-databricks-ework-group-remote-1"
+    },
+    "375": {
+      "url": "https://nofluffjobs.com/pl/job/digital-biomarker-biomedical-engineer-avenga-agencja-pracy-nr-kraz-8448-remote",
+      "title": "Digital Biomarker Biomedical Engineer",
+      "company": "AVENGA (Agencja Pracy, nr KRAZ: 8448)",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "digital-biomarker-biomedical-engineer-avenga-agencja-pracy-nr-kraz-8448-remote"
+    },
+    "377": {
+      "url": "https://nofluffjobs.com/pl/job/data-platform-architect-snowflake-xebia-remote",
+      "title": "Data Platform Architect (Snowflake)",
+      "company": "Xebia sp. z o.o.",
+      "location": "Remote",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-platform-architect-snowflake-xebia-remote"
+    },
+    "379": {
+      "url": "https://nofluffjobs.com/pl/job/architekt-ds-modelowania-danych-data-governance-m-k-astek-polska-warszawa",
+      "title": "Architekt ds. modelowania danych (Data Governance) (M/K)",
+      "company": "ASTEK Polska",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "architekt-ds-modelowania-danych-data-governance-m-k-astek-polska-warszawa"
+    },
+    "381": {
+      "url": "https://nofluffjobs.com/pl/job/quant-developer-excel-pricing-models-pre-trade-cantor-fitzgerald-warsaw",
+      "title": "Quant Developer (Excel / Pricing Models / Pre-trade)",
+      "company": "Cantor Fitzgerald",
+      "location": "Warsaw",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "quant-developer-excel-pricing-models-pre-trade-cantor-fitzgerald-warsaw"
+    },
+    "383": {
+      "url": "https://nofluffjobs.com/pl/job/etl-data-engineering-lead-mindbox-krakow",
+      "title": "ETL & Data Engineering Lead",
+      "company": "Mindbox Sp. z o.o.",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "etl-data-engineering-lead-mindbox-krakow"
+    },
+    "385": {
+      "url": "https://nofluffjobs.com/pl/job/data-analyst-monopoly-world-reality-games-krakow-2",
+      "title": "Data Analyst - Monopoly World",
+      "company": "Reality Games",
+      "location": "Kraków",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-analyst-monopoly-world-reality-games-krakow-2"
+    },
+    "387": {
+      "url": "https://nofluffjobs.com/pl/job/database-developer-oracle-apex-scalo-warszawa",
+      "title": "Database developer (Oracle APEX)",
+      "company": "Scalo",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "database-developer-oracle-apex-scalo-warszawa"
+    },
+    "389": {
+      "url": "https://nofluffjobs.com/pl/job/data-architect-scalo-warszawa-2",
+      "title": "Data Architect",
+      "company": "Scalo",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-architect-scalo-warszawa-2"
+    },
+    "391": {
+      "url": "https://nofluffjobs.com/pl/job/datastage-developer-dcg-warsaw",
+      "title": "DataStage Developer",
+      "company": "DCG",
+      "location": "WARSAW",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "datastage-developer-dcg-warsaw"
+    },
+    "393": {
+      "url": "https://nofluffjobs.com/pl/job/data-information-architect-data-platforms-roche-warszawa",
+      "title": "Data/Information Architect - Data Platforms",
+      "company": "Roche",
+      "location": "Warszawa",
+      "source": "nofluffjobs-api",
+      "atsTier": 3,
+      "jobId": "data-information-architect-data-platforms-roche-warszawa"
+    },
+    "395": {
+      "url": "https://jobs.smartrecruiters.com/DeliveryHero/postings/744000134181630",
+      "title": "Senior Legal Counsel, EU Employment Law (Platform Workers)",
+      "company": "Delivery Hero",
+      "location": "Vienna, Vienna, Austria",
+      "source": "smartrecruiters-api",
+      "atsTier": 3,
+      "jobId": "744000134181630"
+    },
+    "397": {
+      "url": "https://jobs.smartrecruiters.com/DeliveryHero/postings/744000130564019",
+      "title": "Sr Software Engineer Backend",
+      "company": "Delivery Hero",
+      "location": "Buenos Aires, Buenos Aires, Argentina",
+      "source": "smartrecruiters-api",
+      "atsTier": 3,
+      "jobId": "744000130564019"
+    },
+    "399": {
+      "url": "https://jobs.smartrecruiters.com/DeliveryHero/postings/744000127385705",
+      "title": "Senior Data Analyst (Marketing)",
+      "company": "Delivery Hero",
+      "location": "Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",
+      "source": "smartrecruiters-api",
+      "atsTier": 3,
+      "jobId": "744000127385705"
+    },
+    "401": {
+      "url": "https://jobs.smartrecruiters.com/DeliveryHero/postings/744000127286574",
+      "title": "Sr Product Manager",
+      "company": "Delivery Hero",
+      "location": "Buenos Aires, , Argentina",
+      "source": "smartrecruiters-api",
+      "atsTier": 3,
+      "jobId": "744000127286574"
+    },
+    "403": {
+      "url": "https://jobs.ashbyhq.com/Perk/4ec5eb14-50bf-44ef-bec1-0cde5a241d90",
+      "title": "Senior Software Engineer - Billing (VAT & Invoicing)",
+      "company": "TravelPerk (Perk)",
+      "location": "Barcelona",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "4ec5eb14-50bf-44ef-bec1-0cde5a241d90"
+    },
+    "404": {
+      "url": "https://jobs.ashbyhq.com/Perk/54f2ff7d-3964-4cd7-bf5f-2f0c1a2b2559",
+      "title": "Staff Product Manager - Billing (VAT)",
+      "company": "TravelPerk (Perk)",
+      "location": "Edinburgh",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "54f2ff7d-3964-4cd7-bf5f-2f0c1a2b2559"
+    },
+    "405": {
+      "url": "https://jobs.ashbyhq.com/Perk/58279f63-e490-4875-a2e2-c4573a596f52",
+      "title": "Analytics Engineer",
+      "company": "TravelPerk (Perk)",
+      "location": "London · Barcelona · Spain",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "58279f63-e490-4875-a2e2-c4573a596f52"
+    },
+    "406": {
+      "url": "https://jobs.ashbyhq.com/Perk/808ec7fa-6921-4d39-84c9-3a920177bf92",
+      "title": "Privacy & AI Analyst",
+      "company": "TravelPerk (Perk)",
+      "location": "Berlin",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "808ec7fa-6921-4d39-84c9-3a920177bf92"
+    },
+    "407": {
+      "url": "https://jobs.ashbyhq.com/Perk/a46f5832-d078-4f31-a98f-676c3adadc1d",
+      "title": "Staff Software Engineer - Flights",
+      "company": "TravelPerk (Perk)",
+      "location": "Edinburgh",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "a46f5832-d078-4f31-a98f-676c3adadc1d"
+    },
+    "408": {
+      "url": "https://jobs.ashbyhq.com/Perk/dd626876-1a3e-468d-bbf8-eb1085d20d8c",
+      "title": "Senior Software Engineer - Flights ",
+      "company": "TravelPerk (Perk)",
+      "location": "Birmingham",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "dd626876-1a3e-468d-bbf8-eb1085d20d8c"
+    },
+    "409": {
+      "url": "https://jobs.ashbyhq.com/Perk/eeb43820-cbf4-4393-9206-5adae531c2d8",
+      "title": "Senior Product Manager - Flights",
+      "company": "TravelPerk (Perk)",
+      "location": "Barcelona",
+      "source": "ashby-api",
+      "atsTier": 1,
+      "jobId": "eeb43820-cbf4-4393-9206-5adae531c2d8"
+    }
+  }
+}
