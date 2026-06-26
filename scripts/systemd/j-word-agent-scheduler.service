@@ -1,0 +1,41 @@
+[Unit]
+Description=j-word-agent autonomous job search scheduler
+Documentation=https://github.com/santifer/career-ops
+# Start after the network stack is fully up (Tailscale, DNS, etc.)
+After=network-online.target
+Wants=network-online.target
+# If the relay server is also running on this host, start it first
+After=j-word-agent-relay.service
+
+[Service]
+Type=simple
+User=__SERVICE_USER__
+Group=__SERVICE_USER__
+WorkingDirectory=__PROJECT_DIR__
+ExecStart=__NODE_BIN__ __PROJECT_DIR__/scheduler.mjs --daemon
+EnvironmentFile=__PROJECT_DIR__/.env
+
+# Restart policy — wait 30 s before restart to avoid tight crash loops.
+# systemd will honour the circuit-breaker logic in scheduler.mjs itself.
+Restart=on-failure
+RestartSec=30
+# Stop restart attempts after 5 failures in 10 minutes (systemd-level circuit breaker)
+StartLimitBurst=5
+StartLimitIntervalSec=600
+
+# Graceful shutdown: send SIGTERM, wait up to 30 s, then SIGKILL
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Resource limits
+LimitNOFILE=65536
+# Restrict memory if the RPi is RAM-constrained. Adjust or remove as needed.
+# MemoryLimit=512M
+
+# Logging — use journalctl to follow
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=j-word-agent-scheduler
+
+[Install]
+WantedBy=multi-user.target

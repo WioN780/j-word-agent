@@ -1,0 +1,45 @@
+# career-ops autonomous scheduler configuration
+# Used by: scheduler.mjs
+
+# ── Scan schedule ─────────────────────────────────────────────────────────────
+# scan_times takes priority over scan_interval_hours.
+# Set scan_times to [] to use interval-based scheduling instead.
+
+scan_times:
+  - "08:00"
+  - "12:00"
+  - "18:00"
+
+# Fallback: run every N hours (used when scan_times is empty)
+scan_interval_hours: 6
+
+# ── Filtering ─────────────────────────────────────────────────────────────────
+# Minimum evaluation score (0–5) to trigger CV generation and apply flow.
+# Note: scores are produced by the AI evaluation mode, not by the scanner itself.
+# This threshold gates post-scan automation (CV gen, relay link) when scores
+# are available in data/applications.md.
+score_threshold: 3.5
+
+# ── Safety limits ─────────────────────────────────────────────────────────────
+# Pause the scheduler and alert via Telegram when this many jobs pass the
+# filter in a single calendar day.
+max_applications_per_day: 10
+
+# ── Pipeline stages ───────────────────────────────────────────────────────────
+# Remove a stage name to disable it.
+#   scan     — run node scan.mjs
+#   cv       — attempt to render a standard CV PDF via generate-pdf.mjs
+#   notify   — pass --notify to scan.mjs (Telegram job cards)
+enabled_stages:
+  - scan
+  - cv
+  - notify
+
+# ── Liveness verification ─────────────────────────────────────────────────────
+# Requires Playwright + a display. Set to false on headless RPi builds unless
+# you have Xvfb or a display configured.
+verify_liveness: false
+
+# ── Daily summary ─────────────────────────────────────────────────────────────
+# Time (HH:MM, 24-hour) to send the daily digest via Telegram.
+daily_summary_time: "20:00"

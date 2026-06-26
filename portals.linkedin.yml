@@ -1,0 +1,87 @@
+# portals.linkedin.yml — LinkedIn job boards via the public guest API.
+#
+# This file is a TEMPLATE. Copy the job_boards entries you want into your
+# portals.eu.yml (which scan.mjs merges automatically), or into portals.yml.
+#
+# Provider: linkedin-guest (providers/linkedin-guest.mjs)
+#   - Hits LinkedIn's unauthenticated /jobs-guest/ endpoint
+#   - No login, no cookies, no Playwright
+#   - Rate-limited: 5–10 s jitter between requests (safe for personal use)
+#   - First page only (25 results max per query) — no pagination
+#
+# Key parameters:
+#   keywords  Search terms (job title, skills, etc.)
+#   location  City, country, or "Europe"
+#   geoId     LinkedIn geo ID for precise filtering (optional)
+#   f_WT      Work type: 1=on-site  2=remote  3=hybrid
+#   f_TPR     Time posted: r86400=24h  r604800=1wk  r2592000=1mo
+#   f_JT      Job type: F=full-time  P=part-time  C=contract
+#   f_E       Experience: 1=intern  2=entry  3=associate  4=mid-senior  5=director
+#
+# To activate: copy desired entries into portals.eu.yml under job_boards:
+#
+#   job_boards:
+#     - name: "LinkedIn — Backend Europe Remote"
+#       provider: linkedin-guest
+#       ...
+
+job_boards:
+
+  # ── EU Remote searches ────────────────────────────────────────────────────
+
+  - name: "LinkedIn — Software Engineer Europe Remote"
+    provider: linkedin-guest
+    keywords: "software engineer europe remote"
+    location: "Europe"
+    f_WT: "2"
+    f_TPR: "r604800"
+    f_JT: "F"
+    enabled: true
+
+  - name: "LinkedIn — Backend Engineer Warsaw Remote"
+    provider: linkedin-guest
+    keywords: "backend engineer remote"
+    location: "Warsaw, Poland"
+    geoId: "105072130"
+    f_WT: "2"
+    f_TPR: "r604800"
+    f_JT: "F"
+    enabled: true
+
+  - name: "LinkedIn — Python Developer Poland"
+    provider: linkedin-guest
+    keywords: "python developer"
+    location: "Poland"
+    geoId: "105072130"
+    f_TPR: "r604800"
+    f_JT: "F"
+    enabled: true
+
+  - name: "LinkedIn — Data Engineer Berlin Remote"
+    provider: linkedin-guest
+    keywords: "data engineer remote"
+    location: "Berlin, Germany"
+    geoId: "106967730"
+    f_WT: "2"
+    f_TPR: "r604800"
+    f_JT: "F"
+    enabled: true
+
+  - name: "LinkedIn — DevOps Engineer UK Remote"
+    provider: linkedin-guest
+    keywords: "devops engineer remote"
+    location: "United Kingdom"
+    geoId: "101165590"
+    f_WT: "2"
+    f_TPR: "r604800"
+    f_JT: "F"
+    enabled: true
+
+  - name: "LinkedIn — ML Engineer Amsterdam"
+    provider: linkedin-guest
+    keywords: "machine learning engineer"
+    location: "Amsterdam, Netherlands"
+    geoId: "102011674"
+    f_TPR: "r604800"
+    f_JT: "F"
+    enabled: true
