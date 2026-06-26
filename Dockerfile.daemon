@@ -42,6 +42,10 @@ WORKDIR /app
 COPY package.json package-lock.json* pnpm-lock.yaml* ./
 RUN npm install --ignore-scripts --no-audit --no-fund
 
+# Claude Code CLI — used by scheduler for tailored CV/cover letter generation.
+# Auth: set CLAUDE_CODE_OAUTH_TOKEN in .env (run `claude setup-token` locally once).
+RUN npm install -g @anthropic-ai/claude-code --no-audit --no-fund
+
 # Project source is bind-mounted at runtime via docker-compose volumes,
 # so we don't COPY it here. Config edits and `git pull` on the host show
 # up immediately inside the container without a rebuild.

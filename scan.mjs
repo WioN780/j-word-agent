@@ -1090,22 +1090,15 @@ async function main() {
   // EU-FORK START — Telegram notifications (--notify)
   if (args.includes('--notify')) {
     try {
-      const { sendJobCard, sendDailySummary } = await import('./telegram-bot.mjs');
-      if (verifiedOffers.length > 0) {
-        console.log(`\n📱 Sending ${verifiedOffers.length} Telegram card(s)...`);
-        for (const offer of verifiedOffers) {
-          await sendJobCard(offer);
-        }
-      }
+      const { sendDailySummary } = await import('./telegram-bot.mjs');
       await sendDailySummary({
         newOffers: verifiedOffers.length,
         duplicates: totalDupes,
         companies: targets.length,
         errors: errors.length,
+        offers: verifiedOffers,
       });
-      if (verifiedOffers.length > 0) {
-        console.log('📱 Telegram: cards sent. Run "node telegram-bot.mjs" to handle replies.');
-      }
+      console.log('📱 Telegram: scan summary sent.');
     } catch (err) {
       console.error(`Telegram: ${err.message}`);
     }
