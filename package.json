@@ -1,5 +1,5 @@
 {
-  "name": "career-ops",
+  "name": "j-word-agent",
   "version": "1.13.0",
   "description": "AI-powered job search pipeline — works with any AI coding CLI (Claude Code, OpenCode, Gemini, Codex, Qwen)",
   "private": true,
@@ -19,10 +19,14 @@
     "liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
     "scan:full": "node scan-ats-full.mjs",
+    "relay": "node relay-server.mjs",
     "validate:portals": "node validate-portals.mjs",
     "verify:portals": "node verify-portals.mjs",
     "tracker": "node tracker.mjs",
     "patterns": "node analyze-patterns.mjs",
+    "scheduler": "node scheduler.mjs",
+    "scheduler:once": "node scheduler.mjs --once",
+    "scheduler:daemon": "node scheduler.mjs --daemon",
     "gemini:eval": "node gemini-eval.mjs",
     "postinstall": "npx playwright install chromium --with-deps || npx playwright install chromium --with-deps"
   },
@@ -40,12 +44,13 @@
   "homepage": "https://santifer.io",
   "repository": {
     "type": "git",
-    "url": "https://github.com/santifer/career-ops"
+    "url": "https://github.com/WioN780/j-word-agent"
   },
   "license": "MIT",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "dotenv": "^17.0.0",
+    "express": "^5.1.0",
     "js-yaml": "^4.1.1",
     "node-telegram-bot-api": "^1.1.1",
     "playwright": "1.61.0"

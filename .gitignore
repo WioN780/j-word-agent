@@ -9,6 +9,7 @@ data/parser-output/**/*.json
 !data/parser-output/**/.gitkeep
 data/cache/ats-companies/
 data/browser-profile/
+data/apply-cards/
 reports/*.md
 !reports/.gitkeep
 output/*

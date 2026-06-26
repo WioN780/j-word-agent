@@ -1,33 +1,143 @@
+# career-ops — docker-compose.yml
+#
+# Two usage modes:
+#
+#  1. Production daemons (default — no profile flag needed):
+#       docker compose up -d
+#     Starts: scheduler (scan loop) + relay (phone review bridge).
+#     Use these on a Raspberry Pi or any always-on server.
+#
+#  2. Interactive AI-agent workspace (--profile dev):
+#       docker compose --profile dev up -d
+#       ./cops up
+#     Also starts the career-ops container so ./cops commands work.
+#
+# Quick reference:
+#   docker compose up -d              # start daemons
+#   docker compose logs -f            # follow both daemon logs
+#   docker compose down               # stop everything
+#   docker compose --profile dev up   # + interactive shell container
+#   ./cops scan                       # one-shot scan in interactive container
+#   make status                       # curl the relay /health endpoint
+
 services:
-  career-ops:
+  # ── scheduler ────────────────────────────────────────────────────────────────
+  # Autonomous scan orchestrator.  Runs continuously, wakes at configured times,
+  # sends Telegram job cards, enforces daily limits, handles /scan /pause etc.
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile.daemon
+    image: j-word-agent:daemon
+    container_name: j-word-agent-scheduler
+    working_dir: /app
+    command: ["node", "scheduler.mjs", "--daemon"]
+    init: true
+    # Load TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, RELAY_SECRET, etc.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+    volumes:
+      # Bind-mount the project so config edits and `git pull` take effect
+      # on the next `docker compose restart` without rebuilding the image.
+      - .:/app
+      # Daemon node_modules live in a separate named volume from the dev
+      # container to avoid collisions (different playwright pin).
+      - j-word-agent-daemon-modules:/app/node_modules
+    # Chromium needs a larger /dev/shm than Docker's default 64 MB.
+    # 512 MB is sufficient for headless liveness checks.
+    shm_size: "512m"
+    restart: unless-stopped
+    healthcheck:
+      # State file is written after the first scan cycle — healthy once it exists.
+      test: ["CMD-SHELL", "test -f data/scheduler-state.json || exit 1"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 45s
+
+  # ── relay ─────────────────────────────────────────────────────────────────────
+  # Express server bridging Telegram callbacks → live browser → phone.
+  # Access via Tailscale: http://<PI_HOSTNAME>:<RELAY_PORT>/?token=<RELAY_SECRET>
+
+  relay:
+    build:
+      context: .
+      dockerfile: Dockerfile.daemon
+    image: j-word-agent:daemon
+    container_name: j-word-agent-relay
+    working_dir: /app
+    command: ["node", "relay-server.mjs"]
+    init: true
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+    volumes:
+      - .:/app
+      - j-word-agent-daemon-modules:/app/node_modules
+    # Expose relay port on the host. RELAY_PORT is read from .env (default 3847).
+    # Docker Compose auto-loads .env for interpolation here.
+    ports:
+      - "${RELAY_PORT:-3847}:${RELAY_PORT:-3847}"
+    restart: unless-stopped
+    healthcheck:
+      # /ping is unauthenticated (registered before authMiddleware in relay-server.mjs).
+      test:
+        [
+          "CMD-SHELL",
+          "curl -sf http://localhost:${RELAY_PORT:-3847}/ping | grep -q 'true' || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ── career-ops (interactive workspace) ───────────────────────────────────────
+  # Full dev image with Go, LaTeX, and the AI coding CLI workspace.
+  # Only started when the "dev" profile is active:
+  #   docker compose --profile dev up -d
+  #   ./cops up
+  #
+  # All ./cops commands route through this container.
+
+  j-word-agent:
+    profiles: [dev]
     build:
       context: .
       dockerfile: Dockerfile
-    image: career-ops:local
+    image: j-word-agent:local
     container_name: career-ops
     working_dir: /app
-    # Long-running shell so `docker compose exec` is instant.
+    # Long-running idle process so `docker compose exec` is instant.
     command: ["tail", "-f", "/dev/null"]
     init: true
-    # Mount whole project so edits on host are visible inside the container.
-    # node_modules is kept inside the image to avoid host/container ABI mismatch
-    # (host is ubuntu26.04 where playwright won't install; image is jammy).
     volumes:
       - .:/app
-      - career-ops-node-modules:/app/node_modules
+      - j-word-agent-node-modules:/app/node_modules
     environment:
       - NODE_ENV=development
       - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-      # Forward common API keys if set on host. Empty values are ignored.
+      # Forward optional AI API keys from the host shell or .env.
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
-    # Chromium needs a larger /dev/shm than the default 64M.
     shm_size: "1gb"
-    # Dashboard TUI is interactive; expose nothing by default but allow `-it`.
     tty: true
     stdin_open: true
     restart: unless-stopped
 
+# ── Volumes ───────────────────────────────────────────────────────────────────
+# Named volumes keep node_modules inside Docker, preventing host/container
+# ABI mismatches and isolating the two images from each other.
+
 volumes:
-  career-ops-node-modules:
+  # For the interactive career-ops container (full Dockerfile).
+  j-word-agent-node-modules:
+  # For the scheduler and relay containers (slim Dockerfile.daemon).
+  # Separate volume avoids conflicting playwright pin between the two images.
+  j-word-agent-daemon-modules:

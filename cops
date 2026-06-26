@@ -9,19 +9,25 @@
 #   ./cops node generate-pdf.mjs cv.html output/cv.pdf
 #   ./cops shell                     # interactive bash
 #   ./cops up | down | rebuild | logs
+#   ./cops daemon                    # show status of scheduler + relay
 #
 # Anything not matching a known subcommand is forwarded to npm run <subcommand>
 # when package.json defines it, otherwise executed verbatim inside the container.
+#
+# The interactive career-ops container is in the "dev" compose profile.
+# The scheduler and relay daemons run without any profile.
 
 set -euo pipefail
 
 cd "$(dirname "$0")"
 
-SERVICE="career-ops"
+SERVICE="j-word-agent"
+DAEMON_SERVICES="scheduler relay"
 
+# Start the interactive dev container (and the daemons, which have no profile).
 ensure_up() {
-  if ! docker compose ps --services --filter "status=running" | grep -qx "$SERVICE"; then
-    docker compose up -d >/dev/null
+  if ! docker compose ps --services --filter "status=running" 2>/dev/null | grep -qx "$SERVICE"; then
+    docker compose --profile dev up -d "$SERVICE" >/dev/null
   fi
 }
 
@@ -30,17 +36,23 @@ case "${1:-}" in
     sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
     exit 0
     ;;
+
+  # ── Lifecycle ────────────────────────────────────────────────────────────────
+
   up)
-    docker compose up -d
+    # Start dev container + daemons.
+    docker compose --profile dev up -d
     exit 0
     ;;
   down)
-    docker compose down
+    # Stop everything (dev container + daemons).
+    docker compose --profile dev down
     exit 0
     ;;
   rebuild)
+    # Rebuild both images from scratch.
     docker compose build --no-cache
-    docker compose up -d
+    docker compose --profile dev up -d
     exit 0
     ;;
   logs)
@@ -48,6 +60,26 @@ case "${1:-}" in
     docker compose logs -f "$@"
     exit 0
     ;;
+
+  # ── Daemon shortcuts ─────────────────────────────────────────────────────────
+
+  daemon|daemons)
+    # Show scheduler + relay status without starting the dev container.
+    docker compose ps scheduler relay 2>/dev/null || \
+      echo "Daemons not running. Start with: docker compose up -d"
+    exit 0
+    ;;
+  daemon-logs)
+    docker compose logs -f scheduler relay
+    exit 0
+    ;;
+  daemon-restart)
+    docker compose restart scheduler relay
+    exit 0
+    ;;
+
+  # ── Interactive exec into the dev container ──────────────────────────────────
+
   shell|bash)
     ensure_up
     exec docker compose exec -it "$SERVICE" bash
