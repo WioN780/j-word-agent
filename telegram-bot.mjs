@@ -29,9 +29,12 @@
  */
 
 import TelegramBot from "node-telegram-bot-api";
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from "fs";
 import { pathToFileURL } from "url";
 import dotenv from "dotenv";
+import { spawn } from "child_process";
+import path from "path";
+import yaml from "js-yaml";
 import { detectATS } from "./ats-detector.mjs";
 import { generateAndSaveApplyCard } from "./apply-card.mjs";
 
@@ -57,19 +60,20 @@ const STATE_PATH = "data/telegram-state.json";
 
 function loadState() {
   if (!existsSync(STATE_PATH))
-    return { kept: [], skipped: [], pendingCards: {} };
+    return { kept: [], skipped: [], pendingCards: {}, chatMode: false, chatHistory: [], autoPilotPending: {}, lastUsageCheck: 0 };
   try {
     const s = JSON.parse(readFileSync(STATE_PATH, "utf-8"));
     return {
       kept: Array.isArray(s.kept) ? s.kept : [],
       skipped: Array.isArray(s.skipped) ? s.skipped : [],
-      pendingCards:
-        s.pendingCards && typeof s.pendingCards === "object"
-          ? s.pendingCards
-          : {},
+      pendingCards: s.pendingCards && typeof s.pendingCards === "object" ? s.pendingCards : {},
+      chatMode: !!s.chatMode,
+      chatHistory: Array.isArray(s.chatHistory) ? s.chatHistory : [],
+      autoPilotPending: s.autoPilotPending && typeof s.autoPilotPending === "object" ? s.autoPilotPending : {},
+      lastUsageCheck: typeof s.lastUsageCheck === "number" ? s.lastUsageCheck : 0,
     };
   } catch {
-    return { kept: [], skipped: [], pendingCards: {} };
+    return { kept: [], skipped: [], pendingCards: {}, chatMode: false, chatHistory: [], autoPilotPending: {}, lastUsageCheck: 0 };
   }
 }
 
@@ -78,7 +82,139 @@ function saveState(state) {
   writeFileSync(STATE_PATH, JSON.stringify(state, null, 2), "utf-8");
 }
 
+// Run a process with stdin support
+function runProcess(cmd, args, opts = {}) {
+  return new Promise((resolve, reject) => {
+    const stdoutBuf = [];
+    const stderrBuf = [];
+    const stdio = [opts.stdin !== undefined ? "pipe" : "ignore", "pipe", "pipe"];
+
+    const child = spawn(cmd, args, {
+      stdio,
+      ...opts,
+    });
+
+    if (opts.stdin !== undefined) {
+      child.stdin.write(opts.stdin);
+      child.stdin.end();
+    }
+
+    child.stdout.on("data", (d) => stdoutBuf.push(d.toString()));
+    child.stderr.on("data", (d) => stderrBuf.push(d.toString()));
+
+    child.on("close", (code) => {
+      resolve({ code, stdout: stdoutBuf.join(""), stderr: stderrBuf.join("") });
+    });
+    child.on("error", reject);
+  });
+}
+
+function getReportByNum(numStr) {
+  const num = numStr.trim().padStart(3, "0");
+  const reportsDir = "reports";
+  if (!existsSync(reportsDir)) return null;
+  const files = readdirSync(reportsDir);
+  const file = files.find(f => f.startsWith(`${num}-`) && f.endsWith(".md"));
+  if (!file) return null;
+  return path.join(reportsDir, file);
+}
+
+function getPdfByNum(numStr) {
+  const num = numStr.trim().padStart(3, "0");
+  const reportsDir = "reports";
+  if (!existsSync(reportsDir)) return null;
+  const files = readdirSync(reportsDir);
+  const reportFile = files.find(f => f.startsWith(`${num}-`) && f.endsWith(".md"));
+  if (!reportFile) return null;
+
+  // format: num-slug-YYYY-MM-DD.md
+  const parts = reportFile.replace(/\.md$/, "").split("-");
+  if (parts.length < 5) return null;
+  const date = parts.slice(-3).join("-");
+  const slug = parts.slice(1, -3).join("-");
+  
+  const pdfPath = path.join("output", `cv-${slug}-${date}.pdf`);
+  if (existsSync(pdfPath)) {
+    return pdfPath;
+  }
+  return null;
+}
+
+function markdownToTelegramHtml(md) {
+  return md
+    .split("\n")
+    .map(line => {
+      if (line.startsWith("#")) {
+        const title = line.replace(/^#+\s*/, "");
+        return `<b>${escapeHtml(title)}</b>`;
+      }
+      let formatted = line;
+      formatted = escapeHtml(formatted);
+      formatted = formatted.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+      formatted = formatted.replace(/\*(.*?)\*/g, "<i>$1</i>");
+      formatted = formatted.replace(/`(.*?)`/g, "<code>$1</code>");
+      return formatted;
+    })
+    .join("\n");
+}
+
+function getAgentCli() {
+  const isWin = process.platform === "win32";
+  const exts = isWin ? (process.env.PATHEXT || ".EXE;.CMD;.BAT").split(";") : [""];
+  const paths = (process.env.PATH || "").split(isWin ? ";" : ":");
+  
+  const onPath = (cmd) => {
+    for (const dir of paths) {
+      if (!dir) continue;
+      for (const ext of exts) {
+        try {
+          if (existsSync(path.join(dir, cmd + ext))) return true;
+        } catch {}
+      }
+    }
+    return false;
+  };
+
+  if (onPath("agy")) return { cmd: "agy", args: ["-p"] };
+  if (onPath("claude")) return { cmd: "claude", args: ["-p"] };
+  if (onPath("opencode")) return { cmd: "opencode", args: ["run"] };
+  if (onPath("copilot")) return { cmd: "copilot", args: ["-p"] };
+  if (onPath("codex")) return { cmd: "codex", args: ["exec"] };
+  if (onPath("qwen")) return { cmd: "qwen", args: ["-p"] };
+  if (onPath("grok")) return { cmd: "grok", args: ["-p"] };
+
+  return { cmd: "claude", args: ["-p"] };
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+// EU-FORK: persistent keyboard reads scheduler-state for Pause↔Resume label
+function buildNavKeyboard() {
+  let isPaused = false;
+  try {
+    const raw = readFileSync("data/scheduler-state.json", "utf-8");
+    isPaused = !!JSON.parse(raw).paused;
+  } catch {}
+  return {
+    keyboard: [
+      [{ text: "/status" }, { text: "/scan" }, { text: "/pending" }],
+      [{ text: "/ranked" }, { text: "/usage" }, { text: isPaused ? "/resume" : "/pause" }],
+    ],
+    resize_keyboard: true,
+    is_persistent: true,
+  };
+}
+
+// EU-FORK: unified inline card keyboard — Row 1 always Keep|Skip|Later, Row 2 conditional on ATS tier
+function buildCardKeyboard(atsTier) {
+  const row1 = [
+    { text: "✅ Keep", callback_data: "keep" },
+    { text: "❌ Skip", callback_data: "skip" },
+    { text: "⏰ Later", callback_data: "later" },
+  ];
+  if (atsTier === 1) return { inline_keyboard: [row1, [{ text: "📋 Apply", callback_data: "apply" }]] };
+  return { inline_keyboard: [row1] };
+}
 
 function escapeHtml(text) {
   return String(text ?? "")
@@ -192,23 +328,10 @@ export async function sendJobCard(job) {
 
   const text = textLines.join("\n");
 
-  const buttonsRow1 = [
-    { text: "✅ Keep", callback_data: "keep" },
-    { text: "❌ Skip", callback_data: "skip" },
-    { text: "⏰ Later", callback_data: "later" },
-  ];
-  if (tier === 1)
-    buttonsRow1.push({ text: "📋 Apply", callback_data: "apply" });
-
-  // All jobs get a "Get Apply Card" button on a second row
-  const buttonsRow2 = [
-    { text: "📋 Get Apply Card", callback_data: "apply_card" },
-  ];
-
   const msg = await bot.sendMessage(chatId, text, {
     parse_mode: "HTML",
     disable_web_page_preview: true,
-    reply_markup: { inline_keyboard: [buttonsRow1, buttonsRow2] },
+    reply_markup: buildCardKeyboard(tier),
   });
 
   // Store messageId → job mapping so the listener can resolve callbacks without
@@ -339,21 +462,60 @@ async function sendNextPipelineJob(bot, chatId) {
   const sentMsg = await bot.sendMessage(chatId, cardLines.join("\n"), {
     parse_mode: "HTML",
     disable_web_page_preview: true,
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { text: "✅ Keep", callback_data: "keep" },
-          { text: "❌ Skip", callback_data: "skip" },
-          { text: "➡️ Next", callback_data: "next_job" },
-        ],
-        [
-          { text: "📋 Apply Card", callback_data: "apply_card" },
-        ],
-      ],
-    },
+    reply_markup: buildCardKeyboard(job.tier),
   });
 
   state.pendingCards[String(sentMsg.message_id)] = {
+    url: job.url,
+    title: job.title,
+    company: job.company,
+    location: null,
+    source: job.atsType,
+    atsTier: job.tier,
+    jobId: null,
+  };
+  saveState(state);
+}
+
+async function editMessageWithNextJob(bot, chatId, messageId) {
+  const state = loadState();
+  const job = getNextPipelineJob(state);
+
+  if (!job) {
+    await bot
+      .editMessageText(
+        "✅ No more jobs to review!\n\nRun <code>node scan.mjs --notify</code> to scan for more, or <code>/ranked</code> to see scored offers.",
+        {
+          chat_id: chatId,
+          message_id: messageId,
+          parse_mode: "HTML",
+          reply_markup: { inline_keyboard: [] },
+        }
+      )
+      .catch(() => {});
+    return;
+  }
+
+  const badge = TIER_BADGE[job.tier] ?? TIER_BADGE[3];
+  const cardLines = [
+    `🔍 <b>Job Review</b> — ${job.remaining} pending`,
+    "",
+    `🏢 <b>${escapeHtml(job.company)}</b> — ${escapeHtml(job.title)}`,
+    `${badge.emoji} ${escapeHtml(job.atsType)} · ${badge.label}`,
+    `🔗 ${escapeHtml(job.url)}`,
+  ];
+
+  await bot
+    .editMessageText(cardLines.join("\n"), {
+      chat_id: chatId,
+      message_id: messageId,
+      parse_mode: "HTML",
+      disable_web_page_preview: true,
+      reply_markup: buildCardKeyboard(job.tier),
+    })
+    .catch(() => {});
+
+  state.pendingCards[String(messageId)] = {
     url: job.url,
     title: job.title,
     company: job.company,
@@ -393,26 +555,28 @@ async function startListener() {
   // Register commands in the "/" menu (Bot API: setMyCommands)
   await bot
     .setMyCommands([
-      { command: "start",    description: "Show help and navigation" },
-      { command: "next",     description: "Review next job from pipeline" },
-      { command: "ranked",   description: "Top-scored evaluated offers" },
-      { command: "linkedin", description: "Search LinkedIn: /linkedin <keywords>" },
+      { command: "start",       description: "Show help and navigation" },
+      { command: "status",      description: "System status & activity" },
+      { command: "scan",        description: "Scan job boards in background" },
+      { command: "pending",     description: "List jobs awaiting your review" },
+      { command: "ranked",      description: "Top-scored evaluated offers" },
+      { command: "usage",       description: "Check Claude Code quota usage" },
+      { command: "pause",       description: "Pause the autonomous scheduler" },
+      { command: "resume",      description: "Resume the autonomous scheduler" },
+      { command: "profile",     description: "Show targeting summary & live portfolio" },
+      { command: "chat",        description: "Toggle chat mode (or /chat <msg> single-shot)" },
+      { command: "autopilot",   description: "Enable/disable auto-apply: /autopilot on|off" },
+      { command: "report",      description: "View evaluation report: /report <num>" },
+      { command: "pdf",         description: "Get tailored CV PDF: /pdf <num>" },
+      { command: "linkedin",    description: "Search LinkedIn: /linkedin <keywords>" },
     ])
     .catch((err) => console.error(`setMyCommands failed: ${err.message}`));
 
-  // Send persistent keyboard so buttons are always visible in chat
-  const NAV_KEYBOARD = {
-    keyboard: [
-      [{ text: "/next" }, { text: "/ranked" }],
-    ],
-    resize_keyboard: true,
-    is_persistent: true,
-  };
-
+  // EU-FORK: persistent keyboard — 2 rows × 3 buttons; Pause↔Resume flips based on scheduler state
   await bot
     .sendMessage(chatId, "🤖 <b>career-ops bot ready</b> — buttons pinned below", {
       parse_mode: "HTML",
-      reply_markup: NAV_KEYBOARD,
+      reply_markup: buildNavKeyboard(),
     })
     .catch(() => {/* ignore if chat not yet initiated */});
 
@@ -424,20 +588,30 @@ async function startListener() {
       "👋 <b>career-ops bot</b>",
       "",
       "<b>Commands:</b>",
-      "  /next — Review next job from pipeline",
-      "  /ranked — Top-scored offers after evaluation",
+      "  /status — Scheduler health + today's stats",
+      "  /scan — Trigger job scan in background",
+      "  /pending — Jobs awaiting your review",
+      "  /ranked — Top-scored offers (evaluated by Gemini)",
+      "  /usage — Claude Code quota usage",
+      "  /pause / /resume — Stop or restart autonomous scanning",
+      "  /profile — Your targeting summary + live portfolio sync",
+      "  /chat — Toggle chat mode (or <code>/chat &lt;msg&gt;</code> for one-shot)",
+      "  /autopilot on|off — Enable hybrid auto-apply for Tier 1 jobs",
+      "  /report &lt;num&gt; — Read evaluation report",
+      "  /pdf &lt;num&gt; — Get tailored CV PDF",
       "  /linkedin &lt;keywords&gt; — Search LinkedIn",
       "",
       "<b>Workflow:</b>",
-      "  1. <code>node scan.mjs --notify</code> — scan &amp; get summary",
-      "  2. /next — browse found jobs one by one",
-      "  3. <code>/career-ops pipeline</code> in Claude — evaluate &amp; score",
-      "  4. /ranked — see your best matches",
+      "  1. /scan finds new job posts (runs automatically on schedule)",
+      "  2. /pending lists them — tap Keep / Skip / Later on each card",
+      "  3. Gemini evaluates kept jobs automatically",
+      "  4. /ranked shows your best matches",
+      "  5. /report &lt;num&gt; reads the AI assessment, /pdf &lt;num&gt; gets the CV",
     ];
 
     await bot.sendMessage(chatId, lines.join("\n"), {
       parse_mode: "HTML",
-      reply_markup: NAV_KEYBOARD,
+      reply_markup: buildNavKeyboard(),
     });
   });
 
@@ -448,6 +622,74 @@ async function startListener() {
     const action = query.data;
     const msgId = String(query.message.message_id);
     const state = loadState();
+
+    // EU-FORK: autopilot callbacks resolved from autoPilotPending (separate from pendingCards)
+    const autoPilotJob = state.autoPilotPending?.[msgId];
+    if (autoPilotJob && (action === "autopilot_yes" || action === "autopilot_no")) {
+      delete state.autoPilotPending[msgId];
+      saveState(state);
+      if (action === "autopilot_no") {
+        await bot.answerCallbackQuery(query.id, { text: "❌ Skipped" });
+        await bot.editMessageReplyMarkup({ inline_keyboard: [] }, { chat_id: query.message.chat.id, message_id: query.message.message_id }).catch(() => {});
+        return;
+      }
+      // EU-FORK: autopilot_yes — update trust ramp, then route through relay flow
+      // deliberate design: always requires user tap (NEVER submits without review)
+      await bot.answerCallbackQuery(query.id, { text: "🚀 Opening relay…" });
+      const SCHED_PATH = "data/scheduler-state.json";
+      try {
+        const ss = existsSync(SCHED_PATH) ? JSON.parse(readFileSync(SCHED_PATH, "utf-8")) : {};
+        if (!ss.autoPilot) ss.autoPilot = { enabled: true, trialRemaining: 3, todayAutoApplied: 0, submissionLog: [] };
+        if (ss.autoPilot.trialRemaining > 0) ss.autoPilot.trialRemaining -= 1;
+        ss.autoPilot.todayAutoApplied = (ss.autoPilot.todayAutoApplied || 0) + 1;
+        ss.autoPilot.submissionLog = [...(ss.autoPilot.submissionLog || []), {
+          date: new Date().toISOString(), url: autoPilotJob.url, company: autoPilotJob.company, role: autoPilotJob.role, score: autoPilotJob.score,
+        }];
+        writeFileSync(SCHED_PATH, JSON.stringify(ss, null, 2), "utf-8");
+      } catch (err) { console.error(`autopilot state update failed: ${err.message}`); }
+      // Route through relay the same way the 'apply' callback does
+      const relayUrl = autoPilotJob.jobId ? await getRelayUrlSafe(autoPilotJob.jobId) : null;
+      let receipt;
+      if (relayUrl) {
+        receipt = [
+          `📋 <b>Ready for Review</b>`,
+          "",
+          `🏢 <b>${escapeHtml(autoPilotJob.company)}</b> — ${escapeHtml(autoPilotJob.role)}`,
+          `⭐ Score: ${autoPilotJob.score}/5 · 🟢 Tier 1`,
+          "",
+          `Review & submit from your phone:`,
+          `<a href="${escapeHtml(relayUrl)}">${escapeHtml(relayUrl)}</a>`,
+        ].join("\n");
+      } else {
+        receipt = [
+          `✅ <b>Confirmed</b> — relay not configured`,
+          `🏢 <b>${escapeHtml(autoPilotJob.company)}</b> — ${escapeHtml(autoPilotJob.role)}`,
+          `⭐ Score: ${autoPilotJob.score}/5`,
+          "",
+          `Direct link: ${escapeHtml(autoPilotJob.url)}`,
+          `📋 Logged in scheduler-state.json`,
+          `See docs/RELAY.md to enable one-tap apply.`,
+        ].join("\n");
+      }
+      await bot.sendMessage(chatId, receipt, { parse_mode: "HTML", disable_web_page_preview: true });
+      await bot.editMessageReplyMarkup({ inline_keyboard: [] }, { chat_id: query.message.chat.id, message_id: query.message.message_id }).catch(() => {});
+      return;
+    }
+
+    // EU-FORK: next_job must resolve before the card guard — /pending summary
+    // message is not in pendingCards, so the guard would otherwise block it
+    if (action === "next_job") {
+      await bot.answerCallbackQuery(query.id, { text: "Loading next job…" });
+      if (state.pendingCards[msgId]) {
+        delete state.pendingCards[msgId];
+        saveState(state);
+        await editMessageWithNextJob(bot, query.message.chat.id, query.message.message_id);
+      } else {
+        await sendNextPipelineJob(bot, chatId);
+      }
+      return;
+    }
+
     const card = state.pendingCards[msgId];
 
     if (!card) {
@@ -462,39 +704,18 @@ async function startListener() {
       delete state.pendingCards[msgId];
       saveState(state);
       await bot.answerCallbackQuery(query.id, { text: "✅ Kept!" });
-      await bot
-        .editMessageReplyMarkup(
-          { inline_keyboard: [[{ text: "✅ Kept", callback_data: "noop" }]] },
-          {
-            chat_id: query.message.chat.id,
-            message_id: query.message.message_id,
-          },
-        )
-        .catch(() => {
-          /* message may be too old to edit — ignore */
-        });
+      await editMessageWithNextJob(bot, query.message.chat.id, query.message.message_id);
       console.log(`  ✅ Kept    — ${card.company} | ${card.title}`);
     } else if (action === "skip") {
       if (!state.skipped.includes(card.url)) state.skipped.push(card.url);
       delete state.pendingCards[msgId];
       saveState(state);
       await bot.answerCallbackQuery(query.id, { text: "❌ Skipped" });
-      await bot
-        .editMessageReplyMarkup(
-          {
-            inline_keyboard: [[{ text: "❌ Skipped", callback_data: "noop" }]],
-          },
-          {
-            chat_id: query.message.chat.id,
-            message_id: query.message.message_id,
-          },
-        )
-        .catch(() => {
-          /* message may be too old to edit — ignore */
-        });
+      await editMessageWithNextJob(bot, query.message.chat.id, query.message.message_id);
       console.log(`  ❌ Skipped — ${card.company} | ${card.title}`);
     } else if (action === "later") {
       await bot.answerCallbackQuery(query.id, { text: "⏰ Saved for later" });
+      await editMessageWithNextJob(bot, query.message.chat.id, query.message.message_id);
       console.log(`  ⏰ Later   — ${card.company} | ${card.title}`);
     } else if (action === "apply") {
       const relayUrl = card.jobId ? await getRelayUrlSafe(card.jobId) : null;
@@ -532,15 +753,6 @@ async function startListener() {
         await bot.sendMessage(chatId, followUp, { parse_mode: "HTML" });
       }
       console.log(`  📋 Apply    — ${card.company} | ${card.title}`);
-    } else if (action === "next_job") {
-      await bot.answerCallbackQuery(query.id, { text: "Loading next job…" });
-      await bot
-        .editMessageReplyMarkup({ inline_keyboard: [] }, {
-          chat_id: query.message.chat.id,
-          message_id: query.message.message_id,
-        })
-        .catch(() => {});
-      await sendNextPipelineJob(bot, chatId);
     } else if (action === "apply_card") {
       // Generate and send an apply data card on demand
       await bot.answerCallbackQuery(query.id, {
@@ -573,6 +785,592 @@ async function startListener() {
 
   bot.on("polling_error", (err) => {
     console.error(`Polling error: ${err.code || ""} ${err.message}`);
+  });
+
+  // ── /pending command ──────────────────────────────────────────────────────
+  bot.onText(/\/pending(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const PIPELINE_PATH = "data/pipeline.md";
+    if (!existsSync(PIPELINE_PATH)) {
+      await bot.sendMessage(
+        chatId,
+        "✅ No jobs pending review.\n(Inbox is empty.)",
+        { parse_mode: "HTML" }
+      );
+      return;
+    }
+
+    const state = loadState();
+    const text = readFileSync(PIPELINE_PATH, "utf-8");
+    const pendingLines = text.split("\n").filter(l => /^- \[ \]/.test(l));
+
+    const list = [];
+    for (const line of pendingLines) {
+      const urlMatch = line.match(/^- \[ \] (\S+)/);
+      if (!urlMatch) continue;
+      const url = urlMatch[1];
+      if (state.kept.includes(url) || state.skipped.includes(url)) continue;
+
+      const parts = line.replace(/^- \[ \] /, "").split(" | ");
+      list.push(`${parts[1] || "Unknown"} — ${parts[2] || "Unknown role"}`);
+    }
+
+    const totalPending = list.length;
+    if (totalPending === 0) {
+      await bot.sendMessage(
+        chatId,
+        "✅ No jobs pending review.\n(All items have been reviewed.)",
+        { parse_mode: "HTML" }
+      );
+      return;
+    }
+
+    const displayed = list.slice(0, 15);
+    const items = displayed.map((l, i) => `${i + 1}. ${escapeHtml(l)}`).join("\n");
+    const moreText = totalPending > 15 ? `\n... and ${totalPending - 15} more` : "";
+
+    await bot.sendMessage(
+      chatId,
+      `⏳ <b>Pending Review (${totalPending})</b>\n\n${items}${moreText}`,
+      {
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [[{ text: "🔍 Start Reviewing", callback_data: "next_job" }]]
+        }
+      }
+    );
+  });
+
+  // ── /reset command ────────────────────────────────────────────────────────
+  bot.onText(/\/(reset|clear_today)(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const STATE_PATH = "data/scheduler-state.json";
+    if (existsSync(STATE_PATH)) {
+      try {
+        const s = JSON.parse(readFileSync(STATE_PATH, "utf-8"));
+        s.today = {
+          date: new Date().toISOString().slice(0, 10),
+          scanCycles: 0,
+          newOffers: 0,
+          cvsGenerated: 0,
+          errors: 0,
+          evalResults: [],
+          highScoringJobs: [],
+          morningDigestSent: false,
+          limitBypassed: false
+        };
+        s.paused = false;
+        s.circuitOpen = false;
+        s.consecutiveScanFailures = 0;
+        s.retryAt = null;
+        writeFileSync(STATE_PATH, JSON.stringify(s, null, 2), "utf-8");
+        
+        await bot.sendMessage(
+          chatId,
+          "🔄 <b>Daily counters reset.</b>\n\nScheduler status: ▶️ Running\nAll limits reset for today.",
+          { parse_mode: "HTML" }
+        );
+      } catch (err) {
+        await bot.sendMessage(chatId, `❌ Failed to reset state: ${err.message}`);
+      }
+    } else {
+      await bot.sendMessage(chatId, "⚠️ Scheduler state file not found.", { parse_mode: "HTML" });
+    }
+  });
+
+  // ── /reset_pending command ──────────────────────────────────────────────────
+  bot.onText(/\/(reset_pending|clear_pending)(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    try {
+      // 1. Clear pending lines from pipeline.md
+      const PIPELINE_PATH = "data/pipeline.md";
+      if (existsSync(PIPELINE_PATH)) {
+        const text = readFileSync(PIPELINE_PATH, "utf-8");
+        const lines = text.split("\n");
+        const cleanedLines = lines.filter(l => !/^- \[ \]/.test(l));
+        writeFileSync(PIPELINE_PATH, cleanedLines.join("\n"), "utf-8");
+      }
+
+      // 2. Clear state variables
+      const state = loadState();
+      state.kept = [];
+      state.skipped = [];
+      state.pendingCards = {};
+      saveState(state);
+
+      await bot.sendMessage(
+        chatId,
+        "🔄 <b>Pending offers and review states reset.</b>\n\nPipeline inbox has been cleared of pending jobs, and keep/skip stats reset.",
+        { parse_mode: "HTML" }
+      );
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Failed to reset pending: ${err.message}`);
+    }
+  });
+
+  // ── /status command ───────────────────────────────────────────────────────
+  bot.onText(/\/status/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    let paused = "unknown";
+    let lastScan = "never";
+    let nextScan = "unknown";
+    let todayCycles = 0;
+    let todayNewOffers = 0;
+    let todayCvs = 0;
+    let todayErrors = 0;
+    let circuitLine = "";
+
+    const STATE_PATH = "data/scheduler-state.json";
+    if (existsSync(STATE_PATH)) {
+      try {
+        const s = JSON.parse(readFileSync(STATE_PATH, "utf-8"));
+        paused = s.paused ? "⏸ Paused" : "▶️ Running";
+        lastScan = s.lastScanTime ? new Date(s.lastScanTime).toLocaleString() : "never";
+        nextScan = s.nextScanTime ? new Date(s.nextScanTime).toLocaleString() : "unknown";
+        if (s.today) {
+          todayCycles = s.today.scanCycles ?? 0;
+          todayNewOffers = s.today.newOffers ?? 0;
+          todayCvs = s.today.cvsGenerated ?? 0;
+          todayErrors = s.today.errors ?? 0;
+        }
+        if (s.circuitOpen) {
+          circuitLine = `\n🔴 Circuit: OPEN (${s.consecutiveScanFailures} failures)`;
+        }
+      } catch {}
+    }
+
+    const PIPELINE_PATH = "data/pipeline.md";
+    let pendingCount = 0;
+    if (existsSync(PIPELINE_PATH)) {
+      const text = readFileSync(PIPELINE_PATH, "utf-8");
+      pendingCount = text.split("\n").filter(l => /^- \[ \]/.test(l)).length;
+    }
+
+    const lines = [
+      "📊 <b>System Status</b>",
+      "",
+      `Scheduler:  ${paused}${circuitLine}`,
+      `Last scan:  ${lastScan}`,
+      `Next scan:  ${nextScan}`,
+      "",
+      "<b>Today's Activity</b>",
+      `🔁 Cycles run:    ${todayCycles}`,
+      `✨ New offers:    ${todayNewOffers}`,
+      `📄 CVs generated: ${todayCvs}`,
+      `⏳ Pending review: ${pendingCount}`,
+      `⚠️ Errors:        ${todayErrors}`,
+    ];
+
+    await bot.sendMessage(chatId, lines.join("\n"), { parse_mode: "HTML" });
+  });
+
+  // ── /scan command ─────────────────────────────────────────────────────────
+  bot.onText(/\/scan/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    await bot.sendMessage(chatId, "🔍 Starting job scan in background...", {
+      parse_mode: "HTML",
+    });
+
+    try {
+      const child = spawn("node", ["scan.mjs", "--notify"], {
+        detached: true,
+        stdio: "ignore",
+      });
+      child.unref();
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Failed to start scan: ${err.message}`);
+    }
+  });
+
+  // EU-FORK: /pause and /resume — control the scheduler and flip keyboard label
+  bot.onText(/\/pause(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+    const SCHED_PATH = "data/scheduler-state.json";
+    try {
+      const ss = existsSync(SCHED_PATH) ? JSON.parse(readFileSync(SCHED_PATH, "utf-8")) : {};
+      ss.paused = true;
+      writeFileSync(SCHED_PATH, JSON.stringify(ss, null, 2), "utf-8");
+      await bot.sendMessage(chatId, "⏸ <b>Scheduler paused.</b> Run /resume to continue.", {
+        parse_mode: "HTML",
+        reply_markup: buildNavKeyboard(),
+      });
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Failed to pause: ${err.message}`);
+    }
+  });
+
+  bot.onText(/\/resume(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+    const SCHED_PATH = "data/scheduler-state.json";
+    try {
+      const ss = existsSync(SCHED_PATH) ? JSON.parse(readFileSync(SCHED_PATH, "utf-8")) : {};
+      ss.paused = false;
+      writeFileSync(SCHED_PATH, JSON.stringify(ss, null, 2), "utf-8");
+      await bot.sendMessage(chatId, "▶️ <b>Scheduler resumed.</b>", {
+        parse_mode: "HTML",
+        reply_markup: buildNavKeyboard(),
+      });
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Failed to resume: ${err.message}`);
+    }
+  });
+
+  // EU-FORK: /profile — live portfolio sync + targeting summary
+  bot.onText(/\/profile(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+    await bot.sendMessage(chatId, "🔄 Fetching live portfolio…", { parse_mode: "HTML" });
+
+    let targetRoles = [];
+    let portfolioUrl = "";
+    let profileName = "";
+    try {
+      const yml = existsSync("config/profile.yml")
+        ? yaml.load(readFileSync("config/profile.yml", "utf-8"))
+        : {};
+      targetRoles = yml?.target_roles?.archetypes?.map(a => a.name) || [];
+      portfolioUrl = yml?.candidate?.portfolio_url || "";
+      profileName = yml?.candidate?.full_name || "";
+    } catch {}
+
+    // Read cached portfolio (written by scheduler on each scan cycle)
+    let projectsMd = "";
+    const cachePath = "data/projects-cache.md";
+    if (existsSync(cachePath)) {
+      projectsMd = readFileSync(cachePath, "utf-8");
+    } else if (existsSync("projects.md")) {
+      projectsMd = readFileSync("projects.md", "utf-8");
+    }
+
+    const projectTitles = [...projectsMd.matchAll(/^### (.+)$/gm)].map(m => m[1].trim());
+    const lines = [
+      `👤 <b>${escapeHtml(profileName || "Your Profile")}</b>`,
+      "",
+      `<b>Target roles:</b> ${escapeHtml(targetRoles.join(", ") || "not set")}`,
+      "",
+      projectTitles.length > 0
+        ? `<b>Live portfolio</b> (${projectTitles.length} projects):\n${projectTitles.slice(0, 8).map(t => `• ${escapeHtml(t)}`).join("\n")}`
+        : "⚠️ No portfolio cache — run a scan cycle to fetch live projects.",
+    ];
+
+    const buttons = [];
+    if (portfolioUrl) {
+      buttons.push([
+        { text: "🌐 View CV", url: `${portfolioUrl}/cv` },
+        { text: "📂 View projects", url: portfolioUrl },
+      ]);
+    }
+
+    await bot.sendMessage(chatId, lines.join("\n"), {
+      parse_mode: "HTML",
+      disable_web_page_preview: true,
+      reply_markup: buttons.length ? { inline_keyboard: buttons } : undefined,
+    });
+  });
+
+  // EU-FORK: /autopilot on|off — enable/disable hybrid auto-apply
+  bot.onText(/\/autopilot(?:\s+(.+))?/, async (msg, match) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+    const arg = match?.[1]?.trim().toLowerCase();
+    const SCHED_PATH = "data/scheduler-state.json";
+    try {
+      const ss = existsSync(SCHED_PATH) ? JSON.parse(readFileSync(SCHED_PATH, "utf-8")) : {};
+      if (!ss.autoPilot) ss.autoPilot = { trialRemaining: 3, todayAutoApplied: 0, submissionLog: [] };
+
+      if (arg === "on") {
+        ss.autoPilot.enabled = true;
+        writeFileSync(SCHED_PATH, JSON.stringify(ss, null, 2), "utf-8");
+        const trial = ss.autoPilot.trialRemaining ?? 3;
+        await bot.sendMessage(chatId, [
+          `🤖 <b>Auto-pilot ON</b>`,
+          trial > 0
+            ? `⚠️ Trial mode: first ${trial} eligible job(s) will ask for confirmation before applying.`
+            : `✅ Trust established — eligible Tier 1 jobs will auto-apply (min score set in config/scheduler.yml).`,
+        ].join("\n"), { parse_mode: "HTML" });
+      } else if (arg === "off") {
+        ss.autoPilot.enabled = false;
+        writeFileSync(SCHED_PATH, JSON.stringify(ss, null, 2), "utf-8");
+        await bot.sendMessage(chatId, "🛑 <b>Auto-pilot OFF</b> — no jobs will be submitted automatically.", { parse_mode: "HTML" });
+      } else {
+        const status = ss.autoPilot.enabled ? "ON" : "OFF";
+        const trial = ss.autoPilot.trialRemaining ?? 3;
+        const applied = ss.autoPilot.submissionLog?.length || 0;
+        await bot.sendMessage(chatId, [
+          `🤖 <b>Auto-pilot: ${status}</b>`,
+          `Trial confirmations remaining: ${trial}`,
+          `Total auto-applied: ${applied}`,
+          ``,
+          `Use <code>/autopilot on</code> or <code>/autopilot off</code>`,
+        ].join("\n"), { parse_mode: "HTML" });
+      }
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Failed to update autopilot: ${err.message}`);
+    }
+  });
+
+  // ── /eval command ─────────────────────────────────────────────────────────
+  bot.onText(/\/eval/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    await bot.sendMessage(chatId, "🤖 Starting AI evaluation cycle in background...", {
+      parse_mode: "HTML",
+    });
+
+    try {
+      const child = spawn("node", ["scheduler.mjs", "--once"], {
+        detached: true,
+        stdio: "ignore",
+      });
+      child.unref();
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Failed to start evaluation: ${err.message}`);
+    }
+  });
+
+  // ── /report command ───────────────────────────────────────────────────────
+  bot.onText(/\/report(?:\s+(\d+))?/, async (msg, match) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const numStr = match?.[1];
+    if (!numStr) {
+      await bot.sendMessage(chatId, "⚠️ Usage: <code>/report &lt;number&gt;</code> (e.g. <code>/report 003</code>)", { parse_mode: "HTML" });
+      return;
+    }
+
+    const reportFile = getReportByNum(numStr);
+    if (!reportFile) {
+      await bot.sendMessage(chatId, `❌ Report for job #${numStr.padStart(3, "0")} not found.`, { parse_mode: "HTML" });
+      return;
+    }
+
+    try {
+      const content = readFileSync(reportFile, "utf-8");
+      const htmlContent = markdownToTelegramHtml(content);
+      const truncated = htmlContent.length > 4000 
+        ? htmlContent.slice(0, 4000) + "\n\n<i>[Truncated...]</i>" 
+        : htmlContent;
+
+      await bot.sendMessage(chatId, truncated, {
+        parse_mode: "HTML",
+        disable_web_page_preview: true,
+      });
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Error reading report: ${err.message}`);
+    }
+  });
+
+  // ── /pdf command ──────────────────────────────────────────────────────────
+  bot.onText(/\/pdf(?:\s+(\d+))?/, async (msg, match) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const numStr = match?.[1];
+    if (!numStr) {
+      await bot.sendMessage(chatId, "⚠️ Usage: <code>/pdf &lt;number&gt;</code> (e.g. <code>/pdf 003</code>)", { parse_mode: "HTML" });
+      return;
+    }
+
+    const pdfFile = getPdfByNum(numStr);
+    if (!pdfFile) {
+      await bot.sendMessage(chatId, `❌ PDF for job #${numStr.padStart(3, "0")} not found. Make sure it scored high enough to generate documents.`, { parse_mode: "HTML" });
+      return;
+    }
+
+    try {
+      await bot.sendMessage(chatId, "📤 Sending PDF...", { parse_mode: "HTML" });
+      await bot.sendDocument(chatId, pdfFile);
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Error sending PDF: ${err.message}`);
+    }
+  });
+
+  // ── /usage command ────────────────────────────────────────────────────────
+  bot.onText(/\/usage(?:\s|$)/, async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    // EU-FORK: 60s cooldown to avoid spamming claude --print
+    const state = loadState();
+    const now = Date.now();
+    if (state.lastUsageCheck && now - state.lastUsageCheck < 60_000) {
+      const remaining = Math.ceil((60_000 - (now - state.lastUsageCheck)) / 1000);
+      await bot.sendMessage(chatId, `⏳ Please wait ${remaining}s before checking usage again.`, { parse_mode: "HTML" });
+      return;
+    }
+    state.lastUsageCheck = now;
+    saveState(state);
+
+    await bot.sendMessage(chatId, "⏳ Checking Claude usage…", {
+      parse_mode: "HTML",
+    });
+
+    try {
+      const runEnv = { ...process.env };
+      delete runEnv.CLAUDE_API_KEY;
+      delete runEnv.ANTHROPIC_API_KEY;
+      delete runEnv.CLAUDE_CODE_OAUTH_TOKEN;
+      delete runEnv.CLAUOAUTH_TOKEN;
+      delete runEnv.CLAUDE_OAUTH_TOKEN;
+      const result = await runProcess("claude", ["--print"], { timeout: 20_000, stdin: "/usage\n", env: runEnv });
+      if (result.code !== 0 || !result.stdout.trim()) {
+        await bot.sendMessage(chatId, "⚠️ No active Claude session or <code>claude</code> not on PATH.\nCannot fetch usage right now.", { parse_mode: "HTML" });
+        return;
+      }
+      
+      const out = result.stdout;
+      
+      let sessionText = "";
+      const sessionMatch = out.match(/Current session:\s*(\d+)%\s*used\s*·\s*resets\s*([^\n\r]+)/i);
+      if (sessionMatch) {
+        const used = parseInt(sessionMatch[1], 10);
+        const left = Math.max(0, 100 - used);
+        const resets = sessionMatch[2].trim();
+        sessionText = `⏳ <b>5-Hour Session:</b> ${used}% used (${left}% left) · Resets ${resets}`;
+      }
+
+      let weekText = "";
+      const weekMatch = out.match(/Current week(?:\s*\(.*?\))?:\s*(\d+)%\s*used\s*·\s*resets\s*([^\n\r]+)/i);
+      if (weekMatch) {
+        const used = parseInt(weekMatch[1], 10);
+        const left = Math.max(0, 100 - used);
+        const resets = weekMatch[2].trim();
+        weekText = `📅 <b>Weekly Limit:</b> ${used}% used (${left}% left) · Resets ${resets}`;
+      }
+
+      let costText = "";
+      const costMatch = out.match(/Total cost:\s*([^\n\r]+)/i);
+      if (costMatch) {
+        costText = `💰 <b>Total Session Cost:</b> ${costMatch[1].trim()}`;
+      }
+
+      let usageText = "";
+      const usageMatch = out.match(/Usage:\s*([^\n\r]+)/i);
+      if (usageMatch) {
+        usageText = `📊 <b>Token Usage:</b> ${usageMatch[1].trim()}`;
+      }
+
+      let responseText = "";
+      if (sessionText || weekText) {
+        responseText = "<b>Claude Quota Usage</b>\n\n";
+        if (sessionText) responseText += sessionText + "\n";
+        if (weekText) responseText += weekText + "\n";
+      } else {
+        responseText = "<b>Claude Quota Usage (OAuth/API Mode)</b>\n\n";
+        if (costText) responseText += costText + "\n";
+        if (usageText) responseText += usageText + "\n";
+        responseText += "\n<i>Note: Subscription rate limits are only visible when logged in via a local browser session. Run <code>claude login</code> in your terminal if you want to see them here.</i>";
+      }
+
+      await bot.sendMessage(chatId, responseText, { parse_mode: "HTML" });
+    } catch (err) {
+      await bot.sendMessage(chatId, `⚠️ Usage check failed: ${err.message.slice(0, 200)}`, { parse_mode: "HTML" });
+    }
+  });
+
+  // EU-FORK: /chat — no args toggles persistent chat mode; /chat <msg> is always single-shot
+  bot.onText(/\/chat(?:\s+(.+))?/, async (msg, match) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+
+    const userMessage = match?.[1]?.trim();
+
+    // Toggle mode when called with no argument
+    if (!userMessage) {
+      const state = loadState();
+      state.chatMode = !state.chatMode;
+      if (!state.chatMode) state.chatHistory = []; // clear history on exit
+      saveState(state);
+      await bot.sendMessage(
+        chatId,
+        state.chatMode
+          ? "💬 <b>Chat mode ON</b> — send any message to talk to the agent.\nSlash commands still work. /chat again to exit."
+          : "💬 <b>Chat mode OFF</b>",
+        { parse_mode: "HTML" }
+      );
+      return;
+    }
+
+    // Single-shot: run with conversation history from chat mode (if any), then respond
+    const state = loadState();
+    const historySnippet = state.chatHistory.slice(-6)
+      .map(h => `${h.role === "user" ? "User" : "Assistant"}: ${h.content}`)
+      .join("\n");
+    const fullPrompt = historySnippet
+      ? `Conversation so far:\n${historySnippet}\n\nUser: ${userMessage}`
+      : userMessage;
+
+    await bot.sendMessage(chatId, "🤖 Thinking… (10-30s)", { parse_mode: "HTML" });
+
+    try {
+      const cli = getAgentCli();
+      const result = await runProcess(cli.cmd, [...cli.args, fullPrompt], {
+        timeout: 120_000,
+        shell: process.platform === "win32",
+      });
+
+      const reply = result.code !== 0
+        ? `⚠️ Agent failed (exit ${result.code}).\n\n${result.stderr || ""}`.slice(0, 4000)
+        : `💬 ${result.stdout.trim()}`.slice(0, 4000);
+
+      if (state.chatMode) {
+        state.chatHistory.push({ role: "user", content: userMessage });
+        state.chatHistory.push({ role: "assistant", content: result.stdout.trim().slice(0, 1000) });
+        if (state.chatHistory.length > 20) state.chatHistory = state.chatHistory.slice(-20);
+        saveState(state);
+      }
+
+      await bot.sendMessage(chatId, reply, { parse_mode: "HTML" });
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Agent error: ${err.message}`);
+    }
+  });
+
+  // EU-FORK: generic message handler — routes to agent in chat mode, shows hint otherwise
+  bot.on("message", async (msg) => {
+    if (String(msg.chat?.id) !== String(chatId)) return;
+    if (!msg.text || msg.text.startsWith("/")) return;
+
+    const state = loadState();
+    if (!state.chatMode) {
+      await bot.sendMessage(
+        chatId,
+        `💬 Tip: use <code>/chat</code> to toggle chat mode, or <code>/chat ${escapeHtml(msg.text)}</code> for a one-shot question.`,
+        { parse_mode: "HTML" }
+      );
+      return;
+    }
+
+    // Chat mode — route to agent with history
+    const historySnippet = state.chatHistory.slice(-6)
+      .map(h => `${h.role === "user" ? "User" : "Assistant"}: ${h.content}`)
+      .join("\n");
+    const fullPrompt = historySnippet
+      ? `Conversation so far:\n${historySnippet}\n\nUser: ${msg.text}`
+      : msg.text;
+
+    await bot.sendMessage(chatId, "🤖 Thinking…", { parse_mode: "HTML" });
+
+    try {
+      const cli = getAgentCli();
+      const result = await runProcess(cli.cmd, [...cli.args, fullPrompt], {
+        timeout: 120_000,
+        shell: process.platform === "win32",
+      });
+
+      const reply = result.code !== 0
+        ? `⚠️ Agent failed.\n\n${result.stderr || ""}`.slice(0, 4000)
+        : result.stdout.trim().slice(0, 4000);
+
+      state.chatHistory.push({ role: "user", content: msg.text.slice(0, 500) });
+      state.chatHistory.push({ role: "assistant", content: result.stdout.trim().slice(0, 1000) });
+      if (state.chatHistory.length > 20) state.chatHistory = state.chatHistory.slice(-20);
+      saveState(state);
+
+      await bot.sendMessage(chatId, reply, { parse_mode: "HTML" });
+    } catch (err) {
+      await bot.sendMessage(chatId, `❌ Agent error: ${err.message}`);
+    }
   });
 
   // ── /next command — browse pipeline jobs one by one ──────────────────────
@@ -624,6 +1422,7 @@ async function startListener() {
       lines.push(`   ⭐ ${r.score}/5 · ${escapeHtml(r.status)}`);
     }
     if (rows.length > 10) lines.push(`\n… and ${rows.length - 10} more`);
+    lines.push("", "<i>Tip: /report &lt;num&gt; for full assessment · /pdf &lt;num&gt; for tailored CV</i>");
 
     await bot.sendMessage(chatId, lines.join("\n"), { parse_mode: "HTML" });
   });

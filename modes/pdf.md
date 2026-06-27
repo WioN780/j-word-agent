@@ -227,13 +227,17 @@ Update tracker if the job is already registered: change PDF from ❌ to ✅.
 <!-- EU-FORK START -->
 ## Project Pool Integration
 
-This block overrides **Step 9** of the Full pipeline above ("Select top 3-4 most relevant projects for the job"). The source of projects is now `projects.md`, not the flat list in `cv.md`.
+This block overrides **Step 9** of the Full pipeline above ("Select top 3-4 most relevant projects for the job"). The source of projects depends on how the CV generation is triggered:
+
+- **Interactive path** (Claude Code session): read `projects.md` from disk as described below.
+- **Scheduler path** (`claude -p` subprocess): the live portfolio data is already injected into the prompt under `═══ LIVE PORTFOLIO PROJECTS ═══`. Use that content — do not attempt to read `projects.md` from disk, as the subprocess has no interactive file access.
 
 ### Revised Step 9 — Project selection from pool
 
 Before building the HTML (Step 14), execute the project pool selection algorithm defined in `modes/_shared.md` → "Project Pool Selection":
 
-1. Check if `projects.md` exists in the project root.
+1. **Scheduler path:** if `═══ LIVE PORTFOLIO PROJECTS ═══` is present in context, use those entries as the project pool — skip to step 2.  
+   **Interactive path:** check if `projects.md` exists in the project root.
    - **If yes:** read all project entries from `projects.md`.
    - **If no:** fall back to the Projects section in `cv.md` (original behaviour — no change).
 

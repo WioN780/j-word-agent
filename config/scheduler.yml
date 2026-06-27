@@ -53,3 +53,10 @@ daily_summary_time: "20:00"
 # Time (HH:MM, 24-hour) to send the ranked job cards from the overnight scan.
 # Set to "" to disable.
 morning_digest_time: "08:00"
+
+# EU-FORK: Auto-pilot (hybrid auto-apply for Tier 1 jobs)
+# Controlled via /autopilot on|off in Telegram — this section sets limits only.
+# enabled: set via /autopilot command (stored in scheduler-state.json)
+auto_apply:
+  min_score: 4.2       # minimum Gemini score to be eligible (must be >= score_threshold)
+  daily_cap: 3         # max auto-applies per day
