@@ -33,7 +33,7 @@ services:
     container_name: j-word-agent-scheduler
     working_dir: /app
     command: ["node", "scheduler.mjs", "--daemon"]
-    init: true
+    # init: true removed — Dockerfile.daemon ENTRYPOINT already uses tini as PID 1
     # Load TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, RELAY_SECRET, etc.
     env_file:
       - path: .env
@@ -71,7 +71,7 @@ services:
     container_name: j-word-agent-relay
     working_dir: /app
     command: ["node", "relay-server.mjs"]
-    init: true
+    # init: true removed — Dockerfile.daemon ENTRYPOINT already uses tini as PID 1
     env_file:
       - path: .env
         required: false
@@ -115,7 +115,7 @@ services:
     working_dir: /app
     # Long-running idle process so `docker compose exec` is instant.
     command: ["tail", "-f", "/dev/null"]
-    init: true
+    # init: true removed — full Dockerfile ENTRYPOINT already uses tini as PID 1
     volumes:
       - .:/app
       - j-word-agent-node-modules:/app/node_modules

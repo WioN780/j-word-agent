@@ -1,17 +1,22 @@
 {
-  "paused": true,
-  "lastScanTime": "2026-06-26T12:52:24.326Z",
-  "nextScanTime": "2026-06-26T18:00:00.000Z",
-  "dailySummarySentDate": null,
+  "paused": false,
+  "lastScanTime": "2026-06-27T13:51:03.294Z",
+  "nextScanTime": "2026-06-27T16:00:00.000Z",
+  "dailySummarySentDate": "2026-06-26",
   "today": {
-    "date": "2026-06-26",
-    "scanCycles": 4,
-    "newOffers": 850,
-    "cvsGenerated": 4,
-    "errors": 45
+    "date": "2026-06-27",
+    "scanCycles": 2,
+    "newOffers": 2,
+    "cvsGenerated": 2,
+    "errors": 23,
+    "evalResults": [],
+    "highScoringJobs": [],
+    "morningDigestSent": false,
+    "limitBypassed": false
   },
   "consecutiveScanFailures": 0,
   "circuitOpen": false,
   "retryAt": null,
-  "diskWarnedDate": null
+  "diskWarnedDate": null,
+  "scoreThreshold": 3.5
 }
