@@ -180,6 +180,22 @@ Key sections to fill in:
 
 ---
 
+<!-- EU-FORK START -->
+## Scheduler Prerequisites
+
+The autonomous scheduler (`node scheduler.mjs --daemon`) requires environment variables beyond the base setup:
+
+| Variable | Required for | Notes |
+|----------|-------------|-------|
+| `GEMINI_API_KEY` | Eval stage | Scores new jobs with `gemini-2.5-flash`. Without this, the eval stage is silently skipped. |
+| `TELEGRAM_BOT_TOKEN` | All Telegram notifications | Get from @BotFather |
+| `TELEGRAM_CHAT_ID` | All Telegram notifications | Get from @userinfobot |
+
+**Live portfolio sync:** The scheduler fetches your current projects and CV PDF from `markooba.com/api/{lang}/` once per scan cycle. The data is used to tailor CV generation — it does NOT overwrite `cv.md` or `projects.md`. If the API is unreachable, the scheduler falls back to `data/projects-cache.md` (last successful fetch), then to your local `projects.md`.
+
+Add these to your `.env` file alongside `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+<!-- EU-FORK END -->
+
 ## Checklist — Before Your First Evaluation
 
 ```

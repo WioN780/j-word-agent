@@ -260,13 +260,22 @@ _If `voice-dna.md` exists, its §3 Banned List is the canonical, fuller version 
 <!-- EU-FORK START -->
 ## Project Pool Selection
 
+There are **two pipelines**, each with a different project source:
+
+| Pipeline | How it runs | Project source |
+|----------|-------------|----------------|
+| **Interactive** (Claude Code / any CLI session) | You paste a JD or URL | Reads `projects.md` from disk; falls back to `cv.md` Projects section |
+| **Scheduler** (`scheduler.mjs` daemon) | Autonomous, runs on cron | Projects injected into prompt from `markooba.com/api` (live fetch → cache → `projects.md` fallback) |
+
+In the scheduler path, the live portfolio data arrives as a pre-formatted block under `═══ LIVE PORTFOLIO PROJECTS ═══` in the prompt context. Do not try to read `projects.md` from disk in that context — use the injected data.
+
+### Interactive pipeline — selection algorithm
+
 `projects.md` (project root) is an **opt-in user file** containing the full pool of portfolio projects with structured metadata. When it exists, it is the **primary source for project selection** in CVs, superseding the flat project list in `cv.md`.
 
 | File | Path | When |
 |------|------|------|
 | projects.md | `projects.md` (project root) | When selecting projects for a CV — prefer over cv.md Projects section |
-
-### Selection algorithm
 
 1. **Read `projects.md`** (if it exists; fall back to cv.md Projects section silently if it does not).
 2. **Extract JD signals:** stack terms, domain keywords, and tool names from the job description.
@@ -275,9 +284,9 @@ _If `voice-dna.md` exists, its §3 Banned List is the canonical, fuller version 
 5. **Drop the weakest match** — do not include all projects just because there are only 3. If the third-ranked project has weak signal overlap, select 2.
 6. **Log the selection reasoning** as a one-line note per project: `Selected: FastAPI Gateway — 4 keyword hits (FastAPI, PostgreSQL, Docker, Python backend). Dropped: SensorMesh — 0 hits on JD stack.`
 
-### Rules
+### Rules (both pipelines)
 
-- **NEVER fabricate project details.** Only use the content in `projects.md` entries — Impact, Keywords, Stack tags exactly as written.
+- **NEVER fabricate project details.** Only use content from the project source — Impact, Keywords, Stack tags exactly as written.
 - The selection affects the `{{PROJECTS}}` placeholder in `cv-template.html` only. The `cv.md` file is never modified.
-- If `projects.md` does not exist, proceed with whatever projects are listed in `cv.md` (existing behaviour, no change).
+- If no project data is available, proceed with whatever projects are listed in `cv.md` (existing behaviour, no change).
 <!-- EU-FORK END -->

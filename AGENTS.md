@@ -44,7 +44,18 @@ To rollback: `node update-system.mjs rollback`
 
 ## What is career-ops
 
-AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluation, CV generation, portal scanning, batch processing. Runs on any AI coding CLI that follows the [open agent skill standard](https://agentskills.io) (Claude Code, Codex, OpenCode, Qwen, Copilot, Kimi, Antigravity CLI, Grok Build CLI). Legacy Gemini API evaluation remains available through `gemini-eval.mjs`.
+AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluation, CV generation, portal scanning, batch processing. Runs on any AI coding CLI that follows the [open agent skill standard](https://agentskills.io) (Claude Code, Codex, OpenCode, Qwen, Copilot, Kimi, Antigravity CLI, Grok Build CLI).
+
+<!-- EU-FORK START -->
+**Two evaluation paths — not interchangeable:**
+- **Scheduler auto-eval** (`scheduler.mjs` daemon): scores new jobs with **Gemini** (`GEMINI_API_KEY` required, `gemini-2.5-flash` default). CV/doc generation uses `claude -p`. This is the primary pipeline.
+- **Manual standalone eval** (`gemini-eval.mjs`): the same Gemini scoring but as a one-shot script — useful when the scheduler is not running. Requires `GEMINI_API_KEY` as well.
+- **Interactive eval** (Claude Code / any CLI): uses the active AI session — no extra API key needed.
+
+`GEMINI_API_KEY` is a **required** environment variable for the scheduler's eval stage. Without it, eval is skipped and jobs are not scored.
+
+**Live portfolio sync (scheduler only):** `scheduler.mjs` fetches `https://markooba.com/api/{lang}/projects.json` and `https://markooba.com/api/{lang}/cv.pdf` once per scan cycle. The fetched data is injected into the Gemini eval context and the `claude -p` CV generation prompt. **Neither `cv.md` nor `projects.md` is overwritten.** On API failure, the scheduler falls back to `data/projects-cache.md` (last successful fetch), then to local `projects.md`. The CV PDF is saved to `output/cv-live.pdf`.
+<!-- EU-FORK END -->
 
 ### Main Files
 
