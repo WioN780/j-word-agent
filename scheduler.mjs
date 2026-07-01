@@ -2283,6 +2283,7 @@ function startCommandListener(ctx) {
   bot.onText(
     /\/usage(?:\s|$)/,
     cmd(async () => {
+      log("📱 /usage command received — checking Claude quota");
       await bot.sendMessage(chatId, "⏳ Checking Claude usage…", {
         parse_mode: "HTML",
       });
@@ -2406,11 +2407,19 @@ function startCommandListener(ctx) {
         const cli = getAgentCli();
         // Allow writes only to user-layer config files (DATA_CONTRACT user layer).
         // No Bash, no arbitrary writes — Claude returns a tool-denied error rather
-        // than hanging on an unacknowledged permission prompt.
+        // than hanging on an unacknowledged permission prompt. .env is explicitly
+        // denied so /chat can't be asked to read out live secrets via the (necessarily
+        // broad) Read/Glob/Grep grant.
         const extraArgs = cli.cmd === "claude"
-          ? ["--allowedTools", "Read,Glob,Grep,Edit(config/profile.yml),Write(config/profile.yml),Edit(modes/_profile.md),Write(modes/_profile.md),Edit(cv.md),Write(cv.md),Edit(article-digest.md),Write(article-digest.md),Edit(portals.yml),Write(portals.yml)"]
+          ? [
+              "--allowedTools", "Read,Glob,Grep,Edit(config/profile.yml),Write(config/profile.yml),Edit(modes/_profile.md),Write(modes/_profile.md),Edit(cv.md),Write(cv.md),Edit(article-digest.md),Write(article-digest.md),Edit(portals.yml),Write(portals.yml)",
+              "--disallowedTools", "Read(.env),Read(**/.env*)",
+            ]
           : [];
-        const result = await runProcess(cli.cmd, [...cli.args, ...extraArgs, userMessage], {
+        // "--" terminates the variadic --allowedTools/--disallowedTools lists so the
+        // prompt isn't swallowed as an extra tool spec (confirmed via direct argv test —
+        // without it, claude -p errors "Input must be provided ... as a prompt argument").
+        const result = await runProcess(cli.cmd, [...cli.args, ...extraArgs, "--", userMessage], {
           timeout: 120_000,
           shell: process.platform === "win32",
         });

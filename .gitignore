@@ -4,6 +4,13 @@ data/applications.md
 data/applications.db
 data/pipeline.md
 data/scan-history.tsv
+
+# Runtime state (rewritten every scan cycle — not source)
+data/scheduler.log
+data/scheduler-state.json
+data/telegram-state.json
+data/pending-applications.json
+data/projects-cache.md
 data/parser-output/**/*.json
 !data/parser-output/.gitkeep
 !data/parser-output/**/.gitkeep
